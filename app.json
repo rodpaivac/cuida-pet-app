@@ -2,6 +2,8 @@
   "expo": {
     "name": "cuida-pet-app",
     "slug": "cuida-pet-app",
-    "version": "1.0.0"
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "plugins": ["expo-font"]
   }
 }
