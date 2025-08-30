@@ -7,13 +7,12 @@ export const styles = StyleSheet.create({
     carousel: {
         marginTop: verticalScale(45),
         marginBottom: isTablet() ? verticalScale(55) : verticalScale(95)
-
     },
     card: {
         borderRadius: 60,
         height: scale(415),
         width: scale(260),
-        marginHorizontal: scale(10),
+        marginRight: scale(20),
         padding: scale(30),
     },
     pawIcon: {
@@ -27,7 +26,6 @@ export const styles = StyleSheet.create({
         borderRadius: 180,
         width: scale(180),
         height: scale(180),
-
     },
     petInfo: {
         alignItems: 'center',

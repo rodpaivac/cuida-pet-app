@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
         marginTop: verticalScale(48),
         marginBottom: verticalScale(34),
         fontFamily: 'Poppins_200ExtraLight',
-        fontSize: 24,
+        fontSize: 20,
     },
     container: {
         position: 'absolute',
@@ -27,6 +27,9 @@ export const styles = StyleSheet.create({
         alignItems: 'center'
     },
     buttonContainer: {
+        marginTop: verticalScale(20)
+    },
+    footerContainer: {
         marginTop: verticalScale(20)
     }
 });

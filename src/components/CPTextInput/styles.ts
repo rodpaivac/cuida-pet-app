@@ -8,7 +8,6 @@ export const styles = StyleSheet.create({
     container: {
         borderColor: COLOR.sand,
         borderWidth: 1,
-        marginBottom: verticalScale(15),
         paddingVertical: verticalScale(3),
         paddingHorizontal: scale(15),
         borderRadius: 15
@@ -20,4 +19,11 @@ export const styles = StyleSheet.create({
         fontSize: 18,
         width: scale(300)
     },
+    forgotPassword: {
+        color: COLOR.sand
+    },
+    forgotPasswordContainer: {
+        width: scale(330),
+        marginTop: verticalScale(8)
+    }
 });

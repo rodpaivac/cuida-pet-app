@@ -29,11 +29,18 @@ const CPLoginBottomSheet: React.FC<Props> = ({
         keyboardType="email-address"
         autoCapitalize="none"
       />
-      <CPTextInput placeholder="senha" isPassword />
+      <CPTextInput
+        placeholder="senha"
+        isPassword
+        showForgotPassword
+        customStyle={{ marginTop: 15 }}
+      />
       <View style={styles.buttonContainer}>
         <CPButton title="Entrar" onPress={() => navigation.navigate("Home")} />
       </View>
-      <CPTextButton title="Criar conta" onPress={() => {}} />
+      <View style={styles.footerContainer}>
+        <CPTextButton title="Criar conta" onPress={() => {}} />
+      </View>
     </View>
   );
 

@@ -10,6 +10,7 @@ export const styles = StyleSheet.create({
         height: 63,
         alignItems: 'flex-start',
         padding: 4.5,
+        justifyContent: 'center'
     },
     circle: {
         backgroundColor: COLOR.darkBrown,
@@ -20,7 +21,7 @@ export const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     row: {
-        flexDirection: 'row'
+        flexDirection: 'row',
     },
     textContainer: {
         alignItems: 'center',

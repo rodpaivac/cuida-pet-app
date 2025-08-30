@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 
 import CPContainer from "@components/CPContainer";
-import { api } from "@service/api";
-import { FlatList, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { styles } from "./styles";
 import CPButton from "@components/CPButton";
 import CPPetCarousel from "@components/CPPetCarousel";
-import CPLoading from "@components/CPLoading";
+import { AppError } from "@utils/AppError";
+import { getPets } from "@service/index";
+import { Pet } from "@service/api.types";
 
 const Home: React.FC = () => {
-  const [pets, setPets] = useState([]);
+  const [pets, setPets] = useState<Pet[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const renderHeader = () => (
@@ -30,10 +31,13 @@ const Home: React.FC = () => {
   const fetchPets = async () => {
     setIsLoading(true);
     try {
-      const response = await api.get("/pets");
-      setPets(response.data);
-      console.log("response", response.data);
+      const response = await getPets("user");
+      setPets(response);
+      console.log("response", response);
     } catch (error) {
+      const isAppError = error instanceof AppError;
+      const title = isAppError ? error.message : "Tente novamente mais tarde.";
+      console.log("title error", title);
       console.log("error", error);
     } finally {
       setIsLoading(false);
@@ -45,7 +49,7 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <CPContainer isLoading={isLoading} header>
+    <CPContainer isLoading={isLoading} header ignorePadding>
       {renderHeader()}
       {renderCarousel()}
       {renderFooter()}

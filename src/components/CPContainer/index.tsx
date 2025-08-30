@@ -4,17 +4,24 @@ import { styles } from "./styles";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CPLoading from "@components/CPLoading";
 import CPHeader from "@components/CPHeader";
+import { scale } from "@utils/dimensions";
 
 type Props = {
-  children?: JSX.Element[];
+  children?: JSX.Element[] | JSX.Element;
   isLoading?: boolean;
   header?: boolean;
+  goBack?: boolean;
+  ignorePadding?: boolean;
+  title?: string;
 };
 
 const CPContainer: React.FC<Props> = ({
   children,
   isLoading = false,
   header = false,
+  goBack = false,
+  ignorePadding = false,
+  title,
 }) => {
   return (
     <>
@@ -23,9 +30,14 @@ const CPContainer: React.FC<Props> = ({
         <CPLoading isLoading />
       ) : (
         <>
-          {header && <CPHeader />}
+          {(header || goBack || title) && (
+            <CPHeader goBack={goBack} title={title} />
+          )}
           <ScrollView
-            style={styles.container}
+            style={[
+              styles.container,
+              { padding: ignorePadding ? 0 : scale(15) },
+            ]}
             showsVerticalScrollIndicator={false}
           >
             {children}

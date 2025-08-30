@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
         fontSize: 18
     },
     header: {
-        paddingHorizontal: scale(35),
+        paddingHorizontal: scale(15),
         paddingTop: scale(15)
     },
     footer: {
