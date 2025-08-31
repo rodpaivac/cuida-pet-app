@@ -9,7 +9,10 @@
       "@storage/*": ["./src/storage/*"],
       "@theme/*": ["./src/theme/*"],
       "@utils/*": ["./src/utils/*"],
-      "@service/*": ["./src/service/*"]
+      "@service/*": ["./src/service/*"],
+      "@contexts/*": ["./src/contexts/*"],
+      "@dtos/*": ["./src/dtos/*"],
+      "@hooks/*": ["./src/hooks/*"]
     }
   },
   "include": ["src", "src/@types"],

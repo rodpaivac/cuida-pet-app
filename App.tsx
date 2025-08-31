@@ -1,7 +1,7 @@
-import { StatusBar } from "react-native";
 import React from "react";
+
+import { StatusBar } from "react-native";
 import { StyleSheet, Text, View } from "react-native";
-import Login from "@screens/Login";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Routes } from "src/routes";
 import {
@@ -13,6 +13,8 @@ import {
   useFonts,
 } from "@expo-google-fonts/poppins";
 import CPLoading from "@components/CPLoading";
+import { AuthContextProvider } from "@contexts/AuthContext";
+import { PetContextProvider } from "@contexts/PetContext";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -31,7 +33,11 @@ export default function App() {
           backgroundColor="transparent"
           translucent
         />
-        {fontsLoaded ? <Routes /> : <CPLoading isLoading />}
+        <AuthContextProvider>
+          <PetContextProvider>
+            {fontsLoaded ? <Routes /> : <CPLoading isLoading />}
+          </PetContextProvider>
+        </AuthContextProvider>
       </>
     </GestureHandlerRootView>
   );

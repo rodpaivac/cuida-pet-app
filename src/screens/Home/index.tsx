@@ -7,11 +7,15 @@ import CPButton from "@components/CPButton";
 import CPPetCarousel from "@components/CPPetCarousel";
 import { AppError } from "@utils/AppError";
 import { getPets } from "@service/index";
-import { Pet } from "@service/api.types";
+import { PetDTO } from "@dtos/PetDTO";
+import { useNavigation } from "@react-navigation/native";
+import { usePet } from "@hooks/usePet";
 
 const Home: React.FC = () => {
-  const [pets, setPets] = useState<Pet[]>([]);
+  const [pets, setPets] = useState<PetDTO[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const navigation = useNavigation();
+  const { selectPet } = usePet();
 
   const renderHeader = () => (
     <View style={styles.header}>
@@ -26,7 +30,9 @@ const Home: React.FC = () => {
     </View>
   );
 
-  const renderCarousel = () => <CPPetCarousel pets={pets} />;
+  const renderCarousel = () => (
+    <CPPetCarousel pets={pets} selectPet={handleSelectPet} />
+  );
 
   const fetchPets = async () => {
     setIsLoading(true);
@@ -42,6 +48,11 @@ const Home: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleSelectPet = (pet: PetDTO, color: string) => {
+    selectPet(pet);
+    navigation.navigate("PetDetails", { color: color });
   };
 
   useEffect(() => {

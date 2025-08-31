@@ -1,5 +1,4 @@
 import CPContainer from "@components/CPContainer";
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { ageCalc } from "@utils/age";
 import React, { useState } from "react";
 import { FlatList, Image, Pressable, Text, View } from "react-native";
@@ -10,17 +9,14 @@ import { styles } from "./styles";
 import { COLOR } from "@theme/colors";
 import { SpaceH } from "@components/Space";
 import Collapsible from "react-native-collapsible";
-import { Vaccine } from "@service/api.types";
-
-type Route = RouteProp<ReactNavigation.RootParamList, "VaccineHistory">;
+import { usePet } from "@hooks/usePet";
+import { VaccineDTO } from "@dtos/VaccineDTO";
 
 const VaccineHistory: React.FC = () => {
-  const route = useRoute<Route>();
-  const navigation = useNavigation();
-  const pet = route.params.pet;
-  const age = ageCalc(pet.birthdate);
+  const { selectedPet } = usePet();
+  const age = ageCalc(selectedPet.birthdate);
 
-  const vaccineMock: Vaccine[] = [
+  const vaccineMock: VaccineDTO[] = [
     {
       id: 1,
       title: "Antirrábica",
@@ -52,7 +48,7 @@ const VaccineHistory: React.FC = () => {
   const Header = () => (
     <View>
       <View>
-        <Text style={styles.name}>{pet.name}</Text>
+        <Text style={styles.name}>{selectedPet.name}</Text>
         <Text style={styles.age}>
           {age} {age === 1 ? "ano" : "anos"}
         </Text>
@@ -80,7 +76,7 @@ const VaccineHistory: React.FC = () => {
 };
 
 type VaccineItemProps = {
-  vaccine: Vaccine;
+  vaccine: VaccineDTO;
 };
 
 const VaccineItem: React.FC<VaccineItemProps> = ({ vaccine }) => {

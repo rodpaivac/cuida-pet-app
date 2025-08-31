@@ -1,4 +1,4 @@
-import { Pet } from "@service/api.types";
+import { PetDTO } from "@dtos/PetDTO";
 
 export declare global {
     namespace ReactNavigation {
@@ -6,17 +6,13 @@ export declare global {
             Login: undefined;
             Home: undefined;
             PetDetails: PetDetailsRouteProp;
-            VaccineHistory: VaccineHistoryRouteProp;
+            VaccineHistory: undefined;
             Menu: undefined;
         }
     }
 }
 
 export type PetDetailsRouteProp = {
-    pet: Pet,
     color: string;
 }
 
-export type VaccineHistoryRouteProp = {
-    pet: Pet,
-}

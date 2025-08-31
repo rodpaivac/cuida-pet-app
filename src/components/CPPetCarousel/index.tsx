@@ -6,22 +6,24 @@ import petImage from "@assets/images/pet.jpg";
 import { ageCalc } from "@utils/age";
 import { COLOR } from "@theme/colors";
 import { useNavigation } from "@react-navigation/native";
-import { Pet } from "@service/api.types";
+import { PetDTO } from "@dtos/PetDTO";
 
 type Props = {
-  pets: Pet[];
+  pets: PetDTO[];
+  selectPet: (pet: PetDTO, color: string) => void;
 };
 
 type CardProps = {
-  pet: Pet;
+  pet: PetDTO;
   index: number;
+  selectPet: (pet: PetDTO, color: string) => void;
 };
 
 const colors = [COLOR.brown, COLOR.purple, COLOR.green1];
 
-const CPPetCarousel: React.FC<Props> = ({ pets }) => {
-  const renderItem = (item: Pet, index: number) => (
-    <CPPetCarouselCard pet={item} index={index} />
+const CPPetCarousel: React.FC<Props> = ({ pets, selectPet }) => {
+  const renderItem = (item: PetDTO, index: number) => (
+    <CPPetCarouselCard pet={item} index={index} selectPet={selectPet} />
   );
   return (
     <FlatList
@@ -36,16 +38,14 @@ const CPPetCarousel: React.FC<Props> = ({ pets }) => {
   );
 };
 
-const CPPetCarouselCard: React.FC<CardProps> = ({ pet, index }) => {
+const CPPetCarouselCard: React.FC<CardProps> = ({ pet, index, selectPet }) => {
   const navigation = useNavigation();
   const color = colors[index % colors.length];
   const age = ageCalc(pet.birthdate);
   return (
     <Pressable
       style={[styles.card, { backgroundColor: color }]}
-      onPress={() =>
-        navigation.navigate("PetDetails", { pet: pet, color: color })
-      }
+      onPress={() => selectPet(pet, color)}
     >
       <View style={styles.cardHeader}>
         <Image style={styles.pawIcon} source={paw} />

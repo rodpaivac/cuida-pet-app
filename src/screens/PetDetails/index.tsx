@@ -8,6 +8,7 @@ import petImage from "@assets/images/pet.jpg";
 import vaccine from "@assets/icons/vaccine.png";
 
 import { styles } from "./styles";
+import { usePet } from "@hooks/usePet";
 
 type Route = RouteProp<ReactNavigation.RootParamList, "PetDetails">;
 
@@ -24,16 +25,16 @@ type InfoItemProps = {
 const PetDetails: React.FC = () => {
   const route = useRoute<Route>();
   const navigation = useNavigation();
-  const pet = route.params.pet;
   const bgColor = route.params.color;
-  const age = ageCalc(pet.birthdate);
+  const { selectedPet } = usePet();
+  const age = ageCalc(selectedPet.birthdate);
 
   const Header = () => (
     <View style={[styles.header, { backgroundColor: bgColor }]}>
       <View style={styles.headerRow}>
         <View style={styles.headerColumn}>
           <View>
-            <Text style={styles.name}>{pet.name}</Text>
+            <Text style={styles.name}>{selectedPet.name}</Text>
             <Text style={styles.age}>
               {age} {age === 1 ? "ano" : "anos"}
             </Text>
@@ -45,11 +46,11 @@ const PetDetails: React.FC = () => {
     </View>
   );
 
-  const Button = () => {
+  const VaccineButton = () => {
     return (
       <Pressable
         style={styles.vaccinesButton}
-        onPress={() => navigation.navigate("VaccineHistory", { pet: pet })}
+        onPress={() => navigation.navigate("VaccineHistory")}
       >
         <Image source={vaccine} style={styles.vaccineIcon} />
         <Text style={styles.buttonText}>vacinas</Text>
@@ -57,81 +58,87 @@ const PetDetails: React.FC = () => {
     );
   };
 
-  const InfoBody = () => (
-    <View style={styles.infoContainer}>
-      <View style={styles.infoRow}>
-        <View style={styles.infoColumn}>
-          <InfoItem
-            color={bgColor}
-            tlRadius={0}
-            trRadius={30}
-            blRadius={30}
-            brRadius={0}
-            label="peso"
-            value={`${pet.weight.toString()} kg`}
-          />
-          <InfoItem
-            color={bgColor}
-            tlRadius={30}
-            trRadius={0}
-            blRadius={30}
-            brRadius={30}
-            label="microchipado"
-            value={pet.microchipped ? "sim" : "não"}
-          />
-          <InfoItem
-            color={bgColor}
-            tlRadius={30}
-            trRadius={30}
-            blRadius={0}
-            brRadius={30}
-            label="cor"
-            value={pet.color}
-          />
-          <InfoItem
-            color={bgColor}
-            tlRadius={30}
-            trRadius={30}
-            blRadius={30}
-            brRadius={0}
-            label="castrado"
-            value={pet.castraded ? "sim" : "não"}
-          />
-        </View>
-        <View style={styles.infoColumn}>
-          <InfoItem
-            color={bgColor}
-            tlRadius={0}
-            trRadius={30}
-            blRadius={30}
-            brRadius={0}
-            label="nascimento"
-            value={`${pet.birthdate.getDay()}/${pet.birthdate.getMonth()}/${pet.birthdate.getFullYear()}`}
-          />
-          <InfoItem
-            color={bgColor}
-            tlRadius={30}
-            trRadius={0}
-            blRadius={30}
-            brRadius={30}
-            label="sexo"
-            value={pet.sex}
-          />
-          <InfoItem
-            color={bgColor}
-            tlRadius={30}
-            trRadius={0}
-            blRadius={0}
-            brRadius={30}
-            label="raça"
-            value={pet.breed}
-          />
+  const InfoBody = () => {
+    const birthdate = selectedPet.birthdate.toLocaleDateString("pt-BR", {
+      timeZone: "UTC",
+    });
 
-          {Button()}
+    return (
+      <View style={styles.infoContainer}>
+        <View style={styles.infoRow}>
+          <View style={styles.infoColumn}>
+            <InfoItem
+              color={bgColor}
+              tlRadius={0}
+              trRadius={30}
+              blRadius={30}
+              brRadius={0}
+              label="peso"
+              value={`${selectedPet.weight.toString()} kg`}
+            />
+            <InfoItem
+              color={bgColor}
+              tlRadius={30}
+              trRadius={0}
+              blRadius={30}
+              brRadius={30}
+              label="microchipado"
+              value={selectedPet.microchipped ? "sim" : "não"}
+            />
+            <InfoItem
+              color={bgColor}
+              tlRadius={30}
+              trRadius={30}
+              blRadius={0}
+              brRadius={30}
+              label="cor"
+              value={selectedPet.color}
+            />
+            <InfoItem
+              color={bgColor}
+              tlRadius={30}
+              trRadius={30}
+              blRadius={30}
+              brRadius={0}
+              label="castrado"
+              value={selectedPet.castraded ? "sim" : "não"}
+            />
+          </View>
+          <View style={styles.infoColumn}>
+            <InfoItem
+              color={bgColor}
+              tlRadius={0}
+              trRadius={30}
+              blRadius={30}
+              brRadius={0}
+              label="nascimento"
+              value={birthdate}
+            />
+            <InfoItem
+              color={bgColor}
+              tlRadius={30}
+              trRadius={0}
+              blRadius={30}
+              brRadius={30}
+              label="sexo"
+              value={selectedPet.sex}
+            />
+            <InfoItem
+              color={bgColor}
+              tlRadius={30}
+              trRadius={0}
+              blRadius={0}
+              brRadius={30}
+              label="raça"
+              value={selectedPet.breed}
+            />
+
+            {VaccineButton()}
+          </View>
         </View>
       </View>
-    </View>
-  );
+    );
+  };
 
   return (
     <CPContainer goBack>

@@ -1,30 +1,45 @@
 import CPContainer from "@components/CPContainer";
 import React from "react";
-import userImage from "@assets/images/user.jpg";
+import userImage from "@assets/images/user.png";
 
 import { Image, Pressable, Text, View } from "react-native";
 import { styles } from "./styles";
+import { useAuth } from "@hooks/useAuth";
+import { useNavigation } from "@react-navigation/native";
 
 const Menu: React.FC = () => {
+  const { signOut, user } = useAuth();
+  const navigation = useNavigation();
+
+  const DefaultAvatar = () => (
+    <View style={styles.defaultAvatarContainer}>
+      <Image style={styles.defaultAvatar} source={userImage} />
+    </View>
+  );
+
   const Header = () => (
     <View style={styles.headerRow}>
-      <Image style={styles.userImage} source={userImage} />
+      {user.avatar && user.avatar !== "" ? (
+        <Image style={styles.userImage} src={user.avatar} />
+      ) : (
+        DefaultAvatar()
+      )}
       <View style={styles.headerInfo}>
-        <Text style={styles.name}>Rodrigo Paiva Corrêa</Text>
-        <Text style={styles.infoText}>rodpaivac@gmail.com</Text>
-        <Text style={styles.infoText}>(31)989120414</Text>
+        <Text style={styles.name}>{user.name}</Text>
+        <Text style={styles.infoText}>{user.email}</Text>
+        <Text style={styles.infoText}>{user.phone}</Text>
       </View>
     </View>
   );
 
   const ItemButton = (title: string, onPress: () => void) => (
-    <Pressable>
+    <Pressable onPress={onPress}>
       <Text style={styles.itemText}>{title}</Text>
     </Pressable>
   );
 
   const SignOutButton = () => (
-    <Pressable>
+    <Pressable onPress={() => signOut()}>
       <Text style={styles.signOut}>sair</Text>
     </Pressable>
   );
@@ -33,7 +48,7 @@ const Menu: React.FC = () => {
       {Header()}
       <View style={styles.itemsContainer}>
         {ItemButton("minha conta", () => {})}
-        {ItemButton("meus pets", () => {})}
+        {ItemButton("meus pets", () => navigation.navigate("Home"))}
         {ItemButton("adicionar pet", () => {})}
         {ItemButton("notificações", () => {})}
         {ItemButton("próximas vacinas", () => {})}

@@ -23,8 +23,8 @@ export const styles = StyleSheet.create({
     },
     userImage: {
         borderRadius: 142,
-        width: scale(142),
-        height: scale(142),
+        width: scale(110),
+        height: scale(110),
     },
     headerInfo: {
         justifyContent: 'center',
@@ -33,7 +33,7 @@ export const styles = StyleSheet.create({
     itemText: {
         fontFamily: FONT.PoppinsBold,
         color: COLOR.primary,
-        fontSize: 35,
+        fontSize: 30,
         marginBottom: verticalScale(15)
     },
     itemsContainer: {
@@ -42,8 +42,20 @@ export const styles = StyleSheet.create({
     signOut: {
         fontFamily: FONT.PoppinsRegular,
         color: COLOR.primary,
-        fontSize: 24,
+        fontSize: 20,
         marginTop: verticalScale(150)
+    },
+    defaultAvatarContainer: {
+        backgroundColor: COLOR.primary,
+        borderRadius: 142,
+        width: scale(110),
+        height: scale(110),
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    defaultAvatar: {
+        width: scale(65),
+        height: scale(65),
     }
 
 });

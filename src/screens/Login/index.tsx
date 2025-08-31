@@ -8,13 +8,17 @@ import bg from "@assets/images/login_bg.png";
 import cachorroCaramelo from "@assets/images/cachorro_caramelo.png";
 import cachorroPreto from "@assets/images/cachorro_preto.png";
 import { screenHeight, verticalScale } from "@utils/dimensions";
+import { useAuth } from "@hooks/useAuth";
 
 const SCREEN_HEIGHT = screenHeight;
 const INITIAL_HEIGHT = verticalScale(222);
 const FINAL_TOP = SCREEN_HEIGHT * 0.2;
 
 const Login: React.FC = () => {
+  const { signIn } = useAuth();
+
   const [isExpanded, setIsExpanded] = useState(false);
+
   const bottomSheetAnim = useRef(
     new Animated.Value(SCREEN_HEIGHT - INITIAL_HEIGHT)
   ).current;
@@ -39,6 +43,10 @@ const Login: React.FC = () => {
     });
   };
 
+  const handleSignIn = (email: string, password: string) => {
+    signIn(email, password);
+  };
+
   return (
     <Pressable style={styles.container} onPress={() => closeBottomSheet()}>
       <Image style={styles.cachorro} source={cachorroPreto} />
@@ -48,6 +56,7 @@ const Login: React.FC = () => {
         bottomSheetAnim={bottomSheetAnim}
         bottomSheetHeight={SCREEN_HEIGHT - FINAL_TOP}
         openBottomSheet={() => openBottomSheet()}
+        onSignIn={handleSignIn}
       />
     </Pressable>
   );

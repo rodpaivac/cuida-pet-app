@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Animated, Text, TextInput, View } from "react-native";
 import { styles } from "./styles";
 import CPButton from "@components/CPButton";
@@ -12,6 +12,7 @@ type Props = {
   bottomSheetHeight: number;
   openBottomSheet: () => void;
   isExpanded: boolean;
+  onSignIn: (email: string, password: string) => void;
 };
 
 const CPLoginBottomSheet: React.FC<Props> = ({
@@ -19,8 +20,10 @@ const CPLoginBottomSheet: React.FC<Props> = ({
   bottomSheetHeight,
   openBottomSheet,
   isExpanded,
+  onSignIn,
 }) => {
-  const navigation = useNavigation();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const renderExpandedSection = () => (
     <View style={styles.expandedSection}>
@@ -28,15 +31,19 @@ const CPLoginBottomSheet: React.FC<Props> = ({
         placeholder="e-mail"
         keyboardType="email-address"
         autoCapitalize="none"
+        value={email}
+        onChangeText={setEmail}
       />
       <CPTextInput
         placeholder="senha"
         isPassword
         showForgotPassword
         customStyle={{ marginTop: 15 }}
+        value={password}
+        onChangeText={setPassword}
       />
       <View style={styles.buttonContainer}>
-        <CPButton title="Entrar" onPress={() => navigation.navigate("Home")} />
+        <CPButton title="Entrar" onPress={() => onSignIn(email, password)} />
       </View>
       <View style={styles.footerContainer}>
         <CPTextButton title="Criar conta" onPress={() => {}} />

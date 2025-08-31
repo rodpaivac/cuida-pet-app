@@ -1,10 +1,10 @@
+import { PetDTO } from "@dtos/PetDTO";
 import { api } from "./api";
-import { Pet } from "./api.types";
 
-export const getPets = async (userId: string): Promise<Pet[]> => {
+export const getPets = async (userId: string): Promise<PetDTO[]> => {
     // const response = await api.get("/pets");
     // return response.data;
-    const mock: Pet[] = [{
+    const mock: PetDTO[] = [{
         id: 1,
         name: "Urias",
         breed: "SRD",
