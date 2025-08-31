@@ -3,7 +3,7 @@ import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { ageCalc } from "@utils/age";
 import React from "react";
 import { Image, Pressable, Text, View } from "react-native";
-import edit_light from "@assets/icons/edit_light.png";
+import editLight from "@assets/icons/edit-light.png";
 import petImage from "@assets/images/pet.jpg";
 import vaccine from "@assets/icons/vaccine.png";
 
@@ -38,7 +38,7 @@ const PetDetails: React.FC = () => {
               {age} {age === 1 ? "ano" : "anos"}
             </Text>
           </View>
-          <Image style={styles.pawIcon} source={edit_light} />
+          <Image style={styles.pawIcon} source={editLight} />
         </View>
         <Image style={styles.petImage} source={petImage} />
       </View>

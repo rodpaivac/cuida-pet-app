@@ -1,38 +1,94 @@
 import React from "react";
 import { Image, Pressable, Text, View } from "react-native";
-import menu from "@assets/icons/menu.png";
-import notification from "@assets/icons/notification.png";
-import back from "@assets/icons/back.png";
+
+import menuDark from "@assets/icons/menu-dark.png";
+import menuLight from "@assets/icons/menu-light.png";
+
+import notificationDark from "@assets/icons/notification-dark.png";
+import notificationLight from "@assets/icons/notification-light.png";
+
+import backDark from "@assets/icons/back-dark.png";
+import backLight from "@assets/icons/back-light.png";
 
 import { styles } from "./styles";
 import { COLOR } from "@theme/colors";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 type Props = {
   backgroundColor?: string;
   goBack?: boolean;
   title?: string;
+  dark?: boolean;
 };
 
 const CPHeader: React.FC<Props> = ({
-  backgroundColor = COLOR.primary,
+  backgroundColor,
   goBack = false,
   title,
+  dark = false,
 }) => {
   const navigation = useNavigation();
+  const route = useRoute();
+
+  const MenuButton = () => {
+    const navigate = () => {
+      if (route.name === "Menu") {
+        navigation.goBack();
+      } else {
+        navigation.navigate("Menu");
+      }
+    };
+
+    return (
+      <Pressable onPress={() => navigate()}>
+        <Image style={styles.icon} source={dark ? menuLight : menuDark} />
+      </Pressable>
+    );
+  };
+
+  const NotificationButton = () => (
+    <Pressable>
+      <Image
+        style={styles.icon}
+        source={dark ? notificationLight : notificationDark}
+      />
+    </Pressable>
+  );
+
+  const GoBackButton = () => (
+    <Pressable onPress={() => navigation.goBack()}>
+      <Image style={styles.backIcon} source={dark ? backLight : backDark} />
+    </Pressable>
+  );
+
   return (
-    <View style={[styles.container, { backgroundColor: backgroundColor }]}>
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor:
+            backgroundColor ?? dark ? COLOR.secondary : COLOR.primary,
+        },
+      ]}
+    >
       {goBack ? (
         <View style={styles.titleContainer}>
-          <Pressable onPress={() => navigation.goBack()}>
-            <Image style={styles.backIcon} source={back} />
-          </Pressable>
-          <Text style={styles.title}>{title}</Text>
+          {GoBackButton()}
+          <Text
+            style={[
+              styles.title,
+              {
+                color: dark ? COLOR.primary : COLOR.darkBrown,
+              },
+            ]}
+          >
+            {title}
+          </Text>
         </View>
       ) : (
         <>
-          <Image style={styles.icon} source={menu} />
-          <Image style={styles.icon} source={notification} />
+          {MenuButton()}
+          {NotificationButton()}
         </>
       )}
     </View>

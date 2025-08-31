@@ -7,6 +7,7 @@ export declare global {
             Home: undefined;
             PetDetails: PetDetailsRouteProp;
             VaccineHistory: VaccineHistoryRouteProp;
+            Menu: undefined;
         }
     }
 }

@@ -33,7 +33,7 @@ export const styles = StyleSheet.create({
         backgroundColor: COLOR.sand,
         borderRadius: 15,
         padding: scale(15),
-
+        marginBottom: verticalScale(15)
     },
     vaccineItemHeader: {
         flexDirection: 'row',
@@ -44,10 +44,23 @@ export const styles = StyleSheet.create({
         color: COLOR.darkBrown,
         fontSize: 14
     },
-    vaccineInfo: {
+    vaccineDate: {
         fontFamily: FONT.PoppinsRegular,
         color: COLOR.darkBrown,
         fontSize: 14
+    },
+    vaccineInfoLabel: {
+        fontFamily: FONT.PoppinsRegular,
+        color: COLOR.darkBrown,
+        fontSize: 14,
+        marginRight: scale(10)
+    },
+    vaccineInfoValue: {
+        fontFamily: FONT.PoppinsRegular,
+        color: COLOR.darkBrown,
+        fontSize: 14,
+        textAlign: 'right',
+        width: scale(230)
     },
     chevronIcon: {
         width: scale(30),
@@ -58,7 +71,8 @@ export const styles = StyleSheet.create({
     },
     infoRow: {
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        marginBottom: scale(5),
     },
     actionButton: {
         alignItems: 'center',

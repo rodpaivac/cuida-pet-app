@@ -20,7 +20,6 @@ export const styles = StyleSheet.create({
     },
     title: {
         fontFamily: FONT.PoppinsRegular,
-        color: COLOR.darkBrown,
         fontSize: 22,
     },
     titleContainer: {
