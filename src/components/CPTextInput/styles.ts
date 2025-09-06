@@ -25,5 +25,9 @@ export const styles = StyleSheet.create({
     forgotPasswordContainer: {
         width: scale(330),
         marginTop: verticalScale(8)
-    }
+    },
+    label: {
+        color: COLOR.sand,
+        marginBottom: verticalScale(5)
+    },
 });

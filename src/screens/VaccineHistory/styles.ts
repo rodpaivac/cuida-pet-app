@@ -84,7 +84,6 @@ export const styles = StyleSheet.create({
     },
     actionButtonText: {
         fontFamily: FONT.PoppinsRegular,
-        color: COLOR.darkBrown,
         fontSize: 12
     },
     collapsedContainer: {

@@ -24,6 +24,7 @@ const CPLoginBottomSheet: React.FC<Props> = ({
 }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigation = useNavigation();
 
   const renderExpandedSection = () => (
     <View style={styles.expandedSection}>
@@ -46,7 +47,10 @@ const CPLoginBottomSheet: React.FC<Props> = ({
         <CPButton title="Entrar" onPress={() => onSignIn(email, password)} />
       </View>
       <View style={styles.footerContainer}>
-        <CPTextButton title="Criar conta" onPress={() => {}} />
+        <CPTextButton
+          title="Criar conta"
+          onPress={() => navigation.navigate("NewUser")}
+        />
       </View>
     </View>
   );

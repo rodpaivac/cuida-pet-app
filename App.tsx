@@ -15,6 +15,7 @@ import {
 import CPLoading from "@components/CPLoading";
 import { AuthContextProvider } from "@contexts/AuthContext";
 import { PetContextProvider } from "@contexts/PetContext";
+import { VaccineContextProvider } from "@contexts/VaccineContext";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -35,7 +36,9 @@ export default function App() {
         />
         <AuthContextProvider>
           <PetContextProvider>
-            {fontsLoaded ? <Routes /> : <CPLoading isLoading />}
+            <VaccineContextProvider>
+              {fontsLoaded ? <Routes /> : <CPLoading isLoading />}
+            </VaccineContextProvider>
           </PetContextProvider>
         </AuthContextProvider>
       </>

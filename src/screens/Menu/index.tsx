@@ -47,11 +47,15 @@ const Menu: React.FC = () => {
     <CPContainer dark goBack title="Menu">
       {Header()}
       <View style={styles.itemsContainer}>
-        {ItemButton("minha conta", () => {})}
+        {ItemButton("editar dados", () => navigation.navigate("EditUser"))}
+        {ItemButton("alterar senha", () => {})}
         {ItemButton("meus pets", () => navigation.navigate("Home"))}
-        {ItemButton("adicionar pet", () => {})}
+        {ItemButton("adicionar pet", () =>
+          navigation.navigate("NewPet", { edit: false })
+        )}
         {ItemButton("notificações", () => {})}
         {ItemButton("próximas vacinas", () => {})}
+
         {SignOutButton()}
       </View>
       <View></View>

@@ -3,6 +3,7 @@ import BottomSheet from "@gorhom/bottom-sheet";
 import { Button, Text, View } from "react-native";
 import { styles } from "./styles";
 
+//TODO fix
 const CPBottomSheet: React.FC = () => {
   const bottomSheetRef = useRef<BottomSheet>(null);
   const snapPoints = useMemo(() => ["25%", "50%"], []);

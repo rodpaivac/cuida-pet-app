@@ -9,6 +9,7 @@ import vaccine from "@assets/icons/vaccine.png";
 
 import { styles } from "./styles";
 import { usePet } from "@hooks/usePet";
+import { dateToString } from "@utils/date";
 
 type Route = RouteProp<ReactNavigation.RootParamList, "PetDetails">;
 
@@ -39,7 +40,11 @@ const PetDetails: React.FC = () => {
               {age} {age === 1 ? "ano" : "anos"}
             </Text>
           </View>
-          <Image style={styles.pawIcon} source={editLight} />
+          <Pressable
+            onPress={() => navigation.navigate("NewPet", { edit: true })}
+          >
+            <Image style={styles.pawIcon} source={editLight} />
+          </Pressable>
         </View>
         <Image style={styles.petImage} source={petImage} />
       </View>
@@ -59,9 +64,7 @@ const PetDetails: React.FC = () => {
   };
 
   const InfoBody = () => {
-    const birthdate = selectedPet.birthdate.toLocaleDateString("pt-BR", {
-      timeZone: "UTC",
-    });
+    const birthdate = dateToString(selectedPet.birthdate);
 
     return (
       <View style={styles.infoContainer}>
@@ -141,7 +144,7 @@ const PetDetails: React.FC = () => {
   };
 
   return (
-    <CPContainer goBack>
+    <CPContainer goBack title="detalhes do pet">
       {Header()}
       {InfoBody()}
     </CPContainer>

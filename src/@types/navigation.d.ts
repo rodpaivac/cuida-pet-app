@@ -8,6 +8,11 @@ export declare global {
             PetDetails: PetDetailsRouteProp;
             VaccineHistory: undefined;
             Menu: undefined;
+            NewPet: NewPetRouteProp;
+            EditUser: undefined;
+            NewUser: undefined;
+            NewVaccine: NewVaccineRouteProp;
+
         }
     }
 }
@@ -15,4 +20,15 @@ export declare global {
 export type PetDetailsRouteProp = {
     color: string;
 }
+
+export type NewPetRouteProp = {
+    edit: boolean;
+}
+
+export type NewVaccineRouteProp = {
+    edit: boolean;
+}
+
+
+
 

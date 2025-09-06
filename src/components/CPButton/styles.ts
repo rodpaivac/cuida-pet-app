@@ -4,9 +4,7 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
     container: {
-        backgroundColor: COLOR.sand,
         borderRadius: 60,
-        width: 220,
         height: 63,
         alignItems: 'flex-start',
         padding: 4.5,
@@ -34,7 +32,6 @@ export const styles = StyleSheet.create({
     },
     text: {
         fontFamily: FONT.PoppinsSemiBold,
-        color: COLOR.darkBrown
     }
 });
 

@@ -1,7 +1,7 @@
 import CPContainer from "@components/CPContainer";
 import { ageCalc } from "@utils/age";
 import React, { useState } from "react";
-import { FlatList, Image, Pressable, Text, View } from "react-native";
+import { Alert, FlatList, Image, Pressable, Text, View } from "react-native";
 import arrowDown from "@assets/icons/arrow-down.png";
 import arrowUp from "@assets/icons/arrow-up.png";
 
@@ -11,39 +11,15 @@ import { SpaceH } from "@components/Space";
 import Collapsible from "react-native-collapsible";
 import { usePet } from "@hooks/usePet";
 import { VaccineDTO } from "@dtos/VaccineDTO";
+import { VACCINES } from "src/mock";
+import { useNavigation } from "@react-navigation/native";
+import { useVaccine } from "@hooks/useVaccine";
 
 const VaccineHistory: React.FC = () => {
   const { selectedPet } = usePet();
   const age = ageCalc(selectedPet.birthdate);
 
-  const vaccineMock: VaccineDTO[] = [
-    {
-      id: 1,
-      title: "Antirrábica",
-      date: new Date("2024-03-15"),
-      vetName: "Dra. Ana Silva",
-      clinic: "Clínica Vet Vida",
-      nextDoseDate: new Date("2025-03-15"),
-      lot: "L12345",
-    },
-    {
-      id: 2,
-      title: "V10",
-      date: new Date("2023-05-10"),
-      vetName: "Dr. Carlos Pereira",
-      clinic: "Amigos dos Pets",
-      nextDoseDate: new Date("2025-05-10"),
-      lot: "V10-5678",
-      description: "Vacina gerou inchaço na pele",
-    },
-    {
-      id: 3,
-      title: "Giárdia",
-      date: new Date("2024-08-05"),
-      clinic: "Pet+ Saúde",
-      lot: "G-00921",
-    },
-  ];
+  const navigation = useNavigation();
 
   const Header = () => (
     <View>
@@ -58,7 +34,10 @@ const VaccineHistory: React.FC = () => {
   );
 
   const AddVaccineButton = () => (
-    <Pressable style={styles.addVaccineButton}>
+    <Pressable
+      style={styles.addVaccineButton}
+      onPress={() => navigation.navigate("NewVaccine", { edit: false })}
+    >
       <Text style={styles.buttonText}>adicionar vacina</Text>
     </Pressable>
   );
@@ -66,7 +45,7 @@ const VaccineHistory: React.FC = () => {
   return (
     <CPContainer noScroll goBack title="histórico de vacinas">
       <FlatList
-        data={vaccineMock}
+        data={VACCINES}
         keyExtractor={(item) => item.id.toString()}
         ListHeaderComponent={Header()}
         renderItem={({ item }) => <VaccineItem vaccine={item} />}
@@ -81,6 +60,8 @@ type VaccineItemProps = {
 
 const VaccineItem: React.FC<VaccineItemProps> = ({ vaccine }) => {
   const [expanded, setExpanded] = useState(false);
+  const navigation = useNavigation();
+  const { selectVaccine } = useVaccine();
 
   const date = vaccine.date.toLocaleDateString("pt-BR", { timeZone: "UTC" });
   const nextDoseDate = vaccine.nextDoseDate
@@ -89,18 +70,37 @@ const VaccineItem: React.FC<VaccineItemProps> = ({ vaccine }) => {
 
   type Action = "edit" | "remove";
 
-  const ActionButton = (action: Action) => (
-    <Pressable
-      style={[
-        styles.actionButton,
-        { backgroundColor: action == "edit" ? COLOR.green1 : COLOR.purple },
-      ]}
-    >
-      <Text style={styles.actionButtonText}>
-        {action == "edit" ? "editar" : "excluir"}
-      </Text>
-    </Pressable>
-  );
+  const ActionButton = (action: Action) => {
+    const handlePress = () => {
+      if (action === "edit") {
+        selectVaccine(vaccine);
+        navigation.navigate("NewVaccine", { edit: true });
+      } else {
+        Alert.alert("Atenção", "Deseja excluir esta vacina?", [
+          { text: "Sim", style: "destructive", onPress: () => {} },
+          { text: "Não", isPreferred: true, onPress: () => {} },
+        ]);
+      }
+    };
+    return (
+      <Pressable
+        onPress={handlePress}
+        style={[
+          styles.actionButton,
+          { backgroundColor: action == "edit" ? COLOR.green1 : COLOR.red },
+        ]}
+      >
+        <Text
+          style={[
+            styles.actionButtonText,
+            { color: action == "edit" ? COLOR.darkBrown : COLOR.sand },
+          ]}
+        >
+          {action == "edit" ? "editar" : "excluir"}
+        </Text>
+      </Pressable>
+    );
+  };
   return (
     <View style={styles.vaccineItemContainer}>
       <Pressable

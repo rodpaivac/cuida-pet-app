@@ -26,7 +26,10 @@ const Home: React.FC = () => {
 
   const renderFooter = () => (
     <View style={styles.footer}>
-      <CPButton title="adicionar pet" onPress={() => {}} />
+      <CPButton
+        title="adicionar pet"
+        onPress={() => navigation.navigate("NewPet", { edit: false })}
+      />
     </View>
   );
 

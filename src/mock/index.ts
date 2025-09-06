@@ -1,0 +1,116 @@
+import { PetDTO } from "@dtos/PetDTO";
+import { GenderDTO, UserDTO } from "@dtos/UserDTO";
+import { VaccineDTO } from "@dtos/VaccineDTO";
+
+export const PETS: PetDTO[] = [{
+    id: 1,
+    name: "Urias",
+    breed: "SRD",
+    user_email: "exemplo@teste.com",
+    weight: "16.5",
+    species: "cão",
+    image: undefined,
+    birthdate: new Date("2019-01-01"),
+    color: "caramelo",
+    sex: "fêmea",
+    castraded: false,
+    microchipped: false,
+},
+{
+    id: 2,
+    name: "Alfredo",
+    breed: "SRD",
+    user_email: "exemplo@teste.com",
+    weight: "3",
+    species: "gato",
+    image: undefined,
+    birthdate: new Date("2021-01-01"),
+    color: "preto",
+    sex: "macho",
+    castraded: true,
+    microchipped: false,
+},
+{
+    id: 3,
+    name: "Lola",
+    breed: "SRD",
+    user_email: "exemplo@teste.com",
+    weight: "5",
+    species: "cão",
+    image: undefined,
+    birthdate: new Date("2017-01-01"),
+    color: "caramelo",
+    sex: "fêmea",
+    castraded: true,
+    microchipped: false,
+},
+{
+    id: 4,
+    name: "Pretinha",
+    breed: "SRD",
+    user_email: "exemplo@teste.com",
+    weight: "11",
+    species: "cão",
+    image: undefined,
+    birthdate: new Date("2018-01-01"),
+    color: "preto",
+    sex: "fêmea",
+    castraded: true,
+    microchipped: false,
+},
+{
+    id: 5,
+    name: "Bob",
+    breed: "Poodle",
+    user_email: "exemplo@teste.com",
+    weight: "5",
+    species: "cão",
+    image: undefined,
+    birthdate: new Date("2024-01-01"),
+    color: "branco",
+    sex: "macho",
+    castraded: false, // não foi informado como castrado
+    microchipped: true,
+},
+];
+
+export const USER: UserDTO = {
+    id: "1",
+    name: "Rodrigo Paiva",
+    email: "rodpaivac@gmail.com",
+    avatar:
+        "https://img.freepik.com/premium-photo/ai-generated-images-build-user-profile-page_1290175-101.jpg",
+    phone: "31989120414",
+    birthdate: new Date("1995-09-20"),
+    gender: "man" as GenderDTO,
+    cpf: '11499367627'
+};
+
+export const VACCINES: VaccineDTO[] = [
+    {
+        id: 1,
+        title: "Antirrábica",
+        date: new Date("2024-03-15"),
+        vetName: "Dra. Ana Silva",
+        clinic: "Clínica Vet Vida",
+        nextDoseDate: new Date("2025-03-15"),
+        lot: "L12345",
+    },
+    {
+        id: 2,
+        title: "V10",
+        date: new Date("2023-05-10"),
+        vetName: "Dr. Carlos Pereira",
+        clinic: "Amigos dos Pets",
+        nextDoseDate: new Date("2025-05-10"),
+        lot: "V10-5678",
+        description: "Vacina gerou inchaço na pele",
+    },
+    {
+        id: 3,
+        title: "Giárdia",
+        date: new Date("2024-08-05"),
+        clinic: "Pet+ Saúde",
+        lot: "G-00921",
+    },
+];

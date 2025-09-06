@@ -3,8 +3,8 @@ export type PetDTO = {
     name: string;
     breed: string;
     user_email: string;
-    weight: number;
-    species: string;
+    weight: string;
+    species: Species;
     image?: string;
     birthdate: Date;
     color: string;
@@ -12,3 +12,20 @@ export type PetDTO = {
     castraded: boolean;
     microchipped: boolean;
 };
+
+export type SexDTO = "macho" | "fêmea";
+
+
+export type Species = "cão"
+    | "gato"
+    | "ave"
+    | "roedor"
+    | "lagomorfo"
+    | "réptil"
+    | "peixe"
+    | "anfíbio"
+    | "invertebrado"
+    | "equino"
+    | "caprino"
+    | "suíno"
+    | "outro";

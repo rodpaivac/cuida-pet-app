@@ -5,7 +5,6 @@ import paw from "@assets/icons/paw.png";
 import petImage from "@assets/images/pet.jpg";
 import { ageCalc } from "@utils/age";
 import { COLOR } from "@theme/colors";
-import { useNavigation } from "@react-navigation/native";
 import { PetDTO } from "@dtos/PetDTO";
 
 type Props = {
@@ -39,7 +38,6 @@ const CPPetCarousel: React.FC<Props> = ({ pets, selectPet }) => {
 };
 
 const CPPetCarouselCard: React.FC<CardProps> = ({ pet, index, selectPet }) => {
-  const navigation = useNavigation();
   const color = colors[index % colors.length];
   const age = ageCalc(pet.birthdate);
   return (

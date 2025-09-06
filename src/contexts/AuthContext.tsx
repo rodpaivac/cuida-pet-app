@@ -1,4 +1,4 @@
-import { UserDTO } from "@dtos/UserDTO";
+import { GenderDTO, UserDTO } from "@dtos/UserDTO";
 import { api } from "@service/api";
 import { createContext, ReactNode, useEffect, useState } from "react";
 import {
@@ -6,6 +6,7 @@ import {
   storageUserGet,
   storageUserRemove,
 } from "@storage/storageUser";
+import { USER } from "src/mock";
 
 export type AuthContextDataProps = {
   user: UserDTO;
@@ -29,14 +30,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
   //async
   function signIn(email: string, password: string) {
-    const userData = {
-      id: "1",
-      name: "Rodrigo Paiva",
-      email,
-      avatar:
-        "https://img.freepik.com/premium-photo/ai-generated-images-build-user-profile-page_1290175-101.jpg",
-      phone: "31989120414",
-    };
+    const userData = USER;
     setUser(userData);
     storageUserSave(userData);
 
