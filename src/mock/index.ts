@@ -1,3 +1,4 @@
+import { NotificationDTO } from "@dtos/NotificationDTO";
 import { PetDTO } from "@dtos/PetDTO";
 import { GenderDTO, UserDTO } from "@dtos/UserDTO";
 import { VaccineDTO } from "@dtos/VaccineDTO";
@@ -138,3 +139,16 @@ export const VACCINES: VaccineDTO[] = [
         nextDoseTaken: false
     },
 ];
+
+export const NOTIFICATIONS: NotificationDTO[] = [
+    {
+        id: '1',
+        title: "Vacina próxima",
+        message: "Urias precisa tomar uma vacina em breve."
+    },
+    {
+        id: '2',
+        title: "Vacina atrasada",
+        message: "Alfredo está com uma vacina atrasada."
+    }
+]

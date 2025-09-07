@@ -5,11 +5,14 @@ import { SpaceV } from "@components/Space";
 import React, { useState } from "react";
 import { Alert, View } from "react-native";
 import { styles } from "./styles";
+import { useNavigation } from "@react-navigation/native";
 
 const ForgotPassword: React.FC = () => {
   const [newPassword, setNewPassword] = useState<string | null>(null);
 
   const [confirmation, setConfirmation] = useState<string | null>(null);
+
+  const navigation = useNavigation();
 
   const hideButton = !newPassword || !confirmation;
   const confirmed = newPassword && confirmation && newPassword === confirmation;
@@ -17,6 +20,8 @@ const ForgotPassword: React.FC = () => {
   const handlePress = () => {
     if (!confirmed) {
       Alert.alert("Atenção", "Senhas não conferem");
+    } else {
+      navigation.navigate("Login");
     }
   };
 

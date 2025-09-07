@@ -16,7 +16,7 @@ export declare global {
             ForgotPassword: undefined;
             ChangePassword: undefined;
             UserDataConfirmation: undefined;
-
+            Notifications: undefined;
         }
     }
 }

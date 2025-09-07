@@ -55,7 +55,7 @@ const Menu: React.FC = () => {
         {ItemButton("adicionar pet", () =>
           navigation.navigate("NewPet", { edit: false })
         )}
-        {ItemButton("notificações", () => {})}
+        {ItemButton("notificações", () => navigation.navigate("Notifications"))}
         {ItemButton("próximas vacinas", () => {})}
 
         {SignOutButton()}

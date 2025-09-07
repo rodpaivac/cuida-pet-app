@@ -47,7 +47,7 @@ const CPHeader: React.FC<Props> = ({
   };
 
   const NotificationButton = () => (
-    <Pressable>
+    <Pressable onPress={() => navigation.navigate("Notifications")}>
       <Image
         style={styles.icon}
         source={dark ? notificationLight : notificationDark}
