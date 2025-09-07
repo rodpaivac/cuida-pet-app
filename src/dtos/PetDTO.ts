@@ -1,5 +1,5 @@
 export type PetDTO = {
-    id: number;
+    id: string;
     name: string;
     breed: string;
     user_email: string;

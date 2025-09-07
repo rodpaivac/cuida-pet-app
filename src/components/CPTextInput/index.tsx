@@ -15,6 +15,7 @@ type Props = {
   showForgotPassword?: boolean;
   customStyle?: ViewStyle;
   mask?: "date";
+  disabled?: boolean;
 };
 
 const CPTextInput: React.FC<Props> = ({
@@ -28,6 +29,7 @@ const CPTextInput: React.FC<Props> = ({
   showForgotPassword = false,
   customStyle,
   mask,
+  disabled = false,
 }) => {
   const handleChangeText = (text: string) => {
     onChangeText(mask === "date" ? dateMask(text) : text);
@@ -35,9 +37,18 @@ const CPTextInput: React.FC<Props> = ({
   return (
     <View>
       {label ? <Text style={styles.label}>{label}</Text> : null}
-      <View style={[styles.container, customStyle]}>
+      <View
+        style={[
+          styles.container,
+          customStyle,
+          { borderColor: disabled ? COLOR.gray : COLOR.sand },
+        ]}
+      >
         <TextInput
-          style={styles.textInput}
+          style={[
+            styles.textInput,
+            { color: disabled ? COLOR.gray : COLOR.sand },
+          ]}
           placeholder={placeholder}
           value={value ?? undefined}
           onChangeText={handleChangeText}
@@ -45,6 +56,7 @@ const CPTextInput: React.FC<Props> = ({
           keyboardType={keyboardType}
           secureTextEntry={isPassword}
           autoCapitalize={autoCapitalize}
+          editable={!disabled}
         />
       </View>
       {showForgotPassword && (

@@ -1,6 +1,6 @@
 import CPContainer from "@components/CPContainer";
 import { ageCalc } from "@utils/age";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert, FlatList, Image, Pressable, Text, View } from "react-native";
 import arrowDown from "@assets/icons/arrow-down.png";
 import arrowUp from "@assets/icons/arrow-up.png";
@@ -14,12 +14,19 @@ import { VaccineDTO } from "@dtos/VaccineDTO";
 import { VACCINES } from "src/mock";
 import { useNavigation } from "@react-navigation/native";
 import { useVaccine } from "@hooks/useVaccine";
+import { dateToString, isBeforeToday, isOneMonthFromToday } from "@utils/date";
+import CPBadge from "@components/CPBadge";
 
 const VaccineHistory: React.FC = () => {
   const { selectedPet } = usePet();
   const age = ageCalc(selectedPet.birthdate);
+  const { fetchPetVaccines } = useVaccine();
 
   const navigation = useNavigation();
+
+  useEffect(() => {
+    fetchPetVaccines(selectedPet.id);
+  }, []);
 
   const Header = () => (
     <View>
@@ -36,7 +43,10 @@ const VaccineHistory: React.FC = () => {
   const AddVaccineButton = () => (
     <Pressable
       style={styles.addVaccineButton}
-      onPress={() => navigation.navigate("NewVaccine", { edit: false })}
+      onPress={
+        () => navigation.navigate("RepeatDose")
+        // navigation.navigate("NewVaccine", { edit: false, repeat: false })
+      }
     >
       <Text style={styles.buttonText}>adicionar vacina</Text>
     </Pressable>
@@ -63,10 +73,12 @@ const VaccineItem: React.FC<VaccineItemProps> = ({ vaccine }) => {
   const navigation = useNavigation();
   const { selectVaccine } = useVaccine();
 
-  const date = vaccine.date.toLocaleDateString("pt-BR", { timeZone: "UTC" });
-  const nextDoseDate = vaccine.nextDoseDate
-    ? vaccine.nextDoseDate.toLocaleDateString("pt-BR", { timeZone: "UTC" })
-    : null;
+  const date = dateToString(vaccine.date);
+  const nextDoseDate = dateToString(vaccine.nextDoseDate);
+
+  const missedVaccine =
+    isBeforeToday(vaccine.nextDoseDate) && !vaccine.nextDoseTaken;
+  const vaccineIsNear = isOneMonthFromToday(vaccine.nextDoseDate);
 
   type Action = "edit" | "remove";
 
@@ -74,7 +86,7 @@ const VaccineItem: React.FC<VaccineItemProps> = ({ vaccine }) => {
     const handlePress = () => {
       if (action === "edit") {
         selectVaccine(vaccine);
-        navigation.navigate("NewVaccine", { edit: true });
+        navigation.navigate("NewVaccine", { edit: true, repeat: false });
       } else {
         Alert.alert("Atenção", "Deseja excluir esta vacina?", [
           { text: "Sim", style: "destructive", onPress: () => {} },
@@ -82,6 +94,7 @@ const VaccineItem: React.FC<VaccineItemProps> = ({ vaccine }) => {
         ]);
       }
     };
+
     return (
       <Pressable
         onPress={handlePress}
@@ -101,15 +114,82 @@ const VaccineItem: React.FC<VaccineItemProps> = ({ vaccine }) => {
       </Pressable>
     );
   };
+
+  const RepeatDoseButton = () => {
+    const handlePress = () => {
+      selectVaccine(vaccine);
+      navigation.navigate("NewVaccine", { edit: false, repeat: true });
+    };
+
+    return (
+      <Pressable style={styles.repeatButton} onPress={handlePress}>
+        <Text style={[styles.actionButtonText, { color: COLOR.sand }]}>
+          repetir dose
+        </Text>
+      </Pressable>
+    );
+  };
+
   return (
-    <View style={styles.vaccineItemContainer}>
+    <View
+      style={[
+        styles.vaccineItemContainer,
+        {
+          borderWidth: missedVaccine || vaccineIsNear ? 2 : 1,
+          borderColor: missedVaccine
+            ? COLOR.red
+            : vaccineIsNear
+            ? COLOR.yellow
+            : COLOR.secondary,
+        },
+      ]}
+    >
       <Pressable
         style={styles.vaccineItemHeader}
         onPress={() => setExpanded(!expanded)}
       >
         <View>
-          <Text style={styles.vaccineTitle}>{vaccine.title}</Text>
-          <Text style={styles.vaccineDate}>{date}</Text>
+          <View style={styles.row}>
+            <Text
+              style={[
+                styles.vaccineTitle,
+                {
+                  color: missedVaccine
+                    ? COLOR.red
+                    : vaccineIsNear
+                    ? COLOR.yellow
+                    : COLOR.darkBrown,
+                },
+              ]}
+              numberOfLines={1}
+              ellipsizeMode="tail"
+            >
+              {vaccine.title}
+            </Text>
+
+            {missedVaccine ? (
+              <CPBadge text={"atrasada"} />
+            ) : (
+              vaccineIsNear && (
+                <CPBadge text={"próxima"} backgroundColor={COLOR.yellow} />
+              )
+            )}
+          </View>
+
+          <Text
+            style={[
+              styles.vaccineDate,
+              {
+                color: missedVaccine
+                  ? COLOR.red
+                  : vaccineIsNear
+                  ? COLOR.yellow
+                  : COLOR.darkBrown,
+              },
+            ]}
+          >
+            {date}
+          </Text>
         </View>
         <View style={styles.chevronIconContainer}>
           <Image
@@ -150,6 +230,8 @@ const VaccineItem: React.FC<VaccineItemProps> = ({ vaccine }) => {
               <Text style={styles.vaccineInfoValue}>{vaccine.lot}</Text>
             </View>
           )}
+
+          {!vaccine.nextDoseTaken && RepeatDoseButton()}
 
           <View style={styles.infoRow}>
             {ActionButton("edit")}

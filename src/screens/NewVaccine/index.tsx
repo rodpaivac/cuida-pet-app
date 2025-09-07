@@ -16,12 +16,12 @@ type Route = RouteProp<ReactNavigation.RootParamList, "NewVaccine">;
 const NewVaccine: React.FC = () => {
   const route = useRoute<Route>();
   const isEdit = route.params.edit;
+  const isRepeat = route.params.repeat;
+
   const { selectedVaccine } = useVaccine();
 
-  console.log("selectedVaccine", selectedVaccine);
-
   const [vaccineName, setVaccineName] = useState<string | null>(
-    isEdit ? selectedVaccine.title : null
+    isEdit || isRepeat ? selectedVaccine.title : null
   );
 
   const [date, setDate] = useState<string | null>(
@@ -80,6 +80,7 @@ const NewVaccine: React.FC = () => {
         placeholder="Nome da vacina"
         onChangeText={(text) => setVaccineName(text)}
         value={vaccineName}
+        disabled={isRepeat}
       />
       <SpaceV amount={10} />
 
@@ -137,7 +138,13 @@ const NewVaccine: React.FC = () => {
   );
 
   return (
-    <CPContainer dark goBack title={isEdit ? "editar vacina" : "nova vacina"}>
+    <CPContainer
+      dark
+      goBack
+      title={
+        isEdit ? "editar vacina" : isRepeat ? "repetir dose" : "nova vacina"
+      }
+    >
       {Body()}
       {Footer()}
     </CPContainer>

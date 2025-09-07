@@ -42,7 +42,6 @@ const Home: React.FC = () => {
     try {
       const response = await getPets("user");
       setPets(response);
-      console.log("response", response);
     } catch (error) {
       const isAppError = error instanceof AppError;
       const title = isAppError ? error.message : "Tente novamente mais tarde.";

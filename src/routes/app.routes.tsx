@@ -6,6 +6,7 @@ import EditUser from "@screens/EditUser";
 import PetDetails from "@screens/PetDetails";
 import VaccineHistory from "@screens/VaccineHistory";
 import NewVaccine from "@screens/NewVaccine";
+import RepeatDose from "@screens/RepeatDose";
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
@@ -25,6 +26,8 @@ export function AppRoutes() {
       <Screen name="EditUser" component={EditUser} />
 
       <Screen name="NewVaccine" component={NewVaccine} />
+
+      <Screen name="RepeatDose" component={RepeatDose} />
     </Navigator>
   );
 }

@@ -12,7 +12,7 @@ export declare global {
             EditUser: undefined;
             NewUser: undefined;
             NewVaccine: NewVaccineRouteProp;
-
+            RepeatDose: undefined;
         }
     }
 }
@@ -27,6 +27,7 @@ export type NewPetRouteProp = {
 
 export type NewVaccineRouteProp = {
     edit: boolean;
+    repeat: boolean;
 }
 
 

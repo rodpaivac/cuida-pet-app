@@ -6,7 +6,6 @@ const SCREEN_HEIGHT = screenHeight;
 
 export const styles = StyleSheet.create({
     container: {
-        borderColor: COLOR.sand,
         borderWidth: 1,
         paddingVertical: verticalScale(3),
         paddingHorizontal: scale(15),
@@ -15,7 +14,6 @@ export const styles = StyleSheet.create({
     textInput: {
         height: verticalScale(45),
         fontFamily: FONT.PoppinsLight,
-        color: COLOR.sand,
         fontSize: 18,
         width: scale(300)
     },

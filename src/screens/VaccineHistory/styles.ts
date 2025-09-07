@@ -41,8 +41,8 @@ export const styles = StyleSheet.create({
     },
     vaccineTitle: {
         fontFamily: FONT.PoppinsBold,
-        color: COLOR.darkBrown,
-        fontSize: 14
+        fontSize: 14,
+        marginRight: scale(8)
     },
     vaccineDate: {
         fontFamily: FONT.PoppinsRegular,
@@ -88,5 +88,18 @@ export const styles = StyleSheet.create({
     },
     collapsedContainer: {
         marginTop: scale(8)
-    }
+    },
+    row: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: scale(245)
+    },
+    repeatButton: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: scale(6),
+        borderRadius: 7.5,
+        marginTop: verticalScale(8),
+        backgroundColor: COLOR.green3
+    },
 });

@@ -13,12 +13,10 @@ export const styles = StyleSheet.create({
     },
     text: {
         fontFamily: FONT.PoppinsRegular,
-        color: COLOR.sand,
         fontSize: 18
     },
     radioContainer: {
         borderWidth: 1,
-        borderColor: COLOR.sand,
         width: scale(35),
         height: scale(35),
         borderRadius: 100,
@@ -26,7 +24,6 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     radioInnerCircle: {
-        backgroundColor: COLOR.green1,
         width: scale(15),
         height: scale(15),
         borderRadius: 90

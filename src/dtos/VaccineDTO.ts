@@ -1,5 +1,5 @@
 export type VaccineDTO = {
-    id: number,
+    id: string,
     title: string,
     date: Date,
     vetName?: string,
@@ -7,4 +7,5 @@ export type VaccineDTO = {
     nextDoseDate?: Date,
     lot?: string,
     description?: string;
+    nextDoseTaken?: boolean;
 }

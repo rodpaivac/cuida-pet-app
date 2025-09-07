@@ -13,6 +13,7 @@ type Props = {
   backgroundColor?: string;
   textColor?: string;
   width?: number;
+  disabled?: boolean;
 };
 
 const CPButton: React.FC<Props> = ({
@@ -22,13 +23,16 @@ const CPButton: React.FC<Props> = ({
   backgroundColor,
   textColor,
   width,
+  disabled = false,
 }) => {
   return (
     <Pressable
       style={[
         styles.container,
         {
-          backgroundColor: backgroundColor ?? COLOR.sand,
+          backgroundColor: disabled
+            ? COLOR.gray
+            : backgroundColor ?? COLOR.sand,
           width: width ?? scale(220),
         },
       ]}
@@ -41,7 +45,14 @@ const CPButton: React.FC<Props> = ({
           </View>
         )}
         <View style={styles.textContainer}>
-          <Text style={[styles.text, { color: textColor ?? COLOR.darkBrown }]}>
+          <Text
+            style={[
+              styles.text,
+              {
+                color: disabled ? COLOR.gray : textColor ?? COLOR.darkBrown,
+              },
+            ]}
+          >
             {title}
           </Text>
         </View>
