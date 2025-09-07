@@ -1,5 +1,12 @@
 import React from "react";
-import { KeyboardType, Text, TextInput, View, ViewStyle } from "react-native";
+import {
+  KeyboardType,
+  Pressable,
+  Text,
+  TextInput,
+  View,
+  ViewStyle,
+} from "react-native";
 import { styles } from "./styles";
 import { COLOR } from "@theme/colors";
 import { dateMask } from "@utils/date";
@@ -16,6 +23,8 @@ type Props = {
   customStyle?: ViewStyle;
   mask?: "date";
   disabled?: boolean;
+  onForgotPasswordPress?: () => void;
+  dark?: boolean;
 };
 
 const CPTextInput: React.FC<Props> = ({
@@ -30,29 +39,49 @@ const CPTextInput: React.FC<Props> = ({
   customStyle,
   mask,
   disabled = false,
+  onForgotPasswordPress,
+  dark = false,
 }) => {
   const handleChangeText = (text: string) => {
     onChangeText(mask === "date" ? dateMask(text) : text);
   };
   return (
     <View>
-      {label ? <Text style={styles.label}>{label}</Text> : null}
+      {label ? (
+        <Text
+          style={[styles.label, { color: dark ? COLOR.darkBrown : COLOR.sand }]}
+        >
+          {label}
+        </Text>
+      ) : null}
       <View
         style={[
           styles.container,
           customStyle,
-          { borderColor: disabled ? COLOR.gray : COLOR.sand },
+          {
+            borderColor: disabled
+              ? COLOR.gray
+              : dark
+              ? COLOR.darkBrown
+              : COLOR.sand,
+          },
         ]}
       >
         <TextInput
           style={[
             styles.textInput,
-            { color: disabled ? COLOR.gray : COLOR.sand },
+            {
+              color: disabled
+                ? COLOR.gray
+                : dark
+                ? COLOR.darkBrown
+                : COLOR.sand,
+            },
           ]}
           placeholder={placeholder}
           value={value ?? undefined}
           onChangeText={handleChangeText}
-          placeholderTextColor={COLOR.gray}
+          placeholderTextColor={dark ? COLOR.brown : COLOR.gray}
           keyboardType={keyboardType}
           secureTextEntry={isPassword}
           autoCapitalize={autoCapitalize}
@@ -60,9 +89,12 @@ const CPTextInput: React.FC<Props> = ({
         />
       </View>
       {showForgotPassword && (
-        <View style={styles.forgotPasswordContainer}>
+        <Pressable
+          style={styles.forgotPasswordContainer}
+          onPress={onForgotPasswordPress}
+        >
           <Text style={styles.forgotPassword}>Esqueci minha senha</Text>
-        </View>
+        </Pressable>
       )}
     </View>
   );

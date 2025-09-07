@@ -48,7 +48,9 @@ const Menu: React.FC = () => {
       {Header()}
       <View style={styles.itemsContainer}>
         {ItemButton("editar dados", () => navigation.navigate("EditUser"))}
-        {ItemButton("alterar senha", () => {})}
+        {ItemButton("alterar senha", () =>
+          navigation.navigate("ChangePassword")
+        )}
         {ItemButton("meus pets", () => navigation.navigate("Home"))}
         {ItemButton("adicionar pet", () =>
           navigation.navigate("NewPet", { edit: false })

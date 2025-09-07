@@ -13,6 +13,10 @@ export declare global {
             NewUser: undefined;
             NewVaccine: NewVaccineRouteProp;
             RepeatDose: undefined;
+            ForgotPassword: undefined;
+            ChangePassword: undefined;
+            UserDataConfirmation: undefined;
+
         }
     }
 }

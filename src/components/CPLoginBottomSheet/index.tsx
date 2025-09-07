@@ -39,6 +39,9 @@ const CPLoginBottomSheet: React.FC<Props> = ({
         placeholder="senha"
         isPassword
         showForgotPassword
+        onForgotPasswordPress={() =>
+          navigation.navigate("UserDataConfirmation")
+        }
         customStyle={{ marginTop: 15 }}
         value={password}
         onChangeText={setPassword}
