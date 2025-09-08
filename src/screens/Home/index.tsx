@@ -10,21 +10,24 @@ import { getPets } from "@service/index";
 import { PetDTO } from "@dtos/PetDTO";
 import { useNavigation } from "@react-navigation/native";
 import { usePet } from "@hooks/usePet";
+import CPContextualLoading from "@components/CPContextualLoading";
 
 const Home: React.FC = () => {
   const [pets, setPets] = useState<PetDTO[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [finishedContextualLoading, setFinishedContextualLoading] =
+    useState<boolean>(false);
   const navigation = useNavigation();
   const { selectPet } = usePet();
 
-  const renderHeader = () => (
+  const Header = () => (
     <View style={styles.header}>
       <Text style={styles.title}>meus pets</Text>
       <Text style={styles.subtitle}>selecione seu pet</Text>
     </View>
   );
 
-  const renderFooter = () => (
+  const Footer = () => (
     <View style={styles.footer}>
       <CPButton
         title="adicionar pet"
@@ -33,7 +36,7 @@ const Home: React.FC = () => {
     </View>
   );
 
-  const renderCarousel = () => (
+  const Carousel = () => (
     <CPPetCarousel pets={pets} selectPet={handleSelectPet} />
   );
 
@@ -52,6 +55,17 @@ const Home: React.FC = () => {
     }
   };
 
+  const ContextualLoading = () => (
+    <CPContextualLoading
+      textLines={[
+        "Analisando a saúde dos seus pets",
+        "Atualizando o histórico de vacinas",
+        "Verificando se há vacinas atrasadas",
+      ]}
+      onFinish={() => setFinishedContextualLoading(true)}
+    />
+  );
+
   const handleSelectPet = (pet: PetDTO, color: string) => {
     selectPet(pet);
     navigation.navigate("PetDetails", { color: color });
@@ -62,11 +76,17 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <CPContainer isLoading={isLoading} header ignorePadding>
-      {renderHeader()}
-      {renderCarousel()}
-      {renderFooter()}
-    </CPContainer>
+    <>
+      {!finishedContextualLoading ? (
+        ContextualLoading()
+      ) : (
+        <CPContainer isLoading={isLoading} header ignorePadding>
+          {Header()}
+          {Carousel()}
+          {Footer()}
+        </CPContainer>
+      )}
+    </>
   );
 };
 

@@ -9,6 +9,7 @@ import cachorroCaramelo from "@assets/images/cachorro_caramelo.png";
 import cachorroPreto from "@assets/images/cachorro_preto.png";
 import { screenHeight, verticalScale } from "@utils/dimensions";
 import { useAuth } from "@hooks/useAuth";
+import { useNavigation } from "@react-navigation/native";
 
 const SCREEN_HEIGHT = screenHeight;
 const INITIAL_HEIGHT = verticalScale(222);
@@ -16,6 +17,7 @@ const FINAL_TOP = SCREEN_HEIGHT * 0.2;
 
 const Login: React.FC = () => {
   const { signIn } = useAuth();
+  const navigation = useNavigation();
 
   const [isExpanded, setIsExpanded] = useState(false);
 

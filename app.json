@@ -4,6 +4,14 @@
     "slug": "cuida-pet-app",
     "orientation": "portrait",
     "version": "1.0.0",
-    "plugins": ["expo-font"]
+    "plugins": ["expo-font"],
+    "splash": {
+      "image": "./assets/logo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FFD8C4"
+    },
+    "android": {
+      "package": "com.cuidapet.app"
+    }
   }
 }

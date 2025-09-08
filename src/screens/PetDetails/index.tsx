@@ -19,7 +19,7 @@ type InfoItemProps = {
   blRadius: number;
   brRadius: number;
   label: string;
-  value?: string;
+  value?: string | null;
   color: string;
 };
 

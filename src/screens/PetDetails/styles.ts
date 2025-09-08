@@ -42,6 +42,8 @@ export const styles = StyleSheet.create({
     },
     infoContainer: {
         marginTop: verticalScale(30),
+        marginBottom: verticalScale(150),
+
     },
     infoColumn: {
 

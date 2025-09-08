@@ -38,7 +38,7 @@ const CPImagePicker: React.FC<Props> = ({ onSelect, image, type }) => {
     <Image style={styles.image} resizeMode="contain" src={image!} />
   );
   return (
-    <Pressable onPress={() => uploadImage()}>
+    <Pressable style={styles.container} onPress={() => uploadImage()}>
       {image ? CustomImage() : DefaultImage()}
       <Text style={styles.loadImage}>alterar imagem</Text>
     </Pressable>
