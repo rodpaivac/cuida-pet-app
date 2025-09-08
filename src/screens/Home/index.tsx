@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-
 import CPContainer from "@components/CPContainer";
 import { Text, View } from "react-native";
 import { styles } from "./styles";

@@ -9,3 +9,10 @@ export type VaccineDTO = {
     description?: string;
     nextDoseTaken?: boolean;
 }
+
+export type PetNextVaccineDTO = {
+    //month/year
+    title: string;
+    //day + pet name + vaccine name
+    data: string[]
+}

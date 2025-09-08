@@ -140,7 +140,7 @@ const VaccineItem: React.FC<VaccineItemProps> = ({ vaccine }) => {
             ? COLOR.red
             : vaccineIsNear
             ? COLOR.yellow
-            : COLOR.secondary,
+            : COLOR.brown,
         },
       ]}
     >

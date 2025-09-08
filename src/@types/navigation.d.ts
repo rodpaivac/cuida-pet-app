@@ -17,6 +17,7 @@ export declare global {
             ChangePassword: undefined;
             UserDataConfirmation: undefined;
             Notifications: undefined;
+            NextVaccines: undefined;
         }
     }
 }

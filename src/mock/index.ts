@@ -1,7 +1,7 @@
 import { NotificationDTO } from "@dtos/NotificationDTO";
 import { PetDTO } from "@dtos/PetDTO";
 import { GenderDTO, UserDTO } from "@dtos/UserDTO";
-import { VaccineDTO } from "@dtos/VaccineDTO";
+import { PetNextVaccineDTO, VaccineDTO } from "@dtos/VaccineDTO";
 
 export const PETS: PetDTO[] = [{
     id: '1',
@@ -150,5 +150,45 @@ export const NOTIFICATIONS: NotificationDTO[] = [
         id: '2',
         title: "Vacina atrasada",
         message: "Alfredo está com uma vacina atrasada."
+    }
+]
+
+export const NEXT_VACCINES: PetNextVaccineDTO[] = [
+    {
+        title: 'Novembro/ 2025',
+        data: ['10 - Urias: Antirrábica', '30 - Alfredo: V10']
+    },
+    {
+        title: 'Janeiro/ 2026',
+        data: ['07 - Bob: Antirrábica']
+    },
+    {
+        title: 'Março/ 2026',
+        data: ['16 - Pretinha: Leishmaniose']
+    },
+    {
+        title: 'Agosto/ 2026',
+        data: ['12 - Lola: Antirrábica']
+    },
+    {
+        title: 'Setembro/ 2026',
+        data: ['07 - Alfredo: Antirrábica']
+    },
+
+    {
+        title: 'Outubro/ 2026',
+        data: ['07 - Alfredo: Antirrábica']
+    },
+    {
+        title: 'Novembro/ 2026',
+        data: ['07 - Alfredo: Antirrábica']
+    },
+    {
+        title: 'Dezembro/ 2026',
+        data: ['07 - Alfredo: Antirrábica']
+    },
+    {
+        title: 'Janeiro/ 2027',
+        data: ['07 - Alfredo: Antirrábica']
     }
 ]

@@ -9,6 +9,7 @@ import NewVaccine from "@screens/NewVaccine";
 import RepeatDose from "@screens/RepeatDose";
 import ChangePassword from "@screens/ChangePassword";
 import Notifications from "@screens/Notifications";
+import NextVaccines from "@screens/NextVaccines";
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
@@ -21,7 +22,11 @@ export function AppRoutes() {
 
       <Screen name="VaccineHistory" component={VaccineHistory} />
 
-      <Screen name="Menu" component={Menu} />
+      <Screen
+        name="Menu"
+        component={Menu}
+        options={{ animation: "slide_from_left" }}
+      />
 
       <Screen name="NewPet" component={NewPet} />
 
@@ -34,6 +39,8 @@ export function AppRoutes() {
       <Screen name="ChangePassword" component={ChangePassword} />
 
       <Screen name="Notifications" component={Notifications} />
+
+      <Screen name="NextVaccines" component={NextVaccines} />
     </Navigator>
   );
 }

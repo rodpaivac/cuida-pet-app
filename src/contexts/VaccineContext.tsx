@@ -1,13 +1,14 @@
-import { VaccineDTO } from "@dtos/VaccineDTO";
-import { usePet } from "@hooks/usePet";
-import { createContext, ReactNode, useEffect, useState } from "react";
-import { VACCINES } from "src/mock";
+import { PetNextVaccineDTO, VaccineDTO } from "@dtos/VaccineDTO";
+import { createContext, ReactNode, useState } from "react";
+import { NEXT_VACCINES, VACCINES } from "src/mock";
 
 export type VaccineContextDataProps = {
   selectedVaccine: VaccineDTO;
   selectVaccine: (vaccine: VaccineDTO) => void;
   selectedPetVaccines: VaccineDTO[];
   fetchPetVaccines: (petId: string) => void;
+  petsNextVaccines: PetNextVaccineDTO[];
+  fetchPetsNextVaccines: () => void;
 };
 
 type VaccineContextProviderProps = {
@@ -28,14 +29,22 @@ export function VaccineContextProvider({
     []
   );
 
+  const [petsNextVaccines, setPetsNextVaccines] = useState<PetNextVaccineDTO[]>(
+    []
+  );
+
   function selectVaccine(vaccine: VaccineDTO) {
     setSelectedVaccine(vaccine);
   }
 
   async function fetchPetVaccines(petId: string) {
     //buscar na api
-    console.log("selectedPet id", petId);
     setSelectedPetVaccines(VACCINES);
+  }
+
+  async function fetchPetsNextVaccines() {
+    //buscar na api
+    setPetsNextVaccines(NEXT_VACCINES);
   }
 
   return (
@@ -45,6 +54,8 @@ export function VaccineContextProvider({
         selectVaccine,
         selectedPetVaccines,
         fetchPetVaccines,
+        petsNextVaccines,
+        fetchPetsNextVaccines,
       }}
     >
       {children}
