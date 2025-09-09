@@ -47,6 +47,7 @@ const UserDataConfirmation: React.FC = () => {
         onChangeText={(text) => setCpf(text)}
         dark
         keyboardType="numeric"
+        mask="cpf"
       />
       <SpaceV amount={15} />
       <CPTextInput
@@ -56,6 +57,7 @@ const UserDataConfirmation: React.FC = () => {
         onChangeText={(text) => setPhone(text)}
         dark
         keyboardType="numeric"
+        mask="phone"
       />
       <SpaceV amount={15} />
       <CPTextInput

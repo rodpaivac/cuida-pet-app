@@ -24,24 +24,6 @@ export const stringToDate = (text?: string) => {
 
 }
 
-export const dateMask = (text: string) => {
-
-    let cleaned = text.replace(/\D/g, "");
-
-    // aplica dd/mm/aaaa
-    if (cleaned.length > 2) {
-        cleaned = cleaned.slice(0, 2) + "/" + cleaned.slice(2);
-    }
-    if (cleaned.length > 5) {
-        cleaned = cleaned.slice(0, 5) + "/" + cleaned.slice(5);
-    }
-    if (cleaned.length > 10) {
-        cleaned = cleaned.slice(0, 10);
-    }
-
-    return cleaned
-}
-
 
 export const isBeforeToday = (date?: Date) => {
     if (!date) {

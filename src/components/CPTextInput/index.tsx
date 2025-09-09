@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { styles } from "./styles";
 import { COLOR } from "@theme/colors";
-import { dateMask } from "@utils/date";
+import { cpfMask, dateMask, phoneMask } from "@utils/masks";
 
 type Props = {
   label?: string;
@@ -21,7 +21,7 @@ type Props = {
   autoCapitalize?: "none" | "sentences" | "words" | "characters" | undefined;
   showForgotPassword?: boolean;
   customStyle?: ViewStyle;
-  mask?: "date";
+  mask?: "date" | "cpf" | "phone";
   disabled?: boolean;
   onForgotPasswordPress?: () => void;
   dark?: boolean;
@@ -43,7 +43,15 @@ const CPTextInput: React.FC<Props> = ({
   dark = false,
 }) => {
   const handleChangeText = (text: string) => {
-    onChangeText(mask === "date" ? dateMask(text) : text);
+    onChangeText(
+      mask === "date"
+        ? dateMask(text)
+        : mask === "cpf"
+        ? cpfMask(text)
+        : mask === "phone"
+        ? phoneMask(text)
+        : text
+    );
   };
   return (
     <View>

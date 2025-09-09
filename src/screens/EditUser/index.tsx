@@ -84,6 +84,8 @@ const EditUser: React.FC = () => {
         placeholder="cpf do usuário"
         value={cpf}
         onChangeText={(text) => setCpf(text)}
+        keyboardType="numeric"
+        mask="cpf"
       />
       <SpaceV amount={15} />
       <CPTextInput
@@ -92,6 +94,7 @@ const EditUser: React.FC = () => {
         keyboardType="numeric"
         value={phone}
         onChangeText={(text) => setPhone(text)}
+        mask="phone"
       />
       <SpaceV amount={15} />
       <CPTextInput

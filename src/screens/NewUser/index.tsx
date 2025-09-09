@@ -86,6 +86,8 @@ const NewUser: React.FC = () => {
         placeholder="cpf do usuário"
         value={cpf}
         onChangeText={(text) => setCpf(text)}
+        mask="cpf"
+        keyboardType="numeric"
       />
       <SpaceV amount={15} />
       <CPTextInput
@@ -94,6 +96,7 @@ const NewUser: React.FC = () => {
         keyboardType="numeric"
         value={phone}
         onChangeText={(text) => setPhone(text)}
+        mask="phone"
       />
       <SpaceV amount={15} />
       <CPTextInput
@@ -133,7 +136,7 @@ const NewUser: React.FC = () => {
   );
 
   return (
-    <CPContainer dark goBack title={"editar conta"}>
+    <CPContainer dark goBack title={"criar conta"}>
       {Header()}
       {Body()}
       {Footer()}
