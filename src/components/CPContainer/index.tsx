@@ -1,5 +1,5 @@
 import React, { JSX } from "react";
-import { ScrollView, View } from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { styles } from "./styles";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CPLoading from "@components/CPLoading";
@@ -29,10 +29,12 @@ const CPContainer: React.FC<Props> = ({
   dark = false,
 }) => {
   return (
-    <>
-      <SafeAreaView
-        style={{ backgroundColor: dark ? COLOR.secondary : COLOR.primary }}
-      />
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: dark ? COLOR.secondary : COLOR.primary,
+      }}
+    >
       {isLoading ? (
         <CPLoading isLoading />
       ) : (
@@ -53,22 +55,29 @@ const CPContainer: React.FC<Props> = ({
               {children}
             </View>
           ) : (
-            <ScrollView
-              style={[
-                styles.container,
-                {
-                  backgroundColor: dark ? COLOR.secondary : COLOR.primary,
-                  padding: ignorePadding ? 0 : scale(15),
-                },
-              ]}
-              showsVerticalScrollIndicator={false}
+            <KeyboardAvoidingView
+              style={{ flex: 1 }}
+              behavior={Platform.OS === "ios" ? "padding" : undefined}
             >
-              {children}
-            </ScrollView>
+              <ScrollView
+                contentContainerStyle={{ flexGrow: 1 }}
+                style={[
+                  styles.container,
+                  {
+                    backgroundColor: dark ? COLOR.secondary : COLOR.primary,
+                    padding: ignorePadding ? 0 : scale(15),
+                  },
+                ]}
+                showsVerticalScrollIndicator={false}
+                keyboardShouldPersistTaps="handled"
+              >
+                {children}
+              </ScrollView>
+            </KeyboardAvoidingView>
           )}
         </>
       )}
-    </>
+    </SafeAreaView>
   );
 };
 
