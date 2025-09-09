@@ -4,7 +4,7 @@ import { styles } from "./styles";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CPLoading from "@components/CPLoading";
 import CPHeader from "@components/CPHeader";
-import { scale } from "@utils/dimensions";
+import { scale, verticalScale } from "@utils/dimensions";
 import { COLOR } from "@theme/colors";
 
 type Props = {
@@ -33,6 +33,7 @@ const CPContainer: React.FC<Props> = ({
       style={{
         flex: 1,
         backgroundColor: dark ? COLOR.secondary : COLOR.primary,
+        paddingTop: verticalScale(15),
       }}
     >
       {isLoading ? (
