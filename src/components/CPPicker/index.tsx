@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { Pressable, Text, View, ViewStyle } from "react-native";
+import { Platform, Pressable, Text, View, ViewStyle } from "react-native";
 import { styles } from "./styles";
 import { Picker } from "@react-native-picker/picker";
 import Modal from "react-native-modal";
+import { COLOR } from "@theme/colors";
+import { scale, verticalScale } from "@utils/dimensions";
 
 type Props = {
   label?: string;
@@ -53,6 +55,14 @@ const CPPicker: React.FC<Props> = ({
     >
       <View style={styles.modalContainer}>
         <Picker
+          style={{
+            color: COLOR.sand,
+            padding: Platform.OS === "android" ? verticalScale(25) : undefined,
+            width: Platform.OS === "android" ? scale(200) : undefined,
+            alignSelf: Platform.OS === "android" ? "center" : undefined,
+          }}
+          dropdownIconColor={COLOR.sand}
+          dropdownIconRippleColor={COLOR.green1}
           selectedValue={selectedValue}
           onValueChange={(itemValue, itemIndex) => {
             setSelectedValue(itemValue);
