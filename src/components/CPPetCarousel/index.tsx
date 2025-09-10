@@ -50,7 +50,9 @@ const CPPetCarouselCard: React.FC<CardProps> = ({ pet, index, selectPet }) => {
       </View>
       <View style={styles.petInfo}>
         <Image style={styles.petImage} source={petImage} />
-        <Text style={styles.petName}>{pet.name}</Text>
+        <Text style={styles.petName} numberOfLines={2}>
+          {pet.name}
+        </Text>
         <Text style={styles.petAge}>
           {age} {age === 1 ? "ano" : "anos"}
         </Text>

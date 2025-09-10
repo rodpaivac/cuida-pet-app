@@ -1,15 +1,15 @@
 export type PetDTO = {
-    id: string;
+    id?: string;
     name: string;
     breed: string;
-    user_email: string;
+    user_cpf: string;
     weight: string;
-    species: Species;
+    species: Species | string;
     image?: string;
     birthdate: Date;
     color: string;
-    sex: string;
-    castraded: boolean;
+    sex: SexDTO;
+    castrated: boolean;
     microchipped: boolean;
 };
 

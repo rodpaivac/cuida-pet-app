@@ -23,7 +23,8 @@ export const styles = StyleSheet.create({
     name: {
         fontFamily: FONT.PoppinsBold,
         color: COLOR.darkBrown,
-        fontSize: 35
+        fontSize: 35,
+        width: scale(170),
     },
     age: {
         fontFamily: FONT.PoppinsExtraLight,
@@ -86,6 +87,7 @@ export const styles = StyleSheet.create({
         fontFamily: FONT.PoppinsRegular,
         color: COLOR.darkBrown,
         fontSize: 20,
+        textAlign: 'center'
     },
     vaccineIcon: {
         height: scale(50),

@@ -1,8 +1,11 @@
 import { AppError } from "@utils/AppError";
 import axios from "axios";
 
+// rodar ipconfig no terminal para obter o ip
+
 const api = axios.create({
-    baseURL: 'https://api-pet-vaccine.onrender.com/'
+    // baseURL: 'https://api-pet-vaccine.onrender.com/' //prod
+    baseURL: 'http://192.168.18.10:3000/' //dev
 });
 
 

@@ -12,25 +12,25 @@ type Props = {
   placeholder?: string;
   items: CPPickerItemType[];
   onSelect: (itemValue: string, itemIndex: number) => void;
-  selectedItem?: string | null;
+  selectedItemValue?: string | null;
 };
 
-export type CPPickerItemType = { label: string; value: string };
+export type CPPickerItemType = { label: string; value: string | null };
 
 const CPPicker: React.FC<Props> = ({
   label,
   customStyle,
   placeholder = "",
   onSelect,
-  selectedItem,
+  selectedItemValue,
   items,
 }) => {
-  const index = selectedItem
-    ? items.findIndex((item) => item.value === selectedItem)
+  const index = selectedItemValue
+    ? items.findIndex((item) => item.value === selectedItemValue)
     : null;
 
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(selectedItem);
+  const [selectedValue, setSelectedValue] = useState(selectedItemValue);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(index);
 
   const openModal = () => {
@@ -63,7 +63,7 @@ const CPPicker: React.FC<Props> = ({
           }}
           dropdownIconColor={COLOR.sand}
           dropdownIconRippleColor={COLOR.green1}
-          selectedValue={selectedValue}
+          selectedValue={selectedValue ?? items[0].value}
           onValueChange={(itemValue, itemIndex) => {
             setSelectedValue(itemValue);
             setSelectedIndex(itemIndex);
@@ -72,7 +72,7 @@ const CPPicker: React.FC<Props> = ({
           {items.map((item) => (
             <Picker.Item
               label={item.label}
-              value={item.label}
+              value={item.value}
               key={item.value}
             />
           ))}
@@ -87,7 +87,7 @@ const CPPicker: React.FC<Props> = ({
       <Pressable onPress={() => openModal()}>
         {label ? <Text style={styles.label}>{label}</Text> : null}
         <View style={[styles.container, customStyle]}>
-          {selectedIndex != null ? (
+          {selectedIndex && selectedItemValue ? (
             <Text style={styles.value}>{items[selectedIndex].label}</Text>
           ) : (
             <Text style={styles.placeholder}>{placeholder}</Text>

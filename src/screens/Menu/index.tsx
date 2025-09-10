@@ -62,7 +62,6 @@ const Menu: React.FC = () => {
 
         {SignOutButton()}
       </View>
-      <View></View>
     </CPContainer>
   );
 };

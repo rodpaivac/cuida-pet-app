@@ -104,7 +104,7 @@ const PetDetails: React.FC = () => {
               blRadius={30}
               brRadius={0}
               label="castrado"
-              value={selectedPet.castraded ? "sim" : "não"}
+              value={selectedPet.castrated ? "sim" : "não"}
             />
           </View>
           <View style={styles.infoColumn}>
@@ -172,7 +172,9 @@ const InfoItem: React.FC<InfoItemProps> = ({
       },
     ]}
   >
-    <Text style={styles.infoItemValue}>{value ?? "-"}</Text>
+    <Text style={styles.infoItemValue} numberOfLines={2}>
+      {value ?? "-"}
+    </Text>
     <Text style={styles.infoItemLabel}>{label}</Text>
   </View>
 );

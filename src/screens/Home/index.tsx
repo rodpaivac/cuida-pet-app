@@ -4,20 +4,29 @@ import { Text, View } from "react-native";
 import { styles } from "./styles";
 import CPButton from "@components/CPButton";
 import CPPetCarousel from "@components/CPPetCarousel";
-import { AppError } from "@utils/AppError";
-import { getPets } from "@service/index";
 import { PetDTO } from "@dtos/PetDTO";
 import { useNavigation } from "@react-navigation/native";
 import { usePet } from "@hooks/usePet";
 import CPContextualLoading from "@components/CPContextualLoading";
 
 const Home: React.FC = () => {
-  const [pets, setPets] = useState<PetDTO[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [finishedContextualLoading, setFinishedContextualLoading] =
     useState<boolean>(false);
   const navigation = useNavigation();
-  const { selectPet } = usePet();
+  const { selectPet, pets, fetchPets } = usePet();
+
+  // show contextual loading when previous screen is not Menu or NewPet
+  const navigationState = navigation.getState();
+  const routes = navigationState?.routes;
+  const currentIndex = navigationState?.index;
+  const previousRoute =
+    routes && currentIndex ? routes[currentIndex - 1] : null;
+
+  const showContextualLoading =
+    previousRoute?.name != "Menu" &&
+    previousRoute?.name != "NewPet" &&
+    !finishedContextualLoading;
 
   const Header = () => (
     <View style={styles.header}>
@@ -39,21 +48,6 @@ const Home: React.FC = () => {
     <CPPetCarousel pets={pets} selectPet={handleSelectPet} />
   );
 
-  const fetchPets = async () => {
-    setIsLoading(true);
-    try {
-      const response = await getPets("user");
-      setPets(response);
-    } catch (error) {
-      const isAppError = error instanceof AppError;
-      const title = isAppError ? error.message : "Tente novamente mais tarde.";
-      console.log("title error", title);
-      console.log("error", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   const ContextualLoading = () => (
     <CPContextualLoading
       textLines={[
@@ -70,13 +64,24 @@ const Home: React.FC = () => {
     navigation.navigate("PetDetails", { color: color });
   };
 
+  const handleFetchPets = async () => {
+    try {
+      setIsLoading(true);
+      await fetchPets();
+    } catch (error) {
+      console.log("error", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    fetchPets();
+    handleFetchPets();
   }, []);
 
   return (
     <>
-      {!finishedContextualLoading ? (
+      {showContextualLoading ? (
         ContextualLoading()
       ) : (
         <CPContainer isLoading={isLoading} header ignorePadding>

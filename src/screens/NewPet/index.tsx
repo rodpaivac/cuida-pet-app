@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import CPContainer from "@components/CPContainer";
-import { RouteProp, useRoute } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { Alert, Text, View } from "react-native";
 import { styles } from "./styles";
 import CPTextInput from "@components/CPTextInput";
@@ -10,20 +10,27 @@ import CPButton from "@components/CPButton";
 import CPPicker, { CPPickerItemType } from "@components/CPPicker";
 import CPImagePicker from "@components/CPImagePicker";
 import { usePet } from "@hooks/usePet";
-import { dateToString } from "@utils/date";
-import { SexDTO } from "@dtos/PetDTO";
+import { dateToString, stringToDate } from "@utils/date";
+import { PetDTO, SexDTO } from "@dtos/PetDTO";
 import { COLOR } from "@theme/colors";
 import { scale } from "@utils/dimensions";
+import { useAuth } from "@hooks/useAuth";
+import { AppError } from "@utils/AppError";
 
 type Route = RouteProp<ReactNavigation.RootParamList, "NewPet">;
 
 const NewPet: React.FC = () => {
   const route = useRoute<Route>();
   const isEdit = route.params.edit;
-  const { selectedPet } = usePet();
+  const { selectedPet, addPet, editPet, deletePet } = usePet();
+  const { user } = useAuth();
+
+  const navigation = useNavigation();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const [isCastrated, setIsCastrated] = useState(
-    isEdit ? selectedPet.castraded : false
+    isEdit ? selectedPet.castrated : false
   );
   const [isMicrochipped, setIsMicrochipped] = useState(
     isEdit ? selectedPet.microchipped : false
@@ -53,6 +60,7 @@ const NewPet: React.FC = () => {
   );
 
   const speciesItems: CPPickerItemType[] = [
+    { label: "selecione uma espécie", value: null },
     { label: "cão", value: "cão" },
     { label: "gato", value: "gato" },
     { label: "ave", value: "ave" },
@@ -135,15 +143,77 @@ const NewPet: React.FC = () => {
       placeholder="selecione a espécie do pet"
       items={speciesItems}
       onSelect={(itemValue, itemIndex) => setSpecies(itemValue)}
-      selectedItem={species}
+      selectedItemValue={species}
     />
   );
 
-  const handleDelete = () => {
-    Alert.alert("Atenção", "Deseja excluir esta vacina?", [
-      { text: "Sim", style: "destructive", onPress: () => {} },
-      { text: "Não", isPreferred: true, onPress: () => {} },
+  const handleDelete = async () => {
+    try {
+      if (selectedPet.id) {
+        await deletePet(selectedPet.id);
+        Alert.alert("Sucesso", "Pet excluído com sucesso.", [
+          { text: "Ok", onPress: () => navigation.navigate("Home") },
+        ]);
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  const handleDeleteAlert = () => {
+    Alert.alert("Atenção", "Deseja excluir este pet?", [
+      { text: "Sim", style: "destructive", onPress: () => handleDelete() },
+      { text: "Não", isPreferred: true },
     ]);
+  };
+
+  const handleSave = async () => {
+    if (
+      !name ||
+      !birthdate ||
+      !breed ||
+      !color ||
+      !sex ||
+      !species ||
+      !weight
+    ) {
+      return;
+    }
+    setIsLoading(true);
+    try {
+      const pet: PetDTO = {
+        id: selectedPet.id,
+        name: name,
+        birthdate: stringToDate(birthdate)!,
+        breed: breed,
+        castrated: isCastrated,
+        color: color,
+        microchipped: isMicrochipped,
+        sex: sex,
+        species: species,
+        user_cpf: user.cpf,
+        weight: weight,
+        image: image ?? undefined,
+      };
+      if (isEdit) {
+        await editPet(pet);
+        Alert.alert("Sucesso", "Pet editado com sucesso!", [
+          { text: "Ok", onPress: () => navigation.goBack() },
+        ]);
+      } else {
+        await addPet(pet);
+        Alert.alert("Sucesso", "Pet adicionado com sucesso!", [
+          { text: "Ok", onPress: () => navigation.goBack() },
+        ]);
+      }
+    } catch (error) {
+      const isAppError = error instanceof AppError;
+      const title = isAppError ? error.message : "Tente novamente mais tarde.";
+      console.log("title error", title);
+      console.log("error", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const Footer = () => (
@@ -152,7 +222,7 @@ const NewPet: React.FC = () => {
         <>
           <CPButton
             title="excluir"
-            onPress={handleDelete}
+            onPress={handleDeleteAlert}
             backgroundColor={COLOR.red}
             textColor={COLOR.sand}
             width={scale(180)}
@@ -162,7 +232,7 @@ const NewPet: React.FC = () => {
       )}
       <CPButton
         title="salvar"
-        onPress={() => {}}
+        onPress={() => handleSave()}
         width={isEdit ? scale(180) : undefined}
       />
     </View>
@@ -184,6 +254,7 @@ const NewPet: React.FC = () => {
         placeholder="raça do pet"
         value={breed}
         onChangeText={(text) => setBreed(text)}
+        autoCapitalize="none"
       />
       <SpaceV amount={15} />
       <CPTextInput
@@ -209,6 +280,7 @@ const NewPet: React.FC = () => {
         placeholder="cor do pet"
         value={color}
         onChangeText={(text) => setColor(text)}
+        autoCapitalize="none"
       />
       <SpaceV amount={15} />
       {SexSelection()}
@@ -220,7 +292,12 @@ const NewPet: React.FC = () => {
   );
 
   return (
-    <CPContainer dark goBack title={isEdit ? "editar pet" : "adicionar pet"}>
+    <CPContainer
+      dark
+      goBack
+      title={isEdit ? "editar pet" : "adicionar pet"}
+      isLoading={isLoading}
+    >
       {Header()}
       {Body()}
       {Footer()}

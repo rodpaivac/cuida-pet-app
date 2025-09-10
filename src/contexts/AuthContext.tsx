@@ -1,5 +1,4 @@
 import { GenderDTO, UserDTO } from "@dtos/UserDTO";
-import { api } from "@service/api";
 import { createContext, ReactNode, useEffect, useState } from "react";
 import {
   storageUserSave,

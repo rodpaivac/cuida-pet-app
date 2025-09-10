@@ -34,7 +34,8 @@ export const styles = StyleSheet.create({
         fontFamily: FONT.PoppinsLight,
         color: COLOR.darkBrown,
         fontSize: 30,
-        marginTop: scale(10)
+        marginTop: scale(10),
+        textAlign: 'center'
     },
     petAge: {
         fontFamily: FONT.PoppinsExtraLight,
