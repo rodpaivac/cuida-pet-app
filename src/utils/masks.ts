@@ -57,3 +57,21 @@ export const phoneMask = (text: string) => {
 
     return cleaned;
 };
+
+export const removePhoneMask = (text: string) => {
+
+    let clearText = text.replaceAll("-", "");
+    clearText = clearText.replaceAll("(", "");
+    clearText = clearText.replaceAll(")", "");
+    clearText = clearText.replaceAll(" ", "");
+
+    return clearText;
+}
+
+export const removeCpfMask = (text: string) => {
+
+    let clearText = text.replaceAll("-", "");
+    clearText = clearText.replaceAll(".", "");
+
+    return clearText;
+}

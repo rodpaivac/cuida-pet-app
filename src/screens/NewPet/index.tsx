@@ -28,7 +28,8 @@ const NewPet: React.FC = () => {
 
   const navigation = useNavigation();
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isSaveLoading, setIsSaveLoading] = useState(false);
+  const [isDeleteLoading, setIsDeleteLoading] = useState(false);
 
   const [isCastrated, setIsCastrated] = useState(
     isEdit ? selectedPet.castrated : false
@@ -150,7 +151,7 @@ const NewPet: React.FC = () => {
 
   const handleDelete = async () => {
     try {
-      setIsLoading(true);
+      setIsDeleteLoading(true);
       if (selectedPet.id) {
         await deletePet(selectedPet.id);
         Alert.alert("Sucesso", "Pet excluído com sucesso.", [
@@ -160,7 +161,7 @@ const NewPet: React.FC = () => {
     } catch (error) {
       console.log("error", error);
     } finally {
-      setIsLoading(false);
+      setIsDeleteLoading(false);
     }
   };
 
@@ -183,7 +184,7 @@ const NewPet: React.FC = () => {
     ) {
       return;
     }
-    setIsLoading(true);
+    setIsSaveLoading(true);
     try {
       const pet: PetDTO = {
         id: selectedPet.id,
@@ -197,6 +198,7 @@ const NewPet: React.FC = () => {
         species: species,
         user_cpf: user.cpf,
         weight: weight,
+        image: imageUri,
       };
       if (isEdit) {
         await editPet(pet, image);
@@ -215,7 +217,7 @@ const NewPet: React.FC = () => {
       console.log("title error", title);
       console.log("error", error);
     } finally {
-      setIsLoading(false);
+      setIsSaveLoading(false);
     }
   };
 
@@ -229,6 +231,8 @@ const NewPet: React.FC = () => {
             backgroundColor={COLOR.red}
             textColor={COLOR.sand}
             width={scale(180)}
+            loading={isDeleteLoading}
+            disabled={isSaveLoading}
           />
           <SpaceH amount={15} />
         </>
@@ -237,6 +241,8 @@ const NewPet: React.FC = () => {
         title="salvar"
         onPress={() => handleSave()}
         width={isEdit ? scale(180) : undefined}
+        loading={isSaveLoading}
+        disabled={isDeleteLoading}
       />
     </View>
   );
@@ -295,12 +301,7 @@ const NewPet: React.FC = () => {
   );
 
   return (
-    <CPContainer
-      dark
-      goBack
-      title={isEdit ? "editar pet" : "adicionar pet"}
-      isLoading={isLoading}
-    >
+    <CPContainer dark goBack title={isEdit ? "editar pet" : "adicionar pet"}>
       {Header()}
       {Body()}
       {Footer()}

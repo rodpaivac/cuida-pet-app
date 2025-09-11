@@ -2,7 +2,20 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { UserDTO } from "@dtos/UserDTO";
 
-import { USER_STORAGE } from "./storageConfig";
+import { TOKEN_STORAGE, USER_STORAGE } from "./storageConfig";
+
+export async function storageTokenSave(token: string) {
+    await AsyncStorage.setItem(TOKEN_STORAGE, token);
+}
+
+export async function storageTokenGet() {
+    const token = await AsyncStorage.getItem(TOKEN_STORAGE);
+    return token;
+}
+
+export async function storageTokenRemove() {
+    await AsyncStorage.removeItem(TOKEN_STORAGE);
+}
 
 export async function storageUserSave(user: UserDTO) {
     await AsyncStorage.setItem(USER_STORAGE, JSON.stringify(user));

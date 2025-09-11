@@ -7,7 +7,7 @@ import { AuthRoutes } from "./auth.routes";
 import CPLoading from "@components/CPLoading";
 
 export function Routes() {
-  const { user, isLoadingUserStorageData } = useAuth();
+  const { token, isLoadingUserStorageData } = useAuth();
 
   if (isLoadingUserStorageData) {
     return <CPLoading isLoading />;
@@ -16,7 +16,7 @@ export function Routes() {
   return (
     <View style={{ flex: 1, backgroundColor: "#FFD8C4" }}>
       <NavigationContainer>
-        {user.id ? <AppRoutes /> : <AuthRoutes />}
+        {token ? <AppRoutes /> : <AuthRoutes />}
       </NavigationContainer>
     </View>
   );

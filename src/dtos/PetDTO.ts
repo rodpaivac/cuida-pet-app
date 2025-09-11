@@ -5,7 +5,7 @@ export type PetDTO = {
     user_cpf: string;
     weight: string;
     species: Species | string;
-    image?: string;
+    image?: string | null;
     birthdate: Date;
     color: string;
     sex: SexDTO;

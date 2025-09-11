@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, Pressable, Text, View } from "react-native";
+import { ActivityIndicator, Image, Pressable, Text, View } from "react-native";
 import { styles } from "./styles";
 
 import paw from "@assets/icons/paw.png";
@@ -15,6 +15,7 @@ type Props = {
   width?: number;
   disabled?: boolean;
   dark?: boolean;
+  loading?: boolean;
 };
 
 const CPButton: React.FC<Props> = ({
@@ -26,6 +27,7 @@ const CPButton: React.FC<Props> = ({
   width,
   disabled = false,
   dark = false,
+  loading = false,
 }) => {
   return (
     <Pressable
@@ -42,7 +44,7 @@ const CPButton: React.FC<Props> = ({
           width: width ?? scale(220),
         },
       ]}
-      onPress={onPress}
+      onPress={() => (loading ? {} : onPress())}
     >
       <View style={styles.row}>
         {showIcon && (
@@ -51,20 +53,24 @@ const CPButton: React.FC<Props> = ({
           </View>
         )}
         <View style={styles.textContainer}>
-          <Text
-            style={[
-              styles.text,
-              {
-                color: disabled
-                  ? COLOR.gray
-                  : textColor ?? dark
-                  ? COLOR.sand
-                  : COLOR.darkBrown,
-              },
-            ]}
-          >
-            {title}
-          </Text>
+          {loading ? (
+            <ActivityIndicator color={dark ? COLOR.sand : COLOR.secondary} />
+          ) : (
+            <Text
+              style={[
+                styles.text,
+                {
+                  color: disabled
+                    ? COLOR.gray
+                    : textColor ?? dark
+                    ? COLOR.sand
+                    : COLOR.darkBrown,
+                },
+              ]}
+            >
+              {title}
+            </Text>
+          )}
         </View>
       </View>
     </Pressable>

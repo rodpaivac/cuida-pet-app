@@ -1,17 +1,22 @@
 import React from "react";
-import { Pressable, Text, View } from "react-native";
+import { ActivityIndicator, Pressable, Text, View } from "react-native";
 import { styles } from "./styles";
 
 type Props = {
   title: string;
   onPress: () => void;
+  loading?: boolean;
 };
 
-const CPTextButton: React.FC<Props> = ({ title, onPress }) => {
+const CPTextButton: React.FC<Props> = ({ title, onPress, loading = false }) => {
   return (
-    <Pressable onPress={onPress}>
+    <Pressable onPress={() => (loading ? {} : onPress())}>
       <View style={styles.textContainer}>
-        <Text style={styles.text}>{title}</Text>
+        {loading ? (
+          <ActivityIndicator />
+        ) : (
+          <Text style={styles.text}>{title}</Text>
+        )}
       </View>
     </Pressable>
   );

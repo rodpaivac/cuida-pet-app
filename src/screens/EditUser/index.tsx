@@ -5,26 +5,60 @@ import CPRadioButton from "@components/CPRadioButton";
 import CPTextInput from "@components/CPTextInput";
 import { SpaceV } from "@components/Space";
 import React, { useState } from "react";
-import { Text, View } from "react-native";
+import { Alert, Text, View } from "react-native";
 import { styles } from "./styles";
 import { useAuth } from "@hooks/useAuth";
-import { GenderDTO } from "@dtos/UserDTO";
+import { GenderDTO, UserDTO } from "@dtos/UserDTO";
 import { dateToString, stringToDate } from "@utils/date";
+import { useNavigation } from "@react-navigation/native";
 
 const EditUser: React.FC = () => {
-  const { user } = useAuth();
+  const { user, editUser } = useAuth();
+  const navigation = useNavigation();
   const imageUri = user.avatar;
 
-  const [gender, setGender] = useState<GenderDTO>(user.gender ?? null);
+  const [loading, setLoading] = useState(false);
+
+  const [gender, setGender] = useState<GenderDTO>(
+    (user.gender as GenderDTO) ?? null
+  );
   const [selectedImage, setSelectedImage] = useState<FormData | null>(null);
   const [name, setName] = useState<string | null>(user.name ?? null);
   const [phone, setPhone] = useState<string | null>(user.phone ?? null);
   const [email, setEmail] = useState<string | null>(user.email ?? null);
-  const [cpf, setCpf] = useState<string | null>(user.cpf ?? null);
-  //TODO converter birthdate usando stringToDate() e verificar se data é válida
+  const [cpf, setCpf] = useState<string>(user.cpf);
   const [birthdate, setBirthdate] = useState<string | null>(
     dateToString(user.birthdate) ?? null
   );
+
+  const handleSave = async () => {
+    if (!name || !email || !phone || !birthdate || !gender) {
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const userData: UserDTO = {
+        name: name,
+        phone: phone,
+        email: email,
+        cpf: cpf,
+        birthdate: stringToDate(birthdate)!,
+        password: null,
+        avatar: imageUri,
+        gender: gender,
+      };
+      await editUser(userData, selectedImage);
+      Alert.alert("Sucesso", "Seus dados foram atualizados com sucesso", [
+        { text: "Ok", onPress: () => navigation.goBack() },
+      ]);
+    } catch (error) {
+      console.log("error", error);
+      Alert.alert("Atenção", "Não foi possível alterar seus dados =(");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const Header = () => (
     <View style={styles.headerContainer}>
@@ -67,7 +101,7 @@ const EditUser: React.FC = () => {
 
   const Footer = () => (
     <View style={styles.footer}>
-      <CPButton title="salvar" onPress={() => {}} />
+      <CPButton title="salvar" onPress={() => handleSave()} loading={loading} />
     </View>
   );
 
@@ -87,6 +121,7 @@ const EditUser: React.FC = () => {
         onChangeText={(text) => setCpf(text)}
         keyboardType="numeric"
         mask="cpf"
+        disabled
       />
       <SpaceV amount={15} />
       <CPTextInput

@@ -1,17 +1,23 @@
-import { GenderDTO, UserDTO } from "@dtos/UserDTO";
+import { UserDTO } from "@dtos/UserDTO";
 import { createContext, ReactNode, useEffect, useState } from "react";
 import {
   storageUserSave,
   storageUserGet,
   storageUserRemove,
+  storageTokenSave,
+  storageTokenGet,
+  storageTokenRemove,
 } from "@storage/storageUser";
-import { USER } from "src/mock";
+import { editUserApi, newUserApi, signInApi } from "@service/auth";
 
 export type AuthContextDataProps = {
   user: UserDTO;
-  signIn: (email: string, password: string) => void; //retornar Promise<void> depois que integrar com backend
+  signIn: (cpf: string, password: string) => void;
   signOut: () => void;
   isLoadingUserStorageData: boolean;
+  newUser: (user: UserDTO, image: FormData | null) => void;
+  token: string | null;
+  editUser: (user: UserDTO, image: FormData | null) => void;
 };
 
 type AuthContextProviderProps = {
@@ -26,32 +32,34 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   const [user, setUser] = useState<UserDTO>({} as UserDTO);
   const [isLoadingUserStorageData, setIsLoadingUserStorageData] =
     useState(true);
+  const [token, setToken] = useState<string | null>(null);
 
-  //async
-  function signIn(email: string, password: string) {
-    const userData = USER;
-    setUser(userData);
-    storageUserSave(userData);
+  async function signIn(cpf: string, password: string) {
+    const response = await signInApi(cpf, password);
+    if (!response) {
+      return;
+    }
 
-    //-> integrar com backend
-    // Integração com backend -> Contextos no React Native -> Buscando dados do usuário no back-end
+    const userData = response.user;
+    const token = response.token;
 
-    //try{
-    //const {data} = await api.post('/sessions, {email, password'});
-
-    //  if(data.user){
-    //      setUser(data.user)
-    //  }
-    //}catch(eror){
-    //  throw error
-    //}
+    try {
+      setUser(userData);
+      setToken(token);
+      await storageUserSave(userData);
+      await storageTokenSave(token);
+    } catch (error) {
+      console.log("error", error);
+    }
   }
 
   function signOut() {
     try {
       setIsLoadingUserStorageData(true);
       setUser({} as UserDTO);
+      setToken(null);
       storageUserRemove();
+      storageTokenRemove();
     } catch (error) {
       throw error;
     } finally {
@@ -62,15 +70,27 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   async function loadUserData() {
     try {
       const userLogged = await storageUserGet();
+      const token = await storageTokenGet();
 
-      if (userLogged) {
+      if (userLogged && token) {
         setUser(userLogged);
+        setToken(token);
       }
     } catch (error) {
       throw error;
     } finally {
       setIsLoadingUserStorageData(false);
     }
+  }
+
+  async function newUser(user: UserDTO, image: FormData | null) {
+    await newUserApi(user, image);
+  }
+
+  async function editUser(user: UserDTO, image: FormData | null) {
+    const response = await editUserApi(user, image);
+    setUser(response);
+    await storageUserSave(response);
   }
 
   useEffect(() => {
@@ -84,6 +104,9 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
         signIn,
         signOut,
         isLoadingUserStorageData,
+        newUser,
+        token,
+        editUser,
       }}
     >
       {children}

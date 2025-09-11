@@ -5,13 +5,19 @@ import CPRadioButton from "@components/CPRadioButton";
 import CPTextInput from "@components/CPTextInput";
 import { SpaceV } from "@components/Space";
 import React, { useState } from "react";
-import { Text, View } from "react-native";
+import { Alert, Text, View } from "react-native";
 import { styles } from "./styles";
 import { useAuth } from "@hooks/useAuth";
-import { GenderDTO } from "@dtos/UserDTO";
+import { GenderDTO, UserDTO } from "@dtos/UserDTO";
 import { dateToString, stringToDate } from "@utils/date";
+import { useNavigation } from "@react-navigation/native";
+import { removeCpfMask, removePhoneMask } from "@utils/masks";
 
 const NewUser: React.FC = () => {
+  const { newUser } = useAuth();
+  const navigation = useNavigation();
+
+  const [loading, setLoading] = useState(false);
   const [gender, setGender] = useState<GenderDTO | null>(null);
   const [image, setImage] = useState<FormData | null>(null);
   const [name, setName] = useState<string | null>(null);
@@ -24,6 +30,48 @@ const NewUser: React.FC = () => {
   >(null);
 
   const [birthdate, setBirthdate] = useState<string | null>(null);
+
+  const handleSaveUser = async () => {
+    if (
+      !name ||
+      !email ||
+      !phone ||
+      !birthdate ||
+      !gender ||
+      !cpf ||
+      !password ||
+      !passwordConfirmation
+    ) {
+      return;
+    }
+
+    if (password != passwordConfirmation) {
+      Alert.alert("Atenção", "As senhas não conferem.");
+      return;
+    }
+
+    const user: UserDTO = {
+      name: name,
+      email: email,
+      phone: removePhoneMask(phone),
+      birthdate: stringToDate(birthdate)!,
+      gender: gender,
+      cpf: removeCpfMask(cpf),
+      avatar: null,
+      password: password,
+    };
+    try {
+      setLoading(true);
+      await newUser(user, image);
+      Alert.alert("Sucesso", "Usuário criado com sucesso!", [
+        { text: "Ok", onPress: () => navigation.goBack() },
+      ]);
+    } catch (error) {
+      console.log("error", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const Header = () => (
     <View style={styles.headerContainer}>
@@ -66,7 +114,7 @@ const NewUser: React.FC = () => {
 
   const Footer = () => (
     <View style={styles.footer}>
-      <CPButton title="salvar" onPress={() => {}} />
+      <CPButton title="salvar" onPress={() => handleSaveUser()} />
     </View>
   );
 
@@ -78,7 +126,6 @@ const NewUser: React.FC = () => {
         value={name}
         onChangeText={(text) => setName(text)}
       />
-      <SpaceV amount={15} />
       <SpaceV amount={15} />
       <CPTextInput
         label="cpf"
@@ -123,6 +170,8 @@ const NewUser: React.FC = () => {
         placeholder="digite uma senha"
         value={password}
         onChangeText={(text) => setPassword(text)}
+        autoCapitalize="none"
+        isPassword
       />
       <SpaceV amount={15} />
       <CPTextInput
@@ -130,12 +179,14 @@ const NewUser: React.FC = () => {
         placeholder="confirme sua senha"
         value={passwordConfirmation}
         onChangeText={(text) => setPasswordConfirmation(text)}
+        autoCapitalize="none"
+        isPassword
       />
     </View>
   );
 
   return (
-    <CPContainer dark goBack title={"criar conta"}>
+    <CPContainer dark goBack title={"criar conta"} isLoading={loading}>
       {Header()}
       {Body()}
       {Footer()}

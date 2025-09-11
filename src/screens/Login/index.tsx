@@ -1,5 +1,6 @@
 import React, { useMemo, useRef, useState } from "react";
 import {
+  Alert,
   Animated,
   Button,
   Image,
@@ -24,15 +25,21 @@ import { COLOR } from "@theme/colors";
 import CPButton from "@components/CPButton";
 import CPTextInput from "@components/CPTextInput";
 import CPTextButton from "@components/CPTextButton";
+import { removeCpfMask } from "@utils/masks";
+import CPLoading from "@components/CPLoading";
+import { SpaceV } from "@components/Space";
 
 const SCREEN_HEIGHT = screenHeight;
 const INITIAL_HEIGHT = verticalScale(222);
 const FINAL_TOP = SCREEN_HEIGHT * 0.8;
 
 const Login: React.FC = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [cpf, setCpf] = useState<string | null>(null);
+  const [password, setPassword] = useState<string | null>(null);
+
   const [expanded, setExpanded] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const transitionAnim = useRef(new Animated.Value(0)).current;
 
   const { signIn } = useAuth();
@@ -40,6 +47,21 @@ const Login: React.FC = () => {
 
   const bottomSheetRef = useRef<BottomSheet>(null);
   const snapPoints = [INITIAL_HEIGHT, FINAL_TOP];
+
+  const handleSignIn = async () => {
+    if (!cpf || !password) {
+      return;
+    }
+    try {
+      setLoading(true);
+      await signIn(removeCpfMask(cpf), password);
+    } catch (error) {
+      console.log("error", error);
+      Alert.alert("Atenção", "Não foi possivel fazer o login =(");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const expandBottomSheet = () => {
     Animated.timing(transitionAnim, {
@@ -73,10 +95,6 @@ const Login: React.FC = () => {
     outputRange: [0, 1],
   });
 
-  const handleSignIn = (email: string, password: string) => {
-    signIn(email, password);
-  };
-
   const BottomSheetBody = () => (
     <>
       {/* Estado inicial (collapsed) */}
@@ -97,12 +115,13 @@ const Login: React.FC = () => {
         <Text style={styles.text}>Monitore a saúde do seu pet</Text>
 
         <CPTextInput
-          placeholder="e-mail"
-          keyboardType="email-address"
-          autoCapitalize="none"
-          value={email}
-          onChangeText={setEmail}
+          placeholder="CPF"
+          keyboardType="numeric"
+          value={cpf}
+          onChangeText={setCpf}
+          mask="cpf"
         />
+        <SpaceV amount={15} />
         <CPTextInput
           placeholder="senha"
           isPassword
@@ -110,14 +129,14 @@ const Login: React.FC = () => {
           onForgotPasswordPress={() =>
             navigation.navigate("UserDataConfirmation")
           }
-          customStyle={{ marginTop: 15 }}
           value={password}
           onChangeText={setPassword}
         />
         <View style={styles.buttonContainer}>
           <CPButton
             title="Entrar"
-            onPress={() => handleSignIn(email, password)}
+            onPress={() => handleSignIn()}
+            loading={loading}
           />
         </View>
         <View style={styles.footerContainer}>
