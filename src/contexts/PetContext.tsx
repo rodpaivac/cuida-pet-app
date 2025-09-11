@@ -14,8 +14,8 @@ export type PetContextDataProps = {
   selectPet: (pet: PetDTO) => void;
   pets: PetDTO[];
   fetchPets: () => void;
-  addPet: (pet: PetDTO) => void;
-  editPet: (pet: PetDTO) => void;
+  addPet: (pet: PetDTO, image: FormData | null) => void;
+  editPet: (pet: PetDTO, image: FormData | null) => void;
   deletePet: (id: string) => void;
 };
 
@@ -42,23 +42,21 @@ export function PetContextProvider({ children }: PetContextProviderProps) {
     setPets(response);
   }
 
-  async function addPet(pet: PetDTO) {
-    const response = await newPetApi(pet);
+  async function addPet(pet: PetDTO, image: FormData | null) {
+    await newPetApi(pet, image);
     await fetchPets();
-    return response;
   }
 
-  async function editPet(pet: PetDTO) {
-    const response = await editPetApi(pet);
+  async function editPet(pet: PetDTO, image: FormData | null) {
+    const response = await editPetApi(pet, image);
     if (response) {
       setSelectedPet(response);
     }
     await fetchPets();
-    return response;
   }
 
   async function deletePet(id: string) {
-    const response = await deletePetApi(id);
+    await deletePetApi(id);
     await fetchPets();
   }
 

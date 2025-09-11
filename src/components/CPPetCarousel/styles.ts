@@ -41,6 +41,18 @@ export const styles = StyleSheet.create({
         fontFamily: FONT.PoppinsExtraLight,
         color: COLOR.darkBrown,
         fontSize: 20,
-    }
+    },
+
+    defaultImageContainer: {
+        width: scale(180),
+        height: scale(180),
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+
+    defaultImage: {
+        width: scale(100),
+        height: scale(100),
+    },
 });
 

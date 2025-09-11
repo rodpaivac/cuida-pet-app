@@ -13,9 +13,10 @@ import { dateToString, stringToDate } from "@utils/date";
 
 const EditUser: React.FC = () => {
   const { user } = useAuth();
+  const imageUri = user.avatar;
 
   const [gender, setGender] = useState<GenderDTO>(user.gender ?? null);
-  const [image, setImage] = useState<string | null>(user.avatar ?? null);
+  const [selectedImage, setSelectedImage] = useState<FormData | null>(null);
   const [name, setName] = useState<string | null>(user.name ?? null);
   const [phone, setPhone] = useState<string | null>(user.phone ?? null);
   const [email, setEmail] = useState<string | null>(user.email ?? null);
@@ -28,8 +29,8 @@ const EditUser: React.FC = () => {
   const Header = () => (
     <View style={styles.headerContainer}>
       <CPImagePicker
-        onSelect={(selectedImage) => setImage(selectedImage)}
-        image={image}
+        onSelect={(selectedImage) => setSelectedImage(selectedImage)}
+        imageUri={imageUri}
         type="user"
       />
     </View>

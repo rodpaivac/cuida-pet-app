@@ -2,7 +2,7 @@ import React from "react";
 import { FlatList, Image, Pressable, Text, View } from "react-native";
 import { styles } from "./styles";
 import paw from "@assets/icons/paw.png";
-import petImage from "@assets/images/pet.jpg";
+import petImage from "@assets/images/default_pet.png";
 import { ageCalc } from "@utils/age";
 import { COLOR } from "@theme/colors";
 import { PetDTO } from "@dtos/PetDTO";
@@ -28,7 +28,7 @@ const CPPetCarousel: React.FC<Props> = ({ pets, selectPet }) => {
     <FlatList
       data={pets}
       renderItem={({ item, index }) => renderItem(item, index)}
-      keyExtractor={(item) => item.id.toString()}
+      keyExtractor={(item) => item.id!}
       horizontal
       showsHorizontalScrollIndicator={false}
       style={styles.carousel}
@@ -40,6 +40,12 @@ const CPPetCarousel: React.FC<Props> = ({ pets, selectPet }) => {
 const CPPetCarouselCard: React.FC<CardProps> = ({ pet, index, selectPet }) => {
   const color = colors[index % colors.length];
   const age = ageCalc(pet.birthdate);
+
+  const DefaultImage = () => (
+    <View style={styles.defaultImageContainer}>
+      <Image style={styles.defaultImage} source={petImage} />
+    </View>
+  );
   return (
     <Pressable
       style={[styles.card, { backgroundColor: color }]}
@@ -49,7 +55,11 @@ const CPPetCarouselCard: React.FC<CardProps> = ({ pet, index, selectPet }) => {
         <Image style={styles.pawIcon} source={paw} />
       </View>
       <View style={styles.petInfo}>
-        <Image style={styles.petImage} source={petImage} />
+        {pet.image ? (
+          <Image style={styles.petImage} src={pet.image} />
+        ) : (
+          DefaultImage()
+        )}
         <Text style={styles.petName} numberOfLines={2}>
           {pet.name}
         </Text>

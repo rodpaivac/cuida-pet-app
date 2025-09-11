@@ -37,9 +37,9 @@ export const styles = StyleSheet.create({
         marginBottom: verticalScale(10)
     },
     petImage: {
-        borderRadius: 160,
-        width: scale(160),
-        height: scale(160),
+        borderRadius: 140,
+        width: scale(140),
+        height: scale(140),
     },
     infoContainer: {
         marginTop: verticalScale(30),
@@ -93,5 +93,17 @@ export const styles = StyleSheet.create({
         height: scale(50),
         width: scale(50),
         marginBottom: verticalScale(5)
-    }
+    },
+    defaultImageContainer: {
+        backgroundColor: COLOR.sand,
+        borderRadius: 140,
+        width: scale(140),
+        height: scale(140),
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    defaultImage: {
+        width: scale(65),
+        height: scale(65),
+    },
 });

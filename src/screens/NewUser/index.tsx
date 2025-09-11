@@ -13,7 +13,7 @@ import { dateToString, stringToDate } from "@utils/date";
 
 const NewUser: React.FC = () => {
   const [gender, setGender] = useState<GenderDTO | null>(null);
-  const [image, setImage] = useState<string | null>(null);
+  const [image, setImage] = useState<FormData | null>(null);
   const [name, setName] = useState<string | null>(null);
   const [phone, setPhone] = useState<string | null>(null);
   const [email, setEmail] = useState<string | null>(null);
@@ -23,14 +23,13 @@ const NewUser: React.FC = () => {
     string | null
   >(null);
 
-  //TODO converter birthdate usando stringToDate() e verificar se data é válida
   const [birthdate, setBirthdate] = useState<string | null>(null);
 
   const Header = () => (
     <View style={styles.headerContainer}>
       <CPImagePicker
         onSelect={(selectedImage) => setImage(selectedImage)}
-        image={image}
+        imageUri={null}
         type="user"
       />
     </View>

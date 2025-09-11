@@ -24,6 +24,7 @@ const NewPet: React.FC = () => {
   const isEdit = route.params.edit;
   const { selectedPet, addPet, editPet, deletePet } = usePet();
   const { user } = useAuth();
+  const imageUri = isEdit && selectedPet.image ? selectedPet.image : null;
 
   const navigation = useNavigation();
 
@@ -41,7 +42,7 @@ const NewPet: React.FC = () => {
   const [species, setSpecies] = useState<string | null>(
     isEdit ? selectedPet.species : null
   );
-  const [image, setImage] = useState<string | null>(null);
+  const [image, setImage] = useState<FormData | null>(null);
 
   const [birthdate, setBirthdate] = useState<string | null>(
     isEdit ? dateToString(selectedPet.birthdate) : null
@@ -80,7 +81,7 @@ const NewPet: React.FC = () => {
     <View style={styles.headerContainer}>
       <CPImagePicker
         onSelect={(selectedImage) => setImage(selectedImage)}
-        image={image}
+        imageUri={imageUri}
         type="pet"
       />
     </View>
@@ -149,6 +150,7 @@ const NewPet: React.FC = () => {
 
   const handleDelete = async () => {
     try {
+      setIsLoading(true);
       if (selectedPet.id) {
         await deletePet(selectedPet.id);
         Alert.alert("Sucesso", "Pet excluído com sucesso.", [
@@ -157,6 +159,8 @@ const NewPet: React.FC = () => {
       }
     } catch (error) {
       console.log("error", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -193,15 +197,14 @@ const NewPet: React.FC = () => {
         species: species,
         user_cpf: user.cpf,
         weight: weight,
-        image: image ?? undefined,
       };
       if (isEdit) {
-        await editPet(pet);
+        await editPet(pet, image);
         Alert.alert("Sucesso", "Pet editado com sucesso!", [
           { text: "Ok", onPress: () => navigation.goBack() },
         ]);
       } else {
-        await addPet(pet);
+        await addPet(pet, image);
         Alert.alert("Sucesso", "Pet adicionado com sucesso!", [
           { text: "Ok", onPress: () => navigation.goBack() },
         ]);

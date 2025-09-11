@@ -4,7 +4,7 @@ import { ageCalc } from "@utils/age";
 import React from "react";
 import { Image, Pressable, Text, View } from "react-native";
 import editLight from "@assets/icons/edit-light.png";
-import petImage from "@assets/images/pet.jpg";
+import petImage from "@assets/images/default_pet.png";
 import vaccine from "@assets/icons/vaccine.png";
 
 import { styles } from "./styles";
@@ -30,6 +30,12 @@ const PetDetails: React.FC = () => {
   const { selectedPet } = usePet();
   const age = ageCalc(selectedPet.birthdate);
 
+  const DefaultImage = () => (
+    <View style={styles.defaultImageContainer}>
+      <Image style={styles.defaultImage} source={petImage} />
+    </View>
+  );
+
   const Header = () => (
     <View style={[styles.header, { backgroundColor: bgColor }]}>
       <View style={styles.headerRow}>
@@ -46,7 +52,11 @@ const PetDetails: React.FC = () => {
             <Image style={styles.pawIcon} source={editLight} />
           </Pressable>
         </View>
-        <Image style={styles.petImage} source={petImage} />
+        {selectedPet.image ? (
+          <Image style={styles.petImage} src={selectedPet.image} />
+        ) : (
+          DefaultImage()
+        )}
       </View>
     </View>
   );
