@@ -1,18 +1,19 @@
 export type VaccineDTO = {
-    id: string,
+    pet_id: string;
+    id?: string,
     title: string,
     date: Date,
-    vetName?: string,
+    vetname?: string,
     clinic?: string,
-    nextDoseDate?: Date,
+    nextdosedate?: Date,
     lot?: string,
     description?: string;
-    nextDoseTaken?: boolean;
+    nextdosetaken?: boolean;
 }
 
 export type PetNextVaccineDTO = {
-    //month/year
+    //month de year
     title: string;
-    //day + pet name + vaccine name
+    //day - pet name: vaccine name
     data: string[]
 }

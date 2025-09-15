@@ -2,14 +2,16 @@ import CPButton from "@components/CPButton";
 import CPContainer from "@components/CPContainer";
 import CPTextInput from "@components/CPTextInput";
 import { SpaceH, SpaceV } from "@components/Space";
-import { RouteProp, useRoute } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import React, { useState } from "react";
 import { Alert, View } from "react-native";
 import { styles } from "./styles";
 import { useVaccine } from "@hooks/useVaccine";
-import { dateToString } from "@utils/date";
+import { dateToString, stringToDate } from "@utils/date";
 import { scale } from "@utils/dimensions";
 import { COLOR } from "@theme/colors";
+import { usePet } from "@hooks/usePet";
+import { VaccineDTO } from "@dtos/VaccineDTO";
 
 type Route = RouteProp<ReactNavigation.RootParamList, "NewVaccine">;
 
@@ -18,7 +20,17 @@ const NewVaccine: React.FC = () => {
   const isEdit = route.params.edit;
   const isRepeat = route.params.repeat;
 
-  const { selectedVaccine } = useVaccine();
+  const navigation = useNavigation();
+
+  const {
+    selectedVaccine,
+    newVaccine,
+    loading,
+    editVaccine,
+    repeatVaccine,
+    deleteVaccine,
+  } = useVaccine();
+  const { selectedPet } = usePet();
 
   const [vaccineName, setVaccineName] = useState<string | null>(
     isEdit || isRepeat ? selectedVaccine.title : null
@@ -29,13 +41,13 @@ const NewVaccine: React.FC = () => {
   );
 
   const [vetName, setVetName] = useState<string | null>(
-    isEdit ? selectedVaccine.vetName ?? null : null
+    isEdit ? selectedVaccine.vetname ?? null : null
   );
   const [clinic, setClinic] = useState<string | null>(
     isEdit ? selectedVaccine.clinic ?? null : null
   );
   const [nextDose, setNextDose] = useState<string | null>(
-    isEdit ? dateToString(selectedVaccine.nextDoseDate) : null
+    isEdit ? dateToString(selectedVaccine.nextdosedate) : null
   );
   const [lot, setLot] = useState<string | null>(
     isEdit ? selectedVaccine.lot ?? null : null
@@ -44,9 +56,68 @@ const NewVaccine: React.FC = () => {
     isEdit ? selectedVaccine.description ?? null : null
   );
 
-  const handleDelete = () => {
+  const handleSave = async () => {
+    if (
+      !selectedPet.id ||
+      !vaccineName ||
+      !date ||
+      !vetName ||
+      !clinic ||
+      !nextDose
+    ) {
+      Alert.alert("Atenção", "Preencha todos os campos obrigatórios.");
+      return;
+    }
+    const vaccine: VaccineDTO = {
+      pet_id: selectedPet.id,
+      id: isEdit ? selectedVaccine.id : undefined,
+      title: vaccineName,
+      date: stringToDate(date)!,
+      vetname: vetName,
+      clinic: clinic,
+      nextdosedate: stringToDate(nextDose)!,
+      lot: lot ?? undefined,
+      description: description ?? undefined,
+      nextdosetaken: isEdit ? selectedVaccine.nextdosetaken : false,
+    };
+    try {
+      if (isEdit) {
+        await editVaccine(vaccine);
+        Alert.alert("Sucesso", "Vacina editada com sucesso.", [
+          { text: "Ok", onPress: () => navigation.goBack() },
+        ]);
+      } else {
+        isRepeat
+          ? await repeatVaccine(vaccine, selectedVaccine.id!)
+          : await newVaccine(vaccine);
+        Alert.alert("Sucesso", "Vacina cadastrada com sucesso.", [
+          { text: "Ok", onPress: () => navigation.navigate("VaccineHistory") },
+        ]);
+      }
+    } catch (error) {
+      console.log("error", error);
+      Alert.alert(
+        "Atenção",
+        `Erro ao ${isEdit ? "editar" : "cadastrar"} vacina =(`
+      );
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      await deleteVaccine(selectedVaccine.id!, selectedPet.id!);
+      Alert.alert("Sucesso", "Vacina removida com sucesso", [
+        { text: "Ok", onPress: () => navigation.goBack() },
+      ]);
+    } catch (error) {
+      console.log("error", error);
+      Alert.alert("Atenção", "Não foi possível remover a vacina =(");
+    }
+  };
+
+  const handleDeleteAlert = () => {
     Alert.alert("Atenção", "Deseja excluir esta vacina?", [
-      { text: "Sim", style: "destructive", onPress: () => {} },
+      { text: "Sim", style: "destructive", onPress: () => handleDelete() },
       { text: "Não", isPreferred: true, onPress: () => {} },
     ]);
   };
@@ -57,7 +128,7 @@ const NewVaccine: React.FC = () => {
         <>
           <CPButton
             title="excluir"
-            onPress={handleDelete}
+            onPress={handleDeleteAlert}
             backgroundColor={COLOR.red}
             textColor={COLOR.sand}
             width={scale(180)}
@@ -67,7 +138,7 @@ const NewVaccine: React.FC = () => {
       )}
       <CPButton
         title="salvar"
-        onPress={() => {}}
+        onPress={() => handleSave()}
         width={isEdit ? scale(180) : undefined}
       />
     </View>

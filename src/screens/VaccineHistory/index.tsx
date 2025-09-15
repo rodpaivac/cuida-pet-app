@@ -11,7 +11,6 @@ import { SpaceH } from "@components/Space";
 import Collapsible from "react-native-collapsible";
 import { usePet } from "@hooks/usePet";
 import { VaccineDTO } from "@dtos/VaccineDTO";
-import { VACCINES } from "src/mock";
 import { useNavigation } from "@react-navigation/native";
 import { useVaccine } from "@hooks/useVaccine";
 import { dateToString, isBeforeToday, isOneMonthFromToday } from "@utils/date";
@@ -20,12 +19,14 @@ import CPBadge from "@components/CPBadge";
 const VaccineHistory: React.FC = () => {
   const { selectedPet } = usePet();
   const age = ageCalc(selectedPet.birthdate);
-  const { fetchPetVaccines } = useVaccine();
+  const { fetchPetVaccines, selectedPetVaccines, loading } = useVaccine();
 
   const navigation = useNavigation();
 
   useEffect(() => {
-    fetchPetVaccines(selectedPet.id);
+    if (selectedPet.id) {
+      fetchPetVaccines(selectedPet.id);
+    }
   }, []);
 
   const Header = () => (
@@ -43,20 +44,22 @@ const VaccineHistory: React.FC = () => {
   const AddVaccineButton = () => (
     <Pressable
       style={styles.addVaccineButton}
-      onPress={
-        () => navigation.navigate("RepeatDose")
-        // navigation.navigate("NewVaccine", { edit: false, repeat: false })
-      }
+      onPress={() => navigation.navigate("RepeatDose")}
     >
       <Text style={styles.buttonText}>adicionar vacina</Text>
     </Pressable>
   );
 
   return (
-    <CPContainer noScroll goBack title="histórico de vacinas">
+    <CPContainer
+      noScroll
+      goBack
+      title="histórico de vacinas"
+      isLoading={loading}
+    >
       <FlatList
-        data={VACCINES}
-        keyExtractor={(item) => item.id.toString()}
+        data={selectedPetVaccines}
+        keyExtractor={(item) => item.id!}
         ListHeaderComponent={Header()}
         renderItem={({ item }) => <VaccineItem vaccine={item} />}
       />
@@ -71,16 +74,27 @@ type VaccineItemProps = {
 const VaccineItem: React.FC<VaccineItemProps> = ({ vaccine }) => {
   const [expanded, setExpanded] = useState(false);
   const navigation = useNavigation();
-  const { selectVaccine } = useVaccine();
+  const { selectVaccine, deleteVaccine } = useVaccine();
+  const { selectedPet } = usePet();
 
   const date = dateToString(vaccine.date);
-  const nextDoseDate = dateToString(vaccine.nextDoseDate);
+  const nextDoseDate = dateToString(vaccine.nextdosedate);
 
   const missedVaccine =
-    isBeforeToday(vaccine.nextDoseDate) && !vaccine.nextDoseTaken;
-  const vaccineIsNear = isOneMonthFromToday(vaccine.nextDoseDate);
+    isBeforeToday(vaccine.nextdosedate) && !vaccine.nextdosetaken;
+  const vaccineIsNear = isOneMonthFromToday(vaccine.nextdosedate);
 
   type Action = "edit" | "remove";
+
+  const handleDelete = async () => {
+    try {
+      await deleteVaccine(vaccine.id!, selectedPet.id!);
+      Alert.alert("Sucesso", "Vacina removida com sucesso");
+    } catch (error) {
+      console.log("error", error);
+      Alert.alert("Atenção", "Não foi possível remover a vacina =(");
+    }
+  };
 
   const ActionButton = (action: Action) => {
     const handlePress = () => {
@@ -89,7 +103,7 @@ const VaccineItem: React.FC<VaccineItemProps> = ({ vaccine }) => {
         navigation.navigate("NewVaccine", { edit: true, repeat: false });
       } else {
         Alert.alert("Atenção", "Deseja excluir esta vacina?", [
-          { text: "Sim", style: "destructive", onPress: () => {} },
+          { text: "Sim", style: "destructive", onPress: () => handleDelete() },
           { text: "Não", isPreferred: true, onPress: () => {} },
         ]);
       }
@@ -206,10 +220,10 @@ const VaccineItem: React.FC<VaccineItemProps> = ({ vaccine }) => {
               <Text style={styles.vaccineInfoValue}>{vaccine.description}</Text>
             </View>
           )}
-          {vaccine.vetName && (
+          {vaccine.vetname && (
             <View style={styles.infoRow}>
               <Text style={styles.vaccineInfoLabel}>Veterinário(a)</Text>
-              <Text style={styles.vaccineInfoValue}>{vaccine.vetName}</Text>
+              <Text style={styles.vaccineInfoValue}>{vaccine.vetname}</Text>
             </View>
           )}
           {vaccine.clinic && (
@@ -218,7 +232,7 @@ const VaccineItem: React.FC<VaccineItemProps> = ({ vaccine }) => {
               <Text style={styles.vaccineInfoValue}>{vaccine.clinic}</Text>
             </View>
           )}
-          {vaccine.nextDoseDate && (
+          {vaccine.nextdosedate && (
             <View style={styles.infoRow}>
               <Text style={styles.vaccineInfoLabel}>Próxima dose</Text>
               <Text style={styles.vaccineInfoValue}>{nextDoseDate}</Text>
@@ -231,7 +245,7 @@ const VaccineItem: React.FC<VaccineItemProps> = ({ vaccine }) => {
             </View>
           )}
 
-          {!vaccine.nextDoseTaken && RepeatDoseButton()}
+          {!vaccine.nextdosetaken && RepeatDoseButton()}
 
           <View style={styles.infoRow}>
             {ActionButton("edit")}
