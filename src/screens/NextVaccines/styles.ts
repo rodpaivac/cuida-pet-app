@@ -1,6 +1,6 @@
 import { COLOR } from "@theme/colors";
 import { FONT } from "@theme/fonts";
-import { isTablet, scale, verticalScale } from "@utils/dimensions";
+import { isTablet, scale, screenHeight, screenWidth, verticalScale } from "@utils/dimensions";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
@@ -35,6 +35,17 @@ export const styles = StyleSheet.create({
     icon: {
         width: scale(40),
         height: scale(40)
+    },
+    emptyContainer: {
+        justifyContent: 'center',
+
+
+    },
+    emptyText: {
+        textAlign: 'center',
+        width: screenWidth - scale(35),
+        fontFamily: FONT.PoppinsLight,
+        color: COLOR.primary,
     }
 
 });

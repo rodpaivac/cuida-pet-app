@@ -28,7 +28,7 @@ const RepeatDose: React.FC = () => {
 
   const getNotRepeatedVaccines = () => {
     const data = selectedPetVaccines.filter(
-      (element) => !element.nextDoseTaken
+      (element) => !element.nextdosetaken
     );
     setNotRepeatedVaccines(data);
   };
@@ -91,12 +91,12 @@ const RepeatDose: React.FC = () => {
   };
 
   return (
-    <CPContainer dark goBack title="nova vacina" noScroll>
+    <CPContainer dark goBack title="repetir dose" noScroll>
       <FlatList
         ListHeaderComponent={() => Header()}
         data={notRepeatedVaccines}
         renderItem={({ item }) => SelectableVaccineItem(item)}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id!}
         ListFooterComponent={Footer()}
         showsVerticalScrollIndicator={false}
       />

@@ -14,12 +14,20 @@ const Notifications: React.FC = () => {
       </View>
     );
   };
+
+  const EmptyComponent = () => (
+    <View style={styles.emptyContainer}>
+      <Text style={styles.emptyText}>Você ainda não possui notificações</Text>
+    </View>
+  );
+
   return (
     <CPContainer title="notificações" goBack noScroll>
       <FlatList
         data={NOTIFICATIONS}
         renderItem={({ item }) => NotificationItem(item)}
         keyExtractor={(item) => item.id}
+        ListEmptyComponent={EmptyComponent()}
       />
     </CPContainer>
   );

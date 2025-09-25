@@ -12,7 +12,6 @@ export const signInApi = async (cpf: string, password: string) => {
 
 }
 
-
 export const newUserApi = async (user: UserDTO, image: FormData | null) => {
 
     const response = await api.post("/new-user", {
@@ -70,6 +69,49 @@ export const editUserApi = async (user: UserDTO, image: FormData | null) => {
     return;
 }
 
+export const changePasswordApi = async (currentPassword: string, newPassword: string, cpf: string) => {
+    if (!currentPassword || !newPassword || !cpf) {
+        return;
+    }
+
+    const response = await api.put("/change-password", {
+        cpf: cpf, currentPassword: currentPassword, newPassword: newPassword
+    })
+
+    if (response.data) {
+        return response.data
+    }
+}
+
+export const verifyUserDataApi = async (cpf: string, phone: string, birthdate: Date, email: string) => {
+
+    if (!phone || !birthdate || !cpf || !email) {
+        return;
+    }
+
+    const response = await api.post("/verify-user-data", {
+        cpf: cpf, phone: phone, birthdate: birthdate, email: email
+    })
+
+    if (response.data) {
+        return response.data.valid
+    }
+
+}
+
+export const forgotPasswordApi = async (cpf: string, newPassword: string) => {
+    if (!cpf || !newPassword) {
+        return;
+    }
+
+    const response = await api.put("/forgot-password", {
+        cpf: cpf, password: newPassword
+    })
+
+    if (response.data) {
+        return response.data;
+    }
+}
 
 const uploadUserImageApi = async (cpf: string, image: FormData) => {
     if (!cpf || !image) {

@@ -21,6 +21,12 @@ type CardProps = {
 const colors = [COLOR.brown, COLOR.purple, COLOR.green1];
 
 const CPPetCarousel: React.FC<Props> = ({ pets, selectPet }) => {
+  const EmptyComponent = () => (
+    <View style={styles.emptyContainer}>
+      <Text style={styles.emptyText}>Você ainda não possui nenhum pet</Text>
+    </View>
+  );
+
   const renderItem = (item: PetDTO, index: number) => (
     <CPPetCarouselCard pet={item} index={index} selectPet={selectPet} />
   );
@@ -33,6 +39,7 @@ const CPPetCarousel: React.FC<Props> = ({ pets, selectPet }) => {
       showsHorizontalScrollIndicator={false}
       style={styles.carousel}
       contentContainerStyle={{ paddingHorizontal: 15 }}
+      ListEmptyComponent={EmptyComponent()}
     />
   );
 };

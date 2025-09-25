@@ -3,27 +3,61 @@ import CPContainer from "@components/CPContainer";
 import CPTextInput from "@components/CPTextInput";
 import { SpaceV } from "@components/Space";
 import React, { useState } from "react";
-import { View } from "react-native";
+import { Alert, Text, View } from "react-native";
 import { styles } from "./styles";
 import { useNavigation } from "@react-navigation/native";
+import { useAuth } from "@hooks/useAuth";
+import { removeCpfMask, removePhoneMask } from "@utils/masks";
+import { stringToDate } from "@utils/date";
 
 const UserDataConfirmation: React.FC = () => {
+  const { verifyUserData } = useAuth();
+
   const [email, setEmail] = useState<string | null>(null);
   const [cpf, setCpf] = useState<string | null>(null);
   const [birthdate, setBirthdate] = useState<string | null>(null);
   const [phone, setPhone] = useState<string | null>(null);
 
+  const [loading, setLoading] = useState(false);
+
   const navigation = useNavigation();
 
   const hideButton = !email || !cpf || !birthdate || !phone;
 
-  const handlePress = () => {
-    navigation.navigate("ForgotPassword");
+  const handlePress = async () => {
+    if (!phone || !birthdate || !cpf || !email) {
+      Alert.alert("Atenção", "Todos os campos são obrigatórios");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      await verifyUserData(
+        removeCpfMask(cpf),
+        removePhoneMask(phone),
+        email,
+        stringToDate(birthdate)!
+      );
+      navigation.navigate("ForgotPassword", { cpf: removeCpfMask(cpf) });
+    } catch (error) {
+      console.log("error", error);
+      Alert.alert(
+        "Atenção",
+        "Não foi possível verificar seus dados pessoais =("
+      );
+    } finally {
+      setLoading(false);
+    }
   };
   const Footer = () => (
     <View style={styles.footer}>
       {!hideButton && (
-        <CPButton title="prosseguir" onPress={handlePress} dark />
+        <CPButton
+          title="prosseguir"
+          onPress={handlePress}
+          dark
+          loading={loading}
+        />
       )}
     </View>
   );
@@ -31,15 +65,9 @@ const UserDataConfirmation: React.FC = () => {
   const Body = () => (
     <>
       <SpaceV amount={15} />
-      <CPTextInput
-        label="email"
-        placeholder="email do usuário"
-        value={email}
-        onChangeText={(text) => setEmail(text)}
-        dark
-        keyboardType="email-address"
-      />
-      <SpaceV amount={15} />
+      <Text style={styles.title}>
+        Verifique seus dados pessoas para redefinir a sua senha:
+      </Text>
       <CPTextInput
         label="CPF"
         placeholder="CPF do usuário"
@@ -48,6 +76,16 @@ const UserDataConfirmation: React.FC = () => {
         dark
         keyboardType="numeric"
         mask="cpf"
+      />
+      <SpaceV amount={15} />
+      <CPTextInput
+        label="email"
+        placeholder="email do usuário"
+        value={email}
+        onChangeText={(text) => setEmail(text)}
+        dark
+        keyboardType="email-address"
+        autoCapitalize="none"
       />
       <SpaceV amount={15} />
       <CPTextInput
@@ -73,7 +111,7 @@ const UserDataConfirmation: React.FC = () => {
   );
 
   return (
-    <CPContainer goBack title="esqueci minha senha">
+    <CPContainer goBack title="verificação de dados">
       {Body()}
       {Footer()}
     </CPContainer>

@@ -1,5 +1,5 @@
 import CPContainer from "@components/CPContainer";
-import React from "react";
+import React, { useState } from "react";
 import userImage from "@assets/images/user.png";
 
 import { Image, Pressable, Text, View } from "react-native";
@@ -9,6 +9,8 @@ import { useNavigation } from "@react-navigation/native";
 
 const Menu: React.FC = () => {
   const { signOut, user } = useAuth();
+  const [loadError, setLoadError] = useState(false);
+
   const navigation = useNavigation();
 
   const DefaultAvatar = () => (
@@ -19,8 +21,12 @@ const Menu: React.FC = () => {
 
   const Header = () => (
     <View style={styles.headerRow}>
-      {user.avatar && user.avatar !== "" ? (
-        <Image style={styles.userImage} src={user.avatar} />
+      {user.avatar && user.avatar !== "" && !loadError ? (
+        <Image
+          onError={() => setLoadError(true)}
+          style={styles.userImage}
+          source={{ uri: user.avatar }}
+        />
       ) : (
         DefaultAvatar()
       )}

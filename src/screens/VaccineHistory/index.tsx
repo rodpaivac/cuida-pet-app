@@ -44,7 +44,11 @@ const VaccineHistory: React.FC = () => {
   const AddVaccineButton = () => (
     <Pressable
       style={styles.addVaccineButton}
-      onPress={() => navigation.navigate("RepeatDose")}
+      onPress={() => {
+        selectedPetVaccines.length != 0
+          ? navigation.navigate("RepeatDose")
+          : navigation.navigate("NewVaccine", { edit: false, repeat: false });
+      }}
     >
       <Text style={styles.buttonText}>adicionar vacina</Text>
     </Pressable>
@@ -82,7 +86,8 @@ const VaccineItem: React.FC<VaccineItemProps> = ({ vaccine }) => {
 
   const missedVaccine =
     isBeforeToday(vaccine.nextdosedate) && !vaccine.nextdosetaken;
-  const vaccineIsNear = isOneMonthFromToday(vaccine.nextdosedate);
+  const vaccineIsNear =
+    isOneMonthFromToday(vaccine.nextdosedate) && !vaccine.nextdosetaken;
 
   type Action = "edit" | "remove";
 

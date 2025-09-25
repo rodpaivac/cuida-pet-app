@@ -12,7 +12,6 @@ export const styles = StyleSheet.create({
         color: COLOR.primary,
         fontSize: 35,
         marginBottom: verticalScale(15)
-
     },
     subtitle: {
         fontFamily: FONT.PoppinsExtraLight,

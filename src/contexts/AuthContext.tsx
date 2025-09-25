@@ -8,7 +8,14 @@ import {
   storageTokenGet,
   storageTokenRemove,
 } from "@storage/storageUser";
-import { editUserApi, newUserApi, signInApi } from "@service/auth";
+import {
+  changePasswordApi,
+  editUserApi,
+  forgotPasswordApi,
+  newUserApi,
+  signInApi,
+  verifyUserDataApi,
+} from "@service/auth";
 
 export type AuthContextDataProps = {
   user: UserDTO;
@@ -18,6 +25,14 @@ export type AuthContextDataProps = {
   newUser: (user: UserDTO, image: FormData | null) => void;
   token: string | null;
   editUser: (user: UserDTO, image: FormData | null) => void;
+  changePassword: (currentPassword: string, newPassword: string) => void;
+  verifyUserData: (
+    cpf: string,
+    phone: string,
+    email: string,
+    birthdate: Date
+  ) => void;
+  forgotPassword: (cpf: string, newPassword: string) => void;
 };
 
 type AuthContextProviderProps = {
@@ -53,13 +68,13 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     }
   }
 
-  function signOut() {
+  async function signOut() {
     try {
       setIsLoadingUserStorageData(true);
       setUser({} as UserDTO);
       setToken(null);
-      storageUserRemove();
-      storageTokenRemove();
+      await storageUserRemove();
+      await storageTokenRemove();
     } catch (error) {
       throw error;
     } finally {
@@ -93,6 +108,40 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     await storageUserSave(response);
   }
 
+  async function changePassword(currentPassword: string, newPassword: string) {
+    try {
+      const response = await changePasswordApi(
+        currentPassword,
+        newPassword,
+        user.cpf
+      );
+    } catch (error) {
+      console.log("error", error);
+      throw error;
+    }
+  }
+
+  async function verifyUserData(
+    cpf: string,
+    phone: string,
+    email: string,
+    birthdate: Date
+  ) {
+    try {
+      await verifyUserDataApi(cpf, phone, birthdate, email);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async function forgotPassword(cpf: string, newPassword: string) {
+    try {
+      await forgotPasswordApi(cpf, newPassword);
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+
   useEffect(() => {
     loadUserData();
   }, []);
@@ -107,6 +156,9 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
         newUser,
         token,
         editUser,
+        changePassword,
+        verifyUserData,
+        forgotPassword,
       }}
     >
       {children}

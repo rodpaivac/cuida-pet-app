@@ -29,14 +29,23 @@ const NextVaccines: React.FC = () => {
     );
   };
 
+  const EmptyComponent = () => (
+    <View style={styles.emptyContainer}>
+      <Text style={styles.emptyText}>
+        Seus pets estão com as vacinas em dia!
+      </Text>
+    </View>
+  );
+
   return (
     <CPContainer dark goBack title="próximas vacinas" noScroll>
       <SectionList
-        sections={petsNextVaccines}
+        sections={petsNextVaccines ?? []}
         keyExtractor={(item, index) => item + index}
         renderSectionHeader={({ section }) => SectionHeader(section.title)}
         renderItem={({ item }) => Item(item)}
         showsVerticalScrollIndicator={false}
+        ListEmptyComponent={EmptyComponent()}
       />
     </CPContainer>
   );

@@ -13,7 +13,7 @@ export declare global {
             NewUser: undefined;
             NewVaccine: NewVaccineRouteProp;
             RepeatDose: undefined;
-            ForgotPassword: undefined;
+            ForgotPassword: ForgotPasswordRouteProp;
             ChangePassword: undefined;
             UserDataConfirmation: undefined;
             Notifications: undefined;
@@ -33,6 +33,10 @@ export type NewPetRouteProp = {
 export type NewVaccineRouteProp = {
     edit: boolean;
     repeat: boolean;
+}
+
+export type ForgotPasswordRouteProp = {
+    cpf: string;
 }
 
 

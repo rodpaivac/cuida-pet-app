@@ -95,7 +95,7 @@ export const styles = StyleSheet.create({
         marginBottom: verticalScale(5)
     },
     defaultImageContainer: {
-        backgroundColor: COLOR.sand,
+        backgroundColor: COLOR.primary,
         borderRadius: 140,
         width: scale(140),
         height: scale(140),
