@@ -4,7 +4,10 @@
     "slug": "cuida-pet-app",
     "orientation": "portrait",
     "version": "1.0.0",
-    "plugins": ["expo-font"],
+    "plugins": [
+      "expo-font",
+      ["onesignal-expo-plugin", { "mode": "development" }]
+    ],
     "splash": {
       "image": "./assets/logo.png",
       "resizeMode": "contain",
@@ -12,6 +15,10 @@
     },
     "android": {
       "package": "com.cuidapet.app"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.rodrigo.cuidapetapp"
     }
   }
 }

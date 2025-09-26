@@ -1,4 +1,4 @@
-package com.cuidapetapp
+package com.cuidapet.app
 
 import android.app.Application
 import android.content.res.Configuration

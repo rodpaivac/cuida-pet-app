@@ -2,9 +2,7 @@ import React, { useMemo, useRef, useState } from "react";
 import {
   Alert,
   Animated,
-  Button,
   Image,
-  Pressable,
   StyleSheet,
   Text,
   TouchableWithoutFeedback,
@@ -17,20 +15,16 @@ import login from "@assets/images/login_2x.png";
 import { screenHeight, verticalScale } from "@utils/dimensions";
 import { useAuth } from "@hooks/useAuth";
 import { useNavigation } from "@react-navigation/native";
-import BottomSheet, {
-  BottomSheetBackdrop,
-  BottomSheetView,
-} from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { COLOR } from "@theme/colors";
 import CPButton from "@components/CPButton";
 import CPTextInput from "@components/CPTextInput";
 import CPTextButton from "@components/CPTextButton";
 import { removeCpfMask } from "@utils/masks";
-import CPLoading from "@components/CPLoading";
 import { SpaceV } from "@components/Space";
 
 const SCREEN_HEIGHT = screenHeight;
-const INITIAL_HEIGHT = verticalScale(222);
+const INITIAL_HEIGHT = verticalScale(226);
 const FINAL_TOP = SCREEN_HEIGHT * 0.8;
 
 const Login: React.FC = () => {
@@ -131,6 +125,7 @@ const Login: React.FC = () => {
           }
           value={password}
           onChangeText={setPassword}
+          autoCapitalize="none"
         />
         <View style={styles.buttonContainer}>
           <CPButton

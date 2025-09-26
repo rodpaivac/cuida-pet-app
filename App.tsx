@@ -17,6 +17,10 @@ import { AuthContextProvider } from "@contexts/AuthContext";
 import { PetContextProvider } from "@contexts/PetContext";
 import { VaccineContextProvider } from "@contexts/VaccineContext";
 
+import { OneSignal } from "react-native-onesignal";
+
+OneSignal.initialize("aefe596e-097d-4c5e-9a20-4fb4e1685e33");
+
 export default function App() {
   const [fontsLoaded] = useFonts({
     Poppins_200ExtraLight,
