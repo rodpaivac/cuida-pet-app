@@ -8,6 +8,8 @@ import { PetDTO } from "@dtos/PetDTO";
 import { useNavigation } from "@react-navigation/native";
 import { usePet } from "@hooks/usePet";
 import CPContextualLoading from "@components/CPContextualLoading";
+import { useAuth } from "@hooks/useAuth";
+import { tagUserInfoCreate } from "@notifications/notificationsTags";
 
 const Home: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -15,6 +17,9 @@ const Home: React.FC = () => {
     useState<boolean>(false);
   const navigation = useNavigation();
   const { selectPet, pets, fetchPets } = usePet();
+
+  const { user } = useAuth();
+  tagUserInfoCreate(user);
 
   // show contextual loading when previous screen is not Menu or NewPet
   const navigationState = navigation.getState();

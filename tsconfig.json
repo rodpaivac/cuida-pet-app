@@ -12,7 +12,8 @@
       "@service/*": ["./src/service/*"],
       "@contexts/*": ["./src/contexts/*"],
       "@dtos/*": ["./src/dtos/*"],
-      "@hooks/*": ["./src/hooks/*"]
+      "@hooks/*": ["./src/hooks/*"],
+      "@notifications/*": ["./src/notifications/*"]
     }
   },
   "include": ["src", "src/@types"],

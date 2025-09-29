@@ -16,6 +16,7 @@ module.exports = {
           "@contexts": "./src/contexts",
           "@dtos/*": "./src/dtos/*",
           "@hooks/*": "./src/hooks/*",
+          "@notifications/*": "./src/notifications/*",
         },
       },
     ],
