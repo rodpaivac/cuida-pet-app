@@ -88,7 +88,7 @@ const CPHeader: React.FC<Props> = ({
       ) : (
         <>
           {MenuButton()}
-          {NotificationButton()}
+          {/* {NotificationButton()} */}
         </>
       )}
     </View>

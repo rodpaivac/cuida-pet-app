@@ -3,4 +3,5 @@ export type NotificationDTO = {
     title: string;
     message: string;
     date: Date;
+    route: string;
 }

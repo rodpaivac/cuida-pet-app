@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Image, Pressable, Text, View } from "react-native";
 import { styles } from "./styles";
 import close from "@assets/icons/close.png";
@@ -10,16 +10,22 @@ type Props = {
   onClose: () => void;
 };
 
-type AdditionalDataProps = {
+export type NotificationAdditionalDataProps = {
   route?: string;
 };
 
 const CPNotification: React.FC<Props> = ({ data, onClose }) => {
   const navigation = useNavigation();
 
+  useEffect(() => {
+    setTimeout(() => {
+      onClose();
+    }, 7000);
+  }, []);
+
   const handleOnPress = () => {
     // opção de navegar utilizando Additional Data
-    const { route } = data.additionalData as AdditionalDataProps;
+    const { route } = data.additionalData as NotificationAdditionalDataProps;
     if (route === "/next-vaccines") {
       navigation.navigate("NextVaccines");
       onClose();
