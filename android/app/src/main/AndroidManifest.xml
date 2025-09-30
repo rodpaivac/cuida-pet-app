@@ -26,6 +26,7 @@
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
         <data android:scheme="exp+cuida-pet-app"/>
+        <data android:scheme="cuida-pet-app"/>
       </intent-filter>
     </activity>
   </application>

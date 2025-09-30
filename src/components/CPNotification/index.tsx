@@ -18,11 +18,18 @@ const CPNotification: React.FC<Props> = ({ data, onClose }) => {
   const navigation = useNavigation();
 
   const handleOnPress = () => {
+    // opção de navegar utilizando Additional Data
     const { route } = data.additionalData as AdditionalDataProps;
-    if (route === "NextVaccines") {
+    if (route === "/next-vaccines") {
       navigation.navigate("NextVaccines");
       onClose();
     }
+
+    // launchURL está vindo undefined, aparentemente ele só vem no click, e não no "NotificationWillDisplayEvent"
+    // if (data.launchURL) {
+    //   Linking.openURL(data.launchURL);
+    //   onClose();
+    // }
   };
   return (
     <Pressable style={styles.container} onPress={handleOnPress}>

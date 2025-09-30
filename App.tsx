@@ -22,10 +22,6 @@ import { NotificationClickEvent, OneSignal } from "react-native-onesignal";
 OneSignal.initialize("aefe596e-097d-4c5e-9a20-4fb4e1685e33");
 OneSignal.Notifications.requestPermission(true);
 
-type AdditionalDataProps = {
-  route?: string;
-};
-
 export default function App() {
   const [fontsLoaded] = useFonts({
     Poppins_200ExtraLight,
@@ -37,14 +33,7 @@ export default function App() {
 
   useEffect(() => {
     const handleNotificationClick = (event: NotificationClickEvent): void => {
-      console.log("click", event);
-
-      const { route } = event.notification
-        .additionalData as AdditionalDataProps;
-
-      if (route === "NextVaccines") {
-        // navigation.navigate("NextVaccines");
-      }
+      console.log("click notification", event);
     };
 
     OneSignal.Notifications.addEventListener("click", handleNotificationClick);

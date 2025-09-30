@@ -37,13 +37,30 @@ export function Routes() {
       );
   }, []);
 
+  const linking = {
+    prefixes: ["cuida-pet-app://"],
+    config: {
+      screens: {
+        //cuida-pet-app://next-vaccines
+        NextVaccines: {
+          path: "/next-vaccines",
+        },
+        // // exemplo de recebimento de parâmetro pelo deeplink
+        // details: {
+        //   path: "/details/:productId",
+        //   parse: { productId: (productId: string) => productId },
+        // },
+      },
+    },
+  };
+
   if (isLoadingUserStorageData) {
     return <CPLoading isLoading />;
   }
 
   return (
     <View style={{ flex: 1, backgroundColor: "#FFD8C4" }}>
-      <NavigationContainer>
+      <NavigationContainer linking={linking}>
         {notification && (
           <CPNotification
             data={notification}
