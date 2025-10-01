@@ -6,6 +6,7 @@ import { Image, Pressable, Text, View } from "react-native";
 import { styles } from "./styles";
 import { useAuth } from "@hooks/useAuth";
 import { useNavigation } from "@react-navigation/native";
+import { phoneMask } from "@utils/masks";
 
 const Menu: React.FC = () => {
   const { signOut, user } = useAuth();
@@ -33,7 +34,7 @@ const Menu: React.FC = () => {
       <View style={styles.headerInfo}>
         <Text style={styles.name}>{user.name}</Text>
         <Text style={styles.infoText}>{user.email}</Text>
-        <Text style={styles.infoText}>{user.phone}</Text>
+        <Text style={styles.infoText}>{phoneMask(user.phone)}</Text>
       </View>
     </View>
   );
@@ -61,7 +62,7 @@ const Menu: React.FC = () => {
         {ItemButton("adicionar pet", () =>
           navigation.navigate("NewPet", { edit: false })
         )}
-        {ItemButton("notificações", () => navigation.navigate("Notifications"))}
+        {/* {ItemButton("notificações", () => navigation.navigate("Notifications"))} */}
         {ItemButton("próximas vacinas", () =>
           navigation.navigate("NextVaccines")
         )}

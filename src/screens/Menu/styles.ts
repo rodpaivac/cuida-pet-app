@@ -1,6 +1,6 @@
 import { COLOR } from "@theme/colors";
 import { FONT } from "@theme/fonts";
-import { isTablet, scale, verticalScale } from "@utils/dimensions";
+import { isTablet, scale, screenHeight, verticalScale } from "@utils/dimensions";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
@@ -34,7 +34,7 @@ export const styles = StyleSheet.create({
         fontFamily: FONT.PoppinsBold,
         color: COLOR.primary,
         fontSize: 30,
-        marginBottom: verticalScale(15)
+        marginBottom: verticalScale(5)
     },
     itemsContainer: {
         padding: scale(15)
@@ -43,7 +43,7 @@ export const styles = StyleSheet.create({
         fontFamily: FONT.PoppinsRegular,
         color: COLOR.primary,
         fontSize: 20,
-        marginTop: verticalScale(150)
+        marginTop: verticalScale(screenHeight * 0.25)
     },
     defaultAvatarContainer: {
         backgroundColor: COLOR.primary,

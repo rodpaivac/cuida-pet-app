@@ -57,7 +57,7 @@ export const isOneMonthFromToday = (date?: Date) => {
 
     const compare = new Date(normalizedDate);
 
-    if (today < compare && compare < nextMonth) {
+    if (today <= compare && compare <= nextMonth) {
         return true
     }
 
