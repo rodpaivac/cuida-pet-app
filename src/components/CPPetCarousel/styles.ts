@@ -6,7 +6,8 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
     carousel: {
         marginTop: verticalScale(45),
-        marginBottom: isTablet() ? verticalScale(55) : verticalScale(95)
+        marginBottom: isTablet() ? verticalScale(55) : verticalScale(95),
+        paddingLeft: scale(15),
     },
     card: {
         borderRadius: 60,

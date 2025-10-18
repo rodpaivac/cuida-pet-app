@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  ActivityIndicator,
-  FlatList,
-  Image,
-  Pressable,
-  Text,
-  View,
-} from "react-native";
+import { ActivityIndicator, Image, Pressable, Text, View } from "react-native";
 import { styles } from "./styles";
 import paw from "@assets/icons/paw.png";
 import petImage from "@assets/images/default_pet.png";
@@ -14,6 +7,7 @@ import { ageCalc } from "@utils/age";
 import { COLOR } from "@theme/colors";
 import { PetDTO } from "@dtos/PetDTO";
 import { scale } from "@utils/dimensions";
+import { ScrollView } from "react-native-gesture-handler";
 
 type Props = {
   pets: PetDTO[];
@@ -36,19 +30,34 @@ const CPPetCarousel: React.FC<Props> = ({ pets, selectPet }) => {
   );
 
   const renderItem = (item: PetDTO, index: number) => (
-    <CPPetCarouselCard pet={item} index={index} selectPet={selectPet} />
+    <CPPetCarouselCard
+      key={item.id}
+      pet={item}
+      index={index}
+      selectPet={selectPet}
+    />
   );
   return (
-    <FlatList
-      data={pets}
-      renderItem={({ item, index }) => renderItem(item, index)}
-      keyExtractor={(item) => item.id!}
+    // <FlatList
+    //   data={pets}
+    //   renderItem={({ item, index }) => renderItem(item, index)}
+    //   keyExtractor={(item) => item.id!}
+    //   horizontal
+    //   showsHorizontalScrollIndicator={false}
+    //   style={styles.carousel}
+    //   contentContainerStyle={{ paddingHorizontal: 15 }}
+    //   ListEmptyComponent={EmptyComponent}
+    // />
+
+    <ScrollView
       horizontal
       showsHorizontalScrollIndicator={false}
       style={styles.carousel}
-      contentContainerStyle={{ paddingHorizontal: 15 }}
-      ListEmptyComponent={EmptyComponent}
-    />
+    >
+      {pets.length === 0
+        ? EmptyComponent()
+        : pets.map((element, index) => renderItem(element, index))}
+    </ScrollView>
   );
 };
 
@@ -59,22 +68,9 @@ const CPPetCarouselCard: React.FC<CardProps> = ({ pet, index, selectPet }) => {
   const [imageLoading, setImageLoading] = useState(false);
 
   const DefaultImage = () => (
-    <>
-      {imageLoading ? (
-        <View style={styles.loadingImage}>
-          <ActivityIndicator size={scale(30)} color={COLOR.darkBrown} />
-        </View>
-      ) : (
-        <View style={styles.defaultImageContainer}>
-          <Image
-            style={styles.defaultImage}
-            source={petImage}
-            onLoadStart={() => setImageLoading(true)}
-            onLoadEnd={() => setImageLoading(false)}
-          />
-        </View>
-      )}
-    </>
+    <View style={styles.defaultImageContainer}>
+      <Image style={styles.defaultImage} source={petImage} />
+    </View>
   );
   return (
     <Pressable
