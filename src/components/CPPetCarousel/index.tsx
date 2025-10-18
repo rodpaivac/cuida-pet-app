@@ -39,7 +39,7 @@ const CPPetCarousel: React.FC<Props> = ({ pets, selectPet }) => {
       showsHorizontalScrollIndicator={false}
       style={styles.carousel}
       contentContainerStyle={{ paddingHorizontal: 15 }}
-      ListEmptyComponent={EmptyComponent()}
+      ListEmptyComponent={EmptyComponent}
     />
   );
 };
@@ -63,7 +63,7 @@ const CPPetCarouselCard: React.FC<CardProps> = ({ pet, index, selectPet }) => {
       </View>
       <View style={styles.petInfo}>
         {pet.image ? (
-          <Image style={styles.petImage} src={pet.image} />
+          <Image style={styles.petImage} source={{ uri: pet.image }} />
         ) : (
           DefaultImage()
         )}

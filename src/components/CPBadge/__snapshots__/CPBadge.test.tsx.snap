@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component: CPBadge should match snapshot 1`] = `
+<View
+  style={
+    [
+      {
+        "alignItems": "center",
+        "borderRadius": 7.5,
+        "height": 37.220982142857146,
+        "justifyContent": "center",
+        "paddingHorizontal": 18.115942028985508,
+      },
+      {
+        "backgroundColor": "#BF5639",
+      },
+    ]
+  }
+>
+  <Text
+    style={
+      [
+        {
+          "fontFamily": "Poppins_400Regular",
+          "fontSize": 11,
+        },
+        {
+          "color": "#F5F5ED",
+        },
+      ]
+    }
+  >
+    teste
+  </Text>
+</View>
+`;

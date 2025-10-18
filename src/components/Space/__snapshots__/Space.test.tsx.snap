@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component: Space should match snapshot: SpaceH 1`] = `
+<View
+  style={
+    {
+      "width": NaN,
+    }
+  }
+/>
+`;
+
+exports[`Component: Space should match snapshot: SpaceV 1`] = `
+<View
+  style={
+    {
+      "height": NaN,
+    }
+  }
+/>
+`;

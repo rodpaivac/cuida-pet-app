@@ -57,6 +57,7 @@ const CPTextInput: React.FC<Props> = ({
     <View>
       {label ? (
         <Text
+          testID="label"
           style={[styles.label, { color: dark ? COLOR.darkBrown : COLOR.sand }]}
         >
           {label}
@@ -101,7 +102,9 @@ const CPTextInput: React.FC<Props> = ({
           style={styles.forgotPasswordContainer}
           onPress={onForgotPasswordPress}
         >
-          <Text style={styles.forgotPassword}>Esqueci minha senha</Text>
+          <Text style={styles.forgotPassword} testID="forgot-password">
+            Esqueci minha senha
+          </Text>
         </Pressable>
       )}
     </View>

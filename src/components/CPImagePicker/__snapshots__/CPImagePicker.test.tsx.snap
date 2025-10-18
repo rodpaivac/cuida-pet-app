@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component: CPImagePicker should match snapshot 1`] = `
+<View
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    {
+      "alignItems": "center",
+    }
+  }
+>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "#FFD8C4",
+        "borderRadius": 142,
+        "height": 199.2753623188406,
+        "justifyContent": "center",
+        "width": 199.2753623188406,
+      }
+    }
+  >
+    <Image
+      source={
+        {
+          "testUri": "../../../src/assets/images/user.png",
+        }
+      }
+      style={
+        {
+          "height": 117.7536231884058,
+          "width": 117.7536231884058,
+        }
+      }
+    />
+  </View>
+  <Text
+    style={
+      {
+        "color": "#F5F5ED",
+        "fontFamily": "Poppins_400Regular",
+        "fontSize": 14,
+        "marginTop": 22.33258928571429,
+      }
+    }
+  >
+    alterar imagem
+  </Text>
+</View>
+`;

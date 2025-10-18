@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component: CPContainer should match snapshot 1`] = `
+<RNCSafeAreaView
+  edges={
+    {
+      "bottom": "additive",
+      "left": "additive",
+      "right": "additive",
+      "top": "additive",
+    }
+  }
+  style={
+    {
+      "backgroundColor": "#FFD8C4",
+      "flex": 1,
+      "paddingTop": 22.33258928571429,
+    }
+  }
+>
+  <View
+    onLayout={[Function]}
+    style={
+      [
+        {
+          "flex": 1,
+        },
+        {
+          "paddingBottom": 0,
+        },
+      ]
+    }
+  >
+    <RCTScrollView
+      contentContainerStyle={
+        {
+          "flexGrow": 1,
+        }
+      }
+      keyboardShouldPersistTaps="handled"
+      showsVerticalScrollIndicator={false}
+      style={
+        [
+          {
+            "flex": 1,
+          },
+          {
+            "backgroundColor": "#FFD8C4",
+            "padding": 27.17391304347826,
+          },
+        ]
+      }
+    >
+      <View />
+    </RCTScrollView>
+  </View>
+</RNCSafeAreaView>
+`;

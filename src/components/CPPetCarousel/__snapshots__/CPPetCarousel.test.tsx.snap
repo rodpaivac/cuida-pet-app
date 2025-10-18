@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component: CPPetCarousel should match snapshot 1`] = `
+<RCTScrollView
+  ListEmptyComponent={[Function]}
+  contentContainerStyle={
+    {
+      "paddingHorizontal": 15,
+    }
+  }
+  data={[]}
+  getItem={[Function]}
+  getItemCount={[Function]}
+  horizontal={true}
+  keyExtractor={[Function]}
+  onContentSizeChange={[Function]}
+  onLayout={[Function]}
+  onMomentumScrollBegin={[Function]}
+  onMomentumScrollEnd={[Function]}
+  onScroll={[Function]}
+  onScrollBeginDrag={[Function]}
+  onScrollEndDrag={[Function]}
+  removeClippedSubviews={false}
+  renderItem={[Function]}
+  scrollEventThrottle={0.0001}
+  showsHorizontalScrollIndicator={false}
+  stickyHeaderIndices={[]}
+  style={
+    {
+      "marginBottom": 81.88616071428572,
+      "marginTop": 66.99776785714286,
+    }
+  }
+  viewabilityConfigCallbackPairs={[]}
+>
+  <View>
+    <View
+      style={
+        {
+          "justifyContent": "center",
+        }
+      }
+    >
+      <Text
+        style={
+          {
+            "color": "#372C26",
+            "fontFamily": "Poppins_300Light",
+            "textAlign": "center",
+            "width": 686.5942028985507,
+          }
+        }
+      >
+        Você ainda não possui nenhum pet
+      </Text>
+    </View>
+  </View>
+</RCTScrollView>
+`;

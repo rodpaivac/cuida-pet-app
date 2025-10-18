@@ -1,0 +1,113 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component: CPContextualLoading should match snapshot 1`] = `
+<RNCSafeAreaView
+  edges={
+    {
+      "bottom": "additive",
+      "left": "additive",
+      "right": "additive",
+      "top": "additive",
+    }
+  }
+  style={
+    {
+      "backgroundColor": "#FFD8C4",
+      "height": 1334,
+      "width": 750,
+    }
+  }
+>
+  <View
+    style={
+      {
+        "gap": 23.821428571428573,
+        "height": 667,
+        "left": 103.26086956521738,
+        "overflow": "hidden",
+        "position": "absolute",
+        "top": 0,
+        "width": 543.4782608695652,
+      }
+    }
+  >
+    <View
+      collapsable={false}
+      onLayout={[Function]}
+      style={
+        {
+          "opacity": 0,
+          "transform": [
+            {
+              "translateY": 667,
+            },
+          ],
+        }
+      }
+    >
+      <Text
+        style={
+          {
+            "color": "#372C26",
+            "fontFamily": "Poppins_300Light",
+            "fontSize": 18,
+          }
+        }
+      >
+        teste1
+      </Text>
+    </View>
+    <View
+      collapsable={false}
+      onLayout={[Function]}
+      style={
+        {
+          "opacity": 0,
+          "transform": [
+            {
+              "translateY": 667,
+            },
+          ],
+        }
+      }
+    >
+      <Text
+        style={
+          {
+            "color": "#372C26",
+            "fontFamily": "Poppins_300Light",
+            "fontSize": 18,
+          }
+        }
+      >
+        teste2
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "backgroundColor": "#A5C699",
+        "borderRadius": 60,
+        "height": 7.246376811594203,
+        "left": 103.26086956521738,
+        "position": "absolute",
+        "top": 690.8214285714286,
+        "width": 543.4782608695652,
+      }
+    }
+  >
+    <View
+      collapsable={false}
+      style={
+        {
+          "backgroundColor": "#5A6D54",
+          "borderRadius": 60,
+          "height": 7.246376811594203,
+          "width": 0,
+        }
+      }
+    />
+  </View>
+</RNCSafeAreaView>
+`;
