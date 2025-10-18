@@ -65,8 +65,6 @@ const CPPetCarouselCard: React.FC<CardProps> = ({ pet, index, selectPet }) => {
   const color = colors[index % colors.length];
   const age = ageCalc(pet.birthdate);
 
-  const [imageLoading, setImageLoading] = useState(false);
-
   const DefaultImage = () => (
     <View style={styles.defaultImageContainer}>
       <Image style={styles.defaultImage} source={petImage} />
@@ -82,18 +80,11 @@ const CPPetCarouselCard: React.FC<CardProps> = ({ pet, index, selectPet }) => {
       </View>
       <View style={styles.petInfo}>
         {pet.image ? (
-          imageLoading ? (
-            <View style={styles.loadingImage}>
-              <ActivityIndicator size={scale(30)} color={COLOR.darkBrown} />
-            </View>
-          ) : (
-            <Image
-              style={styles.petImage}
-              source={{ uri: pet.image }}
-              onLoadStart={() => setImageLoading(true)}
-              onLoadEnd={() => setImageLoading(false)}
-            />
-          )
+          <Image
+            loadingIndicatorSource={petImage}
+            style={styles.petImage}
+            source={{ uri: pet.image }}
+          />
         ) : (
           DefaultImage()
         )}

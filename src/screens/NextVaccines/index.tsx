@@ -6,7 +6,7 @@ import { styles } from "./styles";
 import paw from "@assets/icons/paw.png";
 
 const NextVaccines: React.FC = () => {
-  const { fetchPetsNextVaccines, petsNextVaccines } = useVaccine();
+  const { fetchPetsNextVaccines, petsNextVaccines, loading } = useVaccine();
 
   useEffect(() => {
     fetchPetsNextVaccines();
@@ -38,7 +38,13 @@ const NextVaccines: React.FC = () => {
   );
 
   return (
-    <CPContainer dark goBack title="próximas vacinas" noScroll>
+    <CPContainer
+      dark
+      goBack
+      title="próximas vacinas"
+      noScroll
+      isLoading={loading}
+    >
       <SectionList
         sections={petsNextVaccines ?? []}
         keyExtractor={(item, index) => item + index}

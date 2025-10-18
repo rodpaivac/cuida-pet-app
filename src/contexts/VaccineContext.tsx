@@ -119,10 +119,13 @@ export function VaccineContextProvider({
 
   async function fetchPetsNextVaccines() {
     try {
+      setLoading(true);
       const response = await getNextVaccinesApi(user.cpf);
       setPetsNextVaccines(response);
     } catch (error) {
       console.log("error", error);
+    } finally {
+      setLoading(false);
     }
   }
 
