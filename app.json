@@ -9,6 +9,7 @@
       "expo-font",
       ["onesignal-expo-plugin", { "mode": "development" }]
     ],
+    "icon": "./assets/app_icon.png",
     "splash": {
       "image": "./assets/logo.png",
       "resizeMode": "contain",
