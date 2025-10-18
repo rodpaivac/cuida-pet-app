@@ -2,9 +2,12 @@ import { UserDTO } from "@dtos/UserDTO";
 import { api } from "@service/api";
 
 export const signInApi = async (cpf: string, password: string) => {
+    console.log('login')
     const response = await api.post("/login", {
         cpf: cpf, password: password
     })
+
+    console.log('response', response)
 
     if (response.data) {
         return response.data

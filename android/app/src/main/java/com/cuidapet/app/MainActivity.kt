@@ -1,5 +1,4 @@
 package com.cuidapet.app
-
 import expo.modules.splashscreen.SplashScreenManager
 
 import android.os.Build
