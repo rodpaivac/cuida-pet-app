@@ -24,7 +24,7 @@ import { removeCpfMask } from "@utils/masks";
 import { SpaceV } from "@components/Space";
 
 const SCREEN_HEIGHT = screenHeight;
-const INITIAL_HEIGHT = verticalScale(226);
+const INITIAL_HEIGHT = verticalScale(260);
 const FINAL_TOP = SCREEN_HEIGHT * 0.8;
 
 const Login: React.FC = () => {

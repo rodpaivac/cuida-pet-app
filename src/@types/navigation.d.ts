@@ -5,7 +5,7 @@ export declare global {
         interface RootParamList {
             Login: undefined;
             Home: undefined;
-            PetDetails: PetDetailsRouteProp;
+            PetDetails: undefined;
             VaccineHistory: undefined;
             Menu: undefined;
             NewPet: NewPetRouteProp;
@@ -22,9 +22,6 @@ export declare global {
     }
 }
 
-export type PetDetailsRouteProp = {
-    color: string;
-}
 
 export type NewPetRouteProp = {
     edit: boolean;

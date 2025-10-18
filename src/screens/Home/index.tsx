@@ -65,8 +65,8 @@ const Home: React.FC = () => {
   );
 
   const handleSelectPet = (pet: PetDTO, color: string) => {
-    selectPet(pet);
-    navigation.navigate("PetDetails", { color: color });
+    selectPet(pet, color);
+    navigation.navigate("PetDetails");
   };
 
   const handleFetchPets = async () => {

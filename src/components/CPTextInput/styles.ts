@@ -7,15 +7,15 @@ const SCREEN_HEIGHT = screenHeight;
 export const styles = StyleSheet.create({
     container: {
         borderWidth: 1,
-        paddingVertical: verticalScale(3),
         paddingHorizontal: scale(15),
-        borderRadius: 15
+        borderRadius: 15,
+        paddingTop: verticalScale(9),
+        paddingBottom: verticalScale(5),
     },
     textInput: {
-        height: verticalScale(45),
         fontFamily: FONT.PoppinsLight,
         fontSize: 18,
-        width: scale(300)
+        width: scale(300),
     },
     forgotPassword: {
         color: COLOR.sand

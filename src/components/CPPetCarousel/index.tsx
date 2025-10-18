@@ -1,11 +1,19 @@
-import React from "react";
-import { FlatList, Image, Pressable, Text, View } from "react-native";
+import React, { useState } from "react";
+import {
+  ActivityIndicator,
+  FlatList,
+  Image,
+  Pressable,
+  Text,
+  View,
+} from "react-native";
 import { styles } from "./styles";
 import paw from "@assets/icons/paw.png";
 import petImage from "@assets/images/default_pet.png";
 import { ageCalc } from "@utils/age";
 import { COLOR } from "@theme/colors";
 import { PetDTO } from "@dtos/PetDTO";
+import { scale } from "@utils/dimensions";
 
 type Props = {
   pets: PetDTO[];
@@ -48,10 +56,25 @@ const CPPetCarouselCard: React.FC<CardProps> = ({ pet, index, selectPet }) => {
   const color = colors[index % colors.length];
   const age = ageCalc(pet.birthdate);
 
+  const [imageLoading, setImageLoading] = useState(false);
+
   const DefaultImage = () => (
-    <View style={styles.defaultImageContainer}>
-      <Image style={styles.defaultImage} source={petImage} />
-    </View>
+    <>
+      {imageLoading ? (
+        <View style={styles.loadingImage}>
+          <ActivityIndicator size={scale(30)} color={COLOR.darkBrown} />
+        </View>
+      ) : (
+        <View style={styles.defaultImageContainer}>
+          <Image
+            style={styles.defaultImage}
+            source={petImage}
+            onLoadStart={() => setImageLoading(true)}
+            onLoadEnd={() => setImageLoading(false)}
+          />
+        </View>
+      )}
+    </>
   );
   return (
     <Pressable
@@ -63,7 +86,18 @@ const CPPetCarouselCard: React.FC<CardProps> = ({ pet, index, selectPet }) => {
       </View>
       <View style={styles.petInfo}>
         {pet.image ? (
-          <Image style={styles.petImage} source={{ uri: pet.image }} />
+          imageLoading ? (
+            <View style={styles.loadingImage}>
+              <ActivityIndicator size={scale(30)} color={COLOR.darkBrown} />
+            </View>
+          ) : (
+            <Image
+              style={styles.petImage}
+              source={{ uri: pet.image }}
+              onLoadStart={() => setImageLoading(true)}
+              onLoadEnd={() => setImageLoading(false)}
+            />
+          )
         ) : (
           DefaultImage()
         )}

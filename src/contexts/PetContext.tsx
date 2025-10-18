@@ -11,12 +11,13 @@ import {
 
 export type PetContextDataProps = {
   selectedPet: PetDTO;
-  selectPet: (pet: PetDTO) => void;
+  selectPet: (pet: PetDTO, color: string) => void;
   pets: PetDTO[];
   fetchPets: () => void;
   addPet: (pet: PetDTO, image: FormData | null) => void;
   editPet: (pet: PetDTO, image: FormData | null) => void;
   deletePet: (id: string) => void;
+  backgroundColor: string;
 };
 
 type PetContextProviderProps = {
@@ -30,11 +31,13 @@ export const PetContext = createContext<PetContextDataProps>(
 export function PetContextProvider({ children }: PetContextProviderProps) {
   const [selectedPet, setSelectedPet] = useState<PetDTO>({} as PetDTO);
   const [pets, setPets] = useState<PetDTO[]>([]);
+  const [backgroundColor, setBackgroundColor] = useState<string>("");
 
   const { user } = useAuth();
 
-  function selectPet(pet: PetDTO) {
+  function selectPet(pet: PetDTO, color: string) {
     setSelectedPet(pet);
+    setBackgroundColor(color);
   }
 
   async function fetchPets() {
@@ -70,6 +73,7 @@ export function PetContextProvider({ children }: PetContextProviderProps) {
         addPet,
         editPet,
         deletePet,
+        backgroundColor,
       }}
     >
       {children}

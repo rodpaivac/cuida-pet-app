@@ -19,6 +19,7 @@ type Props = {
   goBack?: boolean;
   title?: string;
   dark?: boolean;
+  customGoBack?: () => void;
 };
 
 const CPHeader: React.FC<Props> = ({
@@ -26,6 +27,7 @@ const CPHeader: React.FC<Props> = ({
   goBack = false,
   title,
   dark = false,
+  customGoBack,
 }) => {
   const navigation = useNavigation();
   const route = useRoute();
@@ -56,7 +58,9 @@ const CPHeader: React.FC<Props> = ({
   );
 
   const GoBackButton = () => (
-    <Pressable onPress={() => navigation.goBack()}>
+    <Pressable
+      onPress={() => (customGoBack ? customGoBack() : navigation.goBack())}
+    >
       <Image style={styles.backIcon} source={dark ? backLight : backDark} />
     </Pressable>
   );

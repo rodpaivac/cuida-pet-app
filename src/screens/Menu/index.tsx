@@ -2,32 +2,56 @@ import CPContainer from "@components/CPContainer";
 import React, { useState } from "react";
 import userImage from "@assets/images/user.png";
 
-import { Image, Pressable, Text, View } from "react-native";
+import { ActivityIndicator, Image, Pressable, Text, View } from "react-native";
 import { styles } from "./styles";
 import { useAuth } from "@hooks/useAuth";
 import { useNavigation } from "@react-navigation/native";
 import { phoneMask } from "@utils/masks";
+import { scale } from "@utils/dimensions";
+import { COLOR } from "@theme/colors";
 
 const Menu: React.FC = () => {
   const { signOut, user } = useAuth();
   const [loadError, setLoadError] = useState(false);
+  const [imageLoading, setImageLoading] = useState(false);
 
   const navigation = useNavigation();
 
   const DefaultAvatar = () => (
-    <View style={styles.defaultAvatarContainer}>
-      <Image style={styles.defaultAvatar} source={userImage} />
-    </View>
+    <>
+      {imageLoading ? (
+        <View style={styles.imageLoading}>
+          <ActivityIndicator size={scale(20)} color={COLOR.green1} />
+        </View>
+      ) : (
+        <View style={styles.defaultAvatarContainer}>
+          <Image
+            style={styles.defaultAvatar}
+            source={userImage}
+            onLoadStart={() => setImageLoading(true)}
+            onLoadEnd={() => setImageLoading(false)}
+          />
+        </View>
+      )}
+    </>
   );
 
   const Header = () => (
     <View style={styles.headerRow}>
       {user.avatar && user.avatar !== "" && !loadError ? (
-        <Image
-          onError={() => setLoadError(true)}
-          style={styles.userImage}
-          source={{ uri: user.avatar }}
-        />
+        imageLoading ? (
+          <View style={styles.imageLoading}>
+            <ActivityIndicator size={scale(20)} color={COLOR.green1} />
+          </View>
+        ) : (
+          <Image
+            onError={() => setLoadError(true)}
+            style={styles.userImage}
+            source={{ uri: user.avatar }}
+            onLoadStart={() => setImageLoading(true)}
+            onLoadEnd={() => setImageLoading(false)}
+          />
+        )
       ) : (
         DefaultAvatar()
       )}

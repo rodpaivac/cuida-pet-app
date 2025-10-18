@@ -25,7 +25,6 @@ const NewVaccine: React.FC = () => {
   const {
     selectedVaccine,
     newVaccine,
-    loading,
     editVaccine,
     repeatVaccine,
     deleteVaccine,
@@ -56,7 +55,10 @@ const NewVaccine: React.FC = () => {
     isEdit ? selectedVaccine.description ?? null : null
   );
 
+  const [loading, setLoading] = useState(false);
+
   const handleSave = async () => {
+    setLoading(true);
     if (
       !selectedPet.id ||
       !vaccineName ||
@@ -100,10 +102,13 @@ const NewVaccine: React.FC = () => {
         "Atenção",
         `Erro ao ${isEdit ? "editar" : "cadastrar"} vacina =(`
       );
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleDelete = async () => {
+    setLoading(true);
     try {
       await deleteVaccine(selectedVaccine.id!, selectedPet.id!);
       Alert.alert("Sucesso", "Vacina removida com sucesso", [
@@ -112,6 +117,8 @@ const NewVaccine: React.FC = () => {
     } catch (error) {
       console.log("error", error);
       Alert.alert("Atenção", "Não foi possível remover a vacina =(");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -132,6 +139,7 @@ const NewVaccine: React.FC = () => {
             backgroundColor={COLOR.red}
             textColor={COLOR.sand}
             width={scale(180)}
+            loading={loading}
           />
           <SpaceH amount={15} />
         </>
@@ -140,6 +148,7 @@ const NewVaccine: React.FC = () => {
         title="salvar"
         onPress={() => handleSave()}
         width={isEdit ? scale(180) : undefined}
+        loading={loading}
       />
     </View>
   );

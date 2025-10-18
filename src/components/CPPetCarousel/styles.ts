@@ -62,6 +62,11 @@ export const styles = StyleSheet.create({
         width: screenWidth - scale(35),
         fontFamily: FONT.PoppinsLight,
         color: COLOR.darkBrown
+    },
+    loadingImage: {
+        width: scale(180),
+        height: scale(180),
+        justifyContent: 'center'
     }
 });
 

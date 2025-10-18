@@ -56,6 +56,11 @@ export const styles = StyleSheet.create({
     defaultAvatar: {
         width: scale(65),
         height: scale(65),
+    },
+    imageLoading: {
+        width: scale(110),
+        height: scale(110),
+        alignItems: 'center',
+        justifyContent: 'center'
     }
-
 });

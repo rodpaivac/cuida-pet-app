@@ -32,6 +32,10 @@ export const styles = StyleSheet.create({
         fontSize: 14,
         marginTop: verticalScale(15)
     },
-
-
+    imageLoading: {
+        width: scale(110),
+        height: scale(110),
+        alignItems: 'center',
+        justifyContent: 'center'
+    }
 });

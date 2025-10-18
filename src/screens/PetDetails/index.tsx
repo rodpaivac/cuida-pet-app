@@ -11,8 +11,6 @@ import { styles } from "./styles";
 import { usePet } from "@hooks/usePet";
 import { dateToString } from "@utils/date";
 
-type Route = RouteProp<ReactNavigation.RootParamList, "PetDetails">;
-
 type InfoItemProps = {
   tlRadius: number;
   trRadius: number;
@@ -24,10 +22,8 @@ type InfoItemProps = {
 };
 
 const PetDetails: React.FC = () => {
-  const route = useRoute<Route>();
   const navigation = useNavigation();
-  const bgColor = route.params.color;
-  const { selectedPet } = usePet();
+  const { selectedPet, backgroundColor } = usePet();
   const age = ageCalc(selectedPet.birthdate);
 
   const DefaultImage = () => (
@@ -37,7 +33,7 @@ const PetDetails: React.FC = () => {
   );
 
   const Header = () => (
-    <View style={[styles.header, { backgroundColor: bgColor }]}>
+    <View style={[styles.header, { backgroundColor: backgroundColor }]}>
       <View style={styles.headerRow}>
         <View style={styles.headerColumn}>
           <View>
@@ -81,7 +77,7 @@ const PetDetails: React.FC = () => {
         <View style={styles.infoRow}>
           <View style={styles.infoColumn}>
             <InfoItem
-              color={bgColor}
+              color={backgroundColor}
               tlRadius={0}
               trRadius={30}
               blRadius={30}
@@ -90,7 +86,7 @@ const PetDetails: React.FC = () => {
               value={`${selectedPet.weight.toString()} kg`}
             />
             <InfoItem
-              color={bgColor}
+              color={backgroundColor}
               tlRadius={30}
               trRadius={0}
               blRadius={30}
@@ -99,7 +95,7 @@ const PetDetails: React.FC = () => {
               value={selectedPet.microchipped ? "sim" : "não"}
             />
             <InfoItem
-              color={bgColor}
+              color={backgroundColor}
               tlRadius={30}
               trRadius={30}
               blRadius={0}
@@ -108,7 +104,7 @@ const PetDetails: React.FC = () => {
               value={selectedPet.color}
             />
             <InfoItem
-              color={bgColor}
+              color={backgroundColor}
               tlRadius={30}
               trRadius={30}
               blRadius={30}
@@ -119,7 +115,7 @@ const PetDetails: React.FC = () => {
           </View>
           <View style={styles.infoColumn}>
             <InfoItem
-              color={bgColor}
+              color={backgroundColor}
               tlRadius={0}
               trRadius={30}
               blRadius={30}
@@ -128,7 +124,7 @@ const PetDetails: React.FC = () => {
               value={birthdate}
             />
             <InfoItem
-              color={bgColor}
+              color={backgroundColor}
               tlRadius={30}
               trRadius={0}
               blRadius={30}
@@ -137,7 +133,7 @@ const PetDetails: React.FC = () => {
               value={selectedPet.sex}
             />
             <InfoItem
-              color={bgColor}
+              color={backgroundColor}
               tlRadius={30}
               trRadius={0}
               blRadius={0}

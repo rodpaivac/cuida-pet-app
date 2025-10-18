@@ -16,6 +16,7 @@ type Props = {
   title?: string;
   noScroll?: boolean;
   dark?: boolean;
+  customGoBack?: () => void;
 };
 
 const CPContainer: React.FC<Props> = ({
@@ -27,6 +28,7 @@ const CPContainer: React.FC<Props> = ({
   title,
   noScroll = false,
   dark = false,
+  customGoBack,
 }) => {
   return (
     <SafeAreaView
@@ -41,7 +43,12 @@ const CPContainer: React.FC<Props> = ({
       ) : (
         <>
           {(header || goBack || title) && (
-            <CPHeader goBack={goBack} title={title} dark={dark} />
+            <CPHeader
+              customGoBack={customGoBack}
+              goBack={goBack}
+              title={title}
+              dark={dark}
+            />
           )}
           {noScroll ? (
             <View
