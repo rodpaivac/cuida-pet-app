@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { ActivityIndicator, Image, Pressable, Text, View } from "react-native";
+import React from "react";
+import { Image, Pressable, Text, View } from "react-native";
 import { styles } from "./styles";
 import paw from "@assets/icons/paw.png";
 import petImage from "@assets/images/default_pet.png";
+import loading_dark from "@assets/icons/loading_dark.png";
 import { ageCalc } from "@utils/age";
 import { COLOR } from "@theme/colors";
 import { PetDTO } from "@dtos/PetDTO";
-import { scale } from "@utils/dimensions";
 import { ScrollView } from "react-native-gesture-handler";
 
 type Props = {
@@ -81,7 +81,7 @@ const CPPetCarouselCard: React.FC<CardProps> = ({ pet, index, selectPet }) => {
       <View style={styles.petInfo}>
         {pet.image ? (
           <Image
-            loadingIndicatorSource={petImage}
+            loadingIndicatorSource={loading_dark}
             style={styles.petImage}
             source={{ uri: pet.image }}
           />
