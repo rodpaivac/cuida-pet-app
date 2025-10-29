@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Pressable, Text, View } from "react-native";
+import { Keyboard, Pressable, Text, View } from "react-native";
 import { styles } from "./styles";
 import { COLOR } from "@theme/colors";
 
@@ -17,6 +17,7 @@ const CPRadioButton: React.FC<Props> = ({
   dark,
 }) => {
   const handlePress = () => {
+    Keyboard.dismiss();
     if (onChange) {
       onChange(!selected);
     }

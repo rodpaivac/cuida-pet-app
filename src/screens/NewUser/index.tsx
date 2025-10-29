@@ -85,7 +85,7 @@ const NewUser: React.FC = () => {
 
   const GenderSelection = () => (
     <View>
-      <Text style={styles.label}>Gênero</Text>
+      <Text style={styles.label}>Gênero *</Text>
       <CPRadioButton
         text="masculino"
         selected={gender === "man"}
@@ -114,21 +114,34 @@ const NewUser: React.FC = () => {
 
   const Footer = () => (
     <View style={styles.footer}>
-      <CPButton title="salvar" onPress={() => handleSaveUser()} />
+      <CPButton
+        title="salvar"
+        onPress={() => handleSaveUser()}
+        disabled={
+          !name ||
+          !email ||
+          !phone ||
+          !birthdate ||
+          !gender ||
+          !cpf ||
+          !password ||
+          !passwordConfirmation
+        }
+      />
     </View>
   );
 
   const Body = () => (
     <View>
       <CPTextInput
-        label="nome"
+        label="nome *"
         placeholder="nome completo do usuário"
         value={name}
         onChangeText={(text) => setName(text)}
       />
       <SpaceV amount={15} />
       <CPTextInput
-        label="cpf"
+        label="cpf *"
         placeholder="cpf do usuário"
         value={cpf}
         onChangeText={(text) => setCpf(text)}
@@ -137,7 +150,7 @@ const NewUser: React.FC = () => {
       />
       <SpaceV amount={15} />
       <CPTextInput
-        label="telefone"
+        label="telefone *"
         placeholder="telefone do usuário"
         keyboardType="numeric"
         value={phone}
@@ -146,7 +159,7 @@ const NewUser: React.FC = () => {
       />
       <SpaceV amount={15} />
       <CPTextInput
-        label="email"
+        label="email *"
         placeholder="email do usuário"
         keyboardType="email-address"
         autoCapitalize="none"
@@ -155,7 +168,7 @@ const NewUser: React.FC = () => {
       />
       <SpaceV amount={15} />
       <CPTextInput
-        label="data de nascimento"
+        label="data de nascimento *"
         placeholder="data de nascimento do usuário"
         value={birthdate}
         onChangeText={(text) => setBirthdate(text)}
@@ -166,7 +179,7 @@ const NewUser: React.FC = () => {
       {GenderSelection()}
       <SpaceV amount={15} />
       <CPTextInput
-        label="senha"
+        label="senha *"
         placeholder="digite uma senha"
         value={password}
         onChangeText={(text) => setPassword(text)}
@@ -175,7 +188,7 @@ const NewUser: React.FC = () => {
       />
       <SpaceV amount={15} />
       <CPTextInput
-        label="confirmar senha"
+        label="confirmar senha *"
         placeholder="confirme sua senha"
         value={passwordConfirmation}
         onChangeText={(text) => setPasswordConfirmation(text)}

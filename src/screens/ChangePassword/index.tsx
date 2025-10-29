@@ -50,7 +50,7 @@ const ChangePassword: React.FC = () => {
   const Body = () => (
     <>
       <CPTextInput
-        label="senha atual"
+        label="senha atual *"
         placeholder="senha atual"
         value={currentPassword}
         onChangeText={(text) => setCurrentPassword(text)}
@@ -59,7 +59,7 @@ const ChangePassword: React.FC = () => {
       />
       <SpaceV amount={15} />
       <CPTextInput
-        label="nova senha"
+        label="nova senha *"
         placeholder="nova senha"
         value={newPassword}
         onChangeText={(text) => setNewPassword(text)}
@@ -68,7 +68,7 @@ const ChangePassword: React.FC = () => {
       />
       <SpaceV amount={15} />
       <CPTextInput
-        label="confirme a nova senha"
+        label="confirme a nova senha *"
         placeholder="confirme a nova senha"
         value={confirmation}
         onChangeText={(text) => setConfirmation(text)}

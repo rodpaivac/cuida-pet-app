@@ -1,11 +1,9 @@
 import React, { useState } from "react";
-import { ActivityIndicator, Image, Pressable, Text, View } from "react-native";
+import { Image, Pressable, Text, View } from "react-native";
 import { styles } from "./styles";
 import * as ImagePicker from "expo-image-picker";
 import petImage from "@assets/images/default_pet.png";
 import userImage from "@assets/images/user.png";
-import { scale } from "@utils/dimensions";
-import { COLOR } from "@theme/colors";
 
 type Props = {
   onSelect: (image: FormData) => void;
@@ -15,7 +13,6 @@ type Props = {
 
 const CPImagePicker: React.FC<Props> = ({ onSelect, imageUri, type }) => {
   const [uri, setUri] = useState<string | null>(imageUri);
-  const [imageLoading, setImageLoading] = useState(false);
 
   const uploadImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -42,40 +39,16 @@ const CPImagePicker: React.FC<Props> = ({ onSelect, imageUri, type }) => {
   };
 
   const DefaultImage = () => (
-    <>
-      {imageLoading ? (
-        <View style={styles.imageLoading}>
-          <ActivityIndicator size={scale(20)} color={COLOR.green1} />
-        </View>
-      ) : (
-        <View style={styles.defaultImageContainer}>
-          <Image
-            style={styles.defaultImage}
-            source={type === "pet" ? petImage : userImage}
-            onLoadStart={() => setImageLoading(true)}
-            onLoadEnd={() => setImageLoading(false)}
-          />
-        </View>
-      )}
-    </>
+    <View style={styles.defaultImageContainer}>
+      <Image
+        style={styles.defaultImage}
+        source={type === "pet" ? petImage : userImage}
+      />
+    </View>
   );
 
   const CustomImage = () => (
-    <>
-      {imageLoading ? (
-        <View style={styles.imageLoading}>
-          <ActivityIndicator size={scale(20)} color={COLOR.green1} />
-        </View>
-      ) : (
-        <Image
-          style={styles.image}
-          resizeMode="contain"
-          src={uri!}
-          onLoadStart={() => setImageLoading(true)}
-          onLoadEnd={() => setImageLoading(false)}
-        />
-      )}
-    </>
+    <Image style={styles.image} resizeMode="contain" src={uri!} />
   );
   return (
     <Pressable style={styles.container} onPress={() => uploadImage()}>

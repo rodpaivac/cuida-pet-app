@@ -25,6 +25,7 @@ type Props = {
   disabled?: boolean;
   onForgotPasswordPress?: () => void;
   dark?: boolean;
+  onSubmitEditing?: () => void;
 };
 
 const CPTextInput: React.FC<Props> = ({
@@ -40,6 +41,7 @@ const CPTextInput: React.FC<Props> = ({
   mask,
   disabled = false,
   onForgotPasswordPress,
+  onSubmitEditing,
   dark = false,
 }) => {
   const handleChangeText = (text: string) => {
@@ -95,6 +97,7 @@ const CPTextInput: React.FC<Props> = ({
           secureTextEntry={isPassword}
           autoCapitalize={autoCapitalize}
           editable={!disabled}
+          onSubmitEditing={onSubmitEditing}
         />
       </View>
       {showForgotPassword && (

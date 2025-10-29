@@ -69,7 +69,7 @@ const UserDataConfirmation: React.FC = () => {
         Verifique seus dados pessoas para redefinir a sua senha:
       </Text>
       <CPTextInput
-        label="CPF"
+        label="CPF *"
         placeholder="CPF do usuário"
         value={cpf}
         onChangeText={(text) => setCpf(text)}
@@ -79,7 +79,7 @@ const UserDataConfirmation: React.FC = () => {
       />
       <SpaceV amount={15} />
       <CPTextInput
-        label="email"
+        label="email *"
         placeholder="email do usuário"
         value={email}
         onChangeText={(text) => setEmail(text)}
@@ -89,7 +89,7 @@ const UserDataConfirmation: React.FC = () => {
       />
       <SpaceV amount={15} />
       <CPTextInput
-        label="telefone"
+        label="telefone *"
         placeholder="telefone do usuário"
         value={phone}
         onChangeText={(text) => setPhone(text)}
@@ -99,7 +99,7 @@ const UserDataConfirmation: React.FC = () => {
       />
       <SpaceV amount={15} />
       <CPTextInput
-        label="data de nascimento"
+        label="data de nascimento *"
         placeholder="data de nascimento do usuário"
         value={birthdate}
         onChangeText={(text) => setBirthdate(text)}

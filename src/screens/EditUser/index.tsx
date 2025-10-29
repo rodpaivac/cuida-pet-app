@@ -72,7 +72,7 @@ const EditUser: React.FC = () => {
 
   const GenderSelection = () => (
     <View>
-      <Text style={styles.label}>Gênero</Text>
+      <Text style={styles.label}>Gênero *</Text>
       <CPRadioButton
         text="masculino"
         selected={gender === "man"}
@@ -101,21 +101,26 @@ const EditUser: React.FC = () => {
 
   const Footer = () => (
     <View style={styles.footer}>
-      <CPButton title="salvar" onPress={() => handleSave()} loading={loading} />
+      <CPButton
+        title="salvar"
+        onPress={() => handleSave()}
+        loading={loading}
+        disabled={!name || !email || !phone || !birthdate || !gender}
+      />
     </View>
   );
 
   const Body = () => (
     <View>
       <CPTextInput
-        label="nome"
+        label="nome *"
         placeholder="nome completo do usuário"
         value={name}
         onChangeText={(text) => setName(text)}
       />
       <SpaceV amount={15} />
       <CPTextInput
-        label="cpf"
+        label="cpf *"
         placeholder="cpf do usuário"
         value={cpf}
         onChangeText={(text) => setCpf(text)}
@@ -125,7 +130,7 @@ const EditUser: React.FC = () => {
       />
       <SpaceV amount={15} />
       <CPTextInput
-        label="telefone"
+        label="telefone *"
         placeholder="telefone do usuário"
         keyboardType="numeric"
         value={phone}
@@ -134,7 +139,7 @@ const EditUser: React.FC = () => {
       />
       <SpaceV amount={15} />
       <CPTextInput
-        label="email"
+        label="email *"
         placeholder="email do usuário"
         keyboardType="email-address"
         autoCapitalize="none"
@@ -143,7 +148,7 @@ const EditUser: React.FC = () => {
       />
       <SpaceV amount={15} />
       <CPTextInput
-        label="data de nascimento"
+        label="data de nascimento *"
         placeholder="data de nascimento do usuário"
         value={birthdate}
         onChangeText={(text) => setBirthdate(text)}

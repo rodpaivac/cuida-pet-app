@@ -90,7 +90,7 @@ const NewPet: React.FC = () => {
 
   const CastratedSelection = () => (
     <View>
-      <Text style={styles.label}>Castrado?</Text>
+      <Text style={styles.label}>Castrado? *</Text>
       <CPRadioButton
         text="sim"
         selected={isCastrated}
@@ -107,7 +107,7 @@ const NewPet: React.FC = () => {
 
   const MicrochippedSelection = () => (
     <View>
-      <Text style={styles.label}>Microchipado?</Text>
+      <Text style={styles.label}>Microchipado? *</Text>
       <CPRadioButton
         text="sim"
         selected={isMicrochipped}
@@ -124,7 +124,7 @@ const NewPet: React.FC = () => {
 
   const SexSelection = () => (
     <View>
-      <Text style={styles.label}>Sexo</Text>
+      <Text style={styles.label}>Sexo *</Text>
       <CPRadioButton
         text="macho"
         selected={sex === "macho"}
@@ -141,7 +141,7 @@ const NewPet: React.FC = () => {
 
   const SpeciesPicker = () => (
     <CPPicker
-      label="espécie"
+      label="espécie *"
       placeholder="selecione a espécie do pet"
       items={speciesItems}
       onSelect={(itemValue, itemIndex) => setSpecies(itemValue)}
@@ -249,17 +249,18 @@ const NewPet: React.FC = () => {
 
   const Body = () => (
     <View>
-      {SpeciesPicker()}
-      <SpaceV amount={15} />
       <CPTextInput
-        label="nome"
+        label="nome *"
         placeholder="nome do pet"
         value={name}
         onChangeText={(text) => setName(text)}
       />
       <SpaceV amount={15} />
+      {SpeciesPicker()}
+      <SpaceV amount={15} />
+
       <CPTextInput
-        label="raça"
+        label="raça *"
         placeholder="raça do pet"
         value={breed}
         onChangeText={(text) => setBreed(text)}
@@ -267,7 +268,7 @@ const NewPet: React.FC = () => {
       />
       <SpaceV amount={15} />
       <CPTextInput
-        label="peso (kg)"
+        label="peso aproximado (kg) *"
         placeholder="peso do pet"
         keyboardType="numeric"
         value={weight}
@@ -276,7 +277,7 @@ const NewPet: React.FC = () => {
       <SpaceV amount={15} />
 
       <CPTextInput
-        label="data de nascimento"
+        label="data de nascimento *"
         placeholder="data de nascimento do pet"
         value={birthdate}
         onChangeText={(text) => setBirthdate(text)}
@@ -285,7 +286,7 @@ const NewPet: React.FC = () => {
       />
       <SpaceV amount={15} />
       <CPTextInput
-        label="cor"
+        label="cor *"
         placeholder="cor do pet"
         value={color}
         onChangeText={(text) => setColor(text)}

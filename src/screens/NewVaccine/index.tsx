@@ -156,7 +156,7 @@ const NewVaccine: React.FC = () => {
   const Body = () => (
     <>
       <CPTextInput
-        label="Nome da vacina"
+        label="Nome da vacina *"
         placeholder="Nome da vacina"
         onChangeText={(text) => setVaccineName(text)}
         value={vaccineName}
@@ -165,7 +165,7 @@ const NewVaccine: React.FC = () => {
       <SpaceV amount={10} />
 
       <CPTextInput
-        label="Data"
+        label="Data *"
         placeholder="Data da dose"
         onChangeText={(text) => setDate(text)}
         value={date}
@@ -183,7 +183,7 @@ const NewVaccine: React.FC = () => {
       <SpaceV amount={10} />
 
       <CPTextInput
-        label="Nome do(a) veterinário(a)"
+        label="Nome do(a) veterinário(a) *"
         placeholder="Nome do(a) veterinário(a)"
         onChangeText={(text) => setVetName(text)}
         value={vetName}
@@ -191,7 +191,7 @@ const NewVaccine: React.FC = () => {
       <SpaceV amount={10} />
 
       <CPTextInput
-        label="Clínica"
+        label="Clínica *"
         placeholder="Nome da clínica"
         onChangeText={(text) => setClinic(text)}
         value={clinic}
@@ -199,7 +199,7 @@ const NewVaccine: React.FC = () => {
       <SpaceV amount={10} />
 
       <CPTextInput
-        label="Próxima dose"
+        label="Próxima dose *"
         placeholder="Data da próxima dose"
         onChangeText={(text) => setNextDose(text)}
         value={nextDose}
