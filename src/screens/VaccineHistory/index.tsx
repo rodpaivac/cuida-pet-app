@@ -11,7 +11,7 @@ import { SpaceH } from "@components/Space";
 import Collapsible from "react-native-collapsible";
 import { usePet } from "@hooks/usePet";
 import { VaccineDTO } from "@dtos/VaccineDTO";
-import { useNavigation } from "@react-navigation/native";
+import { StackActions, useNavigation } from "@react-navigation/native";
 import { useVaccine } from "@hooks/useVaccine";
 import { dateToString, isBeforeToday, isOneMonthFromToday } from "@utils/date";
 import CPBadge from "@components/CPBadge";
@@ -60,6 +60,7 @@ const VaccineHistory: React.FC = () => {
       goBack
       title="histórico de vacinas"
       isLoading={loading}
+      customGoBack={() => navigation.dispatch(StackActions.pop(4))}
     >
       <FlatList
         data={selectedPetVaccines}
