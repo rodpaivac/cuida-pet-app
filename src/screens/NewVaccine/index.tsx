@@ -57,6 +57,19 @@ const NewVaccine: React.FC = () => {
 
   const [loading, setLoading] = useState(false);
 
+  const isDateValid = !!date && date.length === 10;
+  const isNextDoseValid = !!nextDose && nextDose.length === 10;
+
+  const buttonDisabled =
+    !selectedPet.id ||
+    !vaccineName ||
+    !date ||
+    !vetName ||
+    !clinic ||
+    !nextDose ||
+    !isDateValid ||
+    !isNextDoseValid;
+
   const handleSave = async () => {
     setLoading(true);
     if (
@@ -149,6 +162,7 @@ const NewVaccine: React.FC = () => {
         onPress={() => handleSave()}
         width={isEdit ? scale(180) : undefined}
         loading={loading}
+        disabled={buttonDisabled}
       />
     </View>
   );

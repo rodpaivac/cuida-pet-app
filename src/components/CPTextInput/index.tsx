@@ -26,6 +26,8 @@ type Props = {
   onForgotPasswordPress?: () => void;
   dark?: boolean;
   onSubmitEditing?: () => void;
+  error?: boolean;
+  onBlur?: () => void;
 };
 
 const CPTextInput: React.FC<Props> = ({
@@ -43,6 +45,8 @@ const CPTextInput: React.FC<Props> = ({
   onForgotPasswordPress,
   onSubmitEditing,
   dark = false,
+  error = false,
+  onBlur,
 }) => {
   const handleChangeText = (text: string) => {
     onChangeText(
@@ -60,7 +64,10 @@ const CPTextInput: React.FC<Props> = ({
       {label ? (
         <Text
           testID="label"
-          style={[styles.label, { color: dark ? COLOR.darkBrown : COLOR.sand }]}
+          style={[
+            styles.label,
+            { color: error ? COLOR.red : dark ? COLOR.darkBrown : COLOR.sand },
+          ]}
         >
           {label}
         </Text>
@@ -70,8 +77,11 @@ const CPTextInput: React.FC<Props> = ({
           styles.container,
           customStyle,
           {
+            borderWidth: error ? 2 : 1,
             borderColor: disabled
               ? COLOR.gray
+              : error
+              ? COLOR.red
               : dark
               ? COLOR.darkBrown
               : COLOR.sand,
@@ -84,6 +94,8 @@ const CPTextInput: React.FC<Props> = ({
             {
               color: disabled
                 ? COLOR.gray
+                : error
+                ? COLOR.red
                 : dark
                 ? COLOR.darkBrown
                 : COLOR.sand,
@@ -98,6 +110,7 @@ const CPTextInput: React.FC<Props> = ({
           autoCapitalize={autoCapitalize}
           editable={!disabled}
           onSubmitEditing={onSubmitEditing}
+          onBlur={onBlur}
         />
       </View>
       {showForgotPassword && (

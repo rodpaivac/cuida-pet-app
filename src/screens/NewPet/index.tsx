@@ -61,6 +61,17 @@ const NewPet: React.FC = () => {
     isEdit ? selectedPet.color : null
   );
 
+  const isBirthdateValid = !!birthdate && birthdate.length === 10;
+  const buttonDisabled =
+    !name ||
+    !birthdate ||
+    !breed ||
+    !color ||
+    !sex ||
+    !species ||
+    !weight ||
+    !isBirthdateValid;
+
   const speciesItems: CPPickerItemType[] = [
     { label: "selecione uma espécie", value: null },
     { label: "cão", value: "cão" },
@@ -180,7 +191,8 @@ const NewPet: React.FC = () => {
       !color ||
       !sex ||
       !species ||
-      !weight
+      !weight ||
+      !isBirthdateValid
     ) {
       return;
     }
@@ -242,7 +254,7 @@ const NewPet: React.FC = () => {
         onPress={() => handleSave()}
         width={isEdit ? scale(180) : undefined}
         loading={isSaveLoading}
-        disabled={isDeleteLoading}
+        disabled={isDeleteLoading || buttonDisabled}
       />
     </View>
   );

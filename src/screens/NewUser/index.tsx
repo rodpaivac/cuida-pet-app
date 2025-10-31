@@ -12,6 +12,7 @@ import { GenderDTO, UserDTO } from "@dtos/UserDTO";
 import { dateToString, stringToDate } from "@utils/date";
 import { useNavigation } from "@react-navigation/native";
 import { removeCpfMask, removePhoneMask } from "@utils/masks";
+import { validateCPF } from "@utils/validation";
 
 const NewUser: React.FC = () => {
   const { newUser } = useAuth();
@@ -30,6 +31,12 @@ const NewUser: React.FC = () => {
   >(null);
 
   const [birthdate, setBirthdate] = useState<string | null>(null);
+
+  const [isCpfValid, setIsCpfValid] = useState<boolean | null>(null);
+  const isPhoneValid = !!phone && phone.length === 15;
+  const isBirthdateValid = !!birthdate && birthdate.length === 10;
+
+  const cpfError = isCpfValid !== null && isCpfValid === false;
 
   const handleSaveUser = async () => {
     if (
@@ -71,6 +78,23 @@ const NewUser: React.FC = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const onCpfChange = (text: string) => {
+    setCpf(text);
+    if (text.length === 14) {
+      setIsCpfValid(validateCPF(text));
+    } else {
+      setIsCpfValid(null);
+    }
+  };
+
+  const onPhoneChange = (text: string) => {
+    setPhone(text);
+  };
+
+  const onBirthdateChange = (text: string) => {
+    setBirthdate(text);
   };
 
   const Header = () => (
@@ -125,7 +149,10 @@ const NewUser: React.FC = () => {
           !gender ||
           !cpf ||
           !password ||
-          !passwordConfirmation
+          !passwordConfirmation ||
+          !isCpfValid ||
+          !isPhoneValid ||
+          !isBirthdateValid
         }
       />
     </View>
@@ -144,9 +171,10 @@ const NewUser: React.FC = () => {
         label="cpf *"
         placeholder="cpf do usuário"
         value={cpf}
-        onChangeText={(text) => setCpf(text)}
+        onChangeText={onCpfChange}
         mask="cpf"
         keyboardType="numeric"
+        error={cpfError}
       />
       <SpaceV amount={15} />
       <CPTextInput
@@ -154,7 +182,7 @@ const NewUser: React.FC = () => {
         placeholder="telefone do usuário"
         keyboardType="numeric"
         value={phone}
-        onChangeText={(text) => setPhone(text)}
+        onChangeText={onPhoneChange}
         mask="phone"
       />
       <SpaceV amount={15} />
@@ -171,7 +199,7 @@ const NewUser: React.FC = () => {
         label="data de nascimento *"
         placeholder="data de nascimento do usuário"
         value={birthdate}
-        onChangeText={(text) => setBirthdate(text)}
+        onChangeText={onBirthdateChange}
         mask="date"
         keyboardType="numeric"
       />

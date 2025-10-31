@@ -11,6 +11,12 @@ import { useAuth } from "@hooks/useAuth";
 import { GenderDTO, UserDTO } from "@dtos/UserDTO";
 import { dateToString, stringToDate } from "@utils/date";
 import { useNavigation } from "@react-navigation/native";
+import {
+  cpfMask,
+  phoneMask,
+  removeCpfMask,
+  removePhoneMask,
+} from "@utils/masks";
 
 const EditUser: React.FC = () => {
   const { user, editUser } = useAuth();
@@ -24,12 +30,26 @@ const EditUser: React.FC = () => {
   );
   const [selectedImage, setSelectedImage] = useState<FormData | null>(null);
   const [name, setName] = useState<string | null>(user.name ?? null);
-  const [phone, setPhone] = useState<string | null>(user.phone ?? null);
+  const [phone, setPhone] = useState<string | null>(
+    user.phone ? phoneMask(user.phone) : null
+  );
   const [email, setEmail] = useState<string | null>(user.email ?? null);
-  const [cpf, setCpf] = useState<string>(user.cpf);
+  const [cpf, setCpf] = useState<string>(cpfMask(user.cpf));
   const [birthdate, setBirthdate] = useState<string | null>(
     dateToString(user.birthdate) ?? null
   );
+
+  const isPhoneValid = !!phone && phone.length === 15;
+  const isBirthdateValid = !!birthdate && birthdate.length === 10;
+
+  const buttonDisabled =
+    !name ||
+    !email ||
+    !phone ||
+    !birthdate ||
+    !gender ||
+    !isPhoneValid ||
+    !isBirthdateValid;
 
   const handleSave = async () => {
     if (!name || !email || !phone || !birthdate || !gender) {
@@ -40,9 +60,9 @@ const EditUser: React.FC = () => {
       setLoading(true);
       const userData: UserDTO = {
         name: name,
-        phone: phone,
+        phone: removePhoneMask(phone),
         email: email,
-        cpf: cpf,
+        cpf: removeCpfMask(cpf),
         birthdate: stringToDate(birthdate)!,
         password: null,
         avatar: imageUri,
@@ -105,7 +125,7 @@ const EditUser: React.FC = () => {
         title="salvar"
         onPress={() => handleSave()}
         loading={loading}
-        disabled={!name || !email || !phone || !birthdate || !gender}
+        disabled={buttonDisabled}
       />
     </View>
   );

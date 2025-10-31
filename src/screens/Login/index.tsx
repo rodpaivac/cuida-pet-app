@@ -3,6 +3,7 @@ import {
   Alert,
   Animated,
   Image,
+  Keyboard,
   StyleSheet,
   Text,
   TouchableWithoutFeedback,
@@ -22,6 +23,7 @@ import CPTextInput from "@components/CPTextInput";
 import CPTextButton from "@components/CPTextButton";
 import { removeCpfMask } from "@utils/masks";
 import { SpaceV } from "@components/Space";
+import { validateCPF } from "@utils/validation";
 
 const SCREEN_HEIGHT = screenHeight;
 const INITIAL_HEIGHT = verticalScale(260);
@@ -36,14 +38,19 @@ const Login: React.FC = () => {
 
   const transitionAnim = useRef(new Animated.Value(0)).current;
 
+  const [isCpfValid, setIsCpfValid] = useState<boolean | null>(null);
+
   const { signIn } = useAuth();
   const navigation = useNavigation();
 
   const bottomSheetRef = useRef<BottomSheet>(null);
   const snapPoints = [INITIAL_HEIGHT, FINAL_TOP];
 
+  const error = isCpfValid != null && !isCpfValid;
+
   const handleSignIn = async () => {
-    if (!cpf || !password) {
+    if (!cpf || !password || error || cpf.length != 14) {
+      Alert.alert("Atenção", "Informe o CPF e senha para fazer o login");
       return;
     }
     try {
@@ -54,6 +61,15 @@ const Login: React.FC = () => {
       Alert.alert("Atenção", "Não foi possivel fazer o login =(");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const onCpfChange = (text: string) => {
+    setCpf(text);
+    if (text.length === 14) {
+      setIsCpfValid(validateCPF(text));
+    } else {
+      setIsCpfValid(null);
     }
   };
 
@@ -69,6 +85,7 @@ const Login: React.FC = () => {
   };
 
   const collapseBottomSheet = () => {
+    Keyboard.dismiss();
     Animated.timing(transitionAnim, {
       toValue: 0,
       duration: 150,
@@ -112,8 +129,9 @@ const Login: React.FC = () => {
           placeholder="CPF"
           keyboardType="numeric"
           value={cpf}
-          onChangeText={setCpf}
+          onChangeText={onCpfChange}
           mask="cpf"
+          error={error}
         />
         <SpaceV amount={15} />
         <CPTextInput
