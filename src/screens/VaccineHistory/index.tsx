@@ -15,11 +15,13 @@ import { StackActions, useNavigation } from "@react-navigation/native";
 import { useVaccine } from "@hooks/useVaccine";
 import { dateToString, isBeforeToday, isOneMonthFromToday } from "@utils/date";
 import CPBadge from "@components/CPBadge";
+import { usePreviousRoute } from "@hooks/usePreviousRoute";
 
 const VaccineHistory: React.FC = () => {
   const { selectedPet } = usePet();
   const age = ageCalc(selectedPet.birthdate);
   const { fetchPetVaccines, selectedPetVaccines, loading } = useVaccine();
+  const previousRoute = usePreviousRoute();
 
   const navigation = useNavigation();
 
@@ -60,7 +62,11 @@ const VaccineHistory: React.FC = () => {
       goBack
       title="histórico de vacinas"
       isLoading={loading}
-      customGoBack={() => navigation.dispatch(StackActions.pop(4))}
+      customGoBack={() =>
+        previousRoute === "NewVaccine"
+          ? navigation.dispatch(StackActions.pop(4))
+          : navigation.goBack()
+      }
     >
       <FlatList
         data={selectedPetVaccines}

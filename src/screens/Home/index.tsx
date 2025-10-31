@@ -10,6 +10,7 @@ import { usePet } from "@hooks/usePet";
 import CPContextualLoading from "@components/CPContextualLoading";
 import { useAuth } from "@hooks/useAuth";
 import { tagUserInfoCreate } from "@notifications/notificationsTags";
+import { usePreviousRoute } from "@hooks/usePreviousRoute";
 
 const Home: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -22,15 +23,11 @@ const Home: React.FC = () => {
   tagUserInfoCreate(user);
 
   // show contextual loading when previous screen is not Menu or NewPet
-  const navigationState = navigation.getState();
-  const routes = navigationState?.routes;
-  const currentIndex = navigationState?.index;
-  const previousRoute =
-    routes && currentIndex ? routes[currentIndex - 1] : null;
+  const previousRoute = usePreviousRoute();
 
   const showContextualLoading =
-    previousRoute?.name != "Menu" &&
-    previousRoute?.name != "NewPet" &&
+    previousRoute != "Menu" &&
+    previousRoute != "NewPet" &&
     !finishedContextualLoading;
 
   const Header = () => (
