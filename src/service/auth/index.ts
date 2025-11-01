@@ -1,3 +1,4 @@
+import { UploadImageData } from "@components/CPImagePicker";
 import { UserDTO } from "@dtos/UserDTO";
 import { api } from "@service/api";
 
@@ -15,7 +16,7 @@ export const signInApi = async (cpf: string, password: string) => {
 
 }
 
-export const newUserApi = async (user: UserDTO, image: FormData | null) => {
+export const newUserApi = async (user: UserDTO, image: UploadImageData | null) => {
 
     const response = await api.post("/new-user", {
         name: user.name,
@@ -28,7 +29,7 @@ export const newUserApi = async (user: UserDTO, image: FormData | null) => {
         password: user.password
     });
 
-    if (image) {
+    if (image && response.data) {
         try {
             await uploadUserImageApi(user.cpf, image);
 
@@ -40,7 +41,7 @@ export const newUserApi = async (user: UserDTO, image: FormData | null) => {
     return response.status === 201;
 }
 
-export const editUserApi = async (user: UserDTO, image: FormData | null) => {
+export const editUserApi = async (user: UserDTO, image: UploadImageData | null) => {
     if (!user.cpf) {
         return;
     }
@@ -65,7 +66,6 @@ export const editUserApi = async (user: UserDTO, image: FormData | null) => {
         gender: user.gender,
     })
 
-    console.log(response.data.user)
     if (response.data.user) {
         return response.data.user;
     }
@@ -116,19 +116,18 @@ export const forgotPasswordApi = async (cpf: string, newPassword: string) => {
     }
 }
 
-const uploadUserImageApi = async (cpf: string, image: FormData) => {
+const uploadUserImageApi = async (cpf: string, image: UploadImageData) => {
     if (!cpf || !image) {
         return;
     }
-    const response = await api.post(`/upload-user-avatar/${cpf}`, image,
-        {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        }
-    );
 
-    if (response.data.url) {
-        return response.data.url
+    try {
+        const response = await api.post(`/upload-user-avatar/${cpf}`, image);
+
+        if (response.data.url) {
+            return response.data.url
+        }
+    } catch (error: any) {
+        console.log('error', error)
     }
 }

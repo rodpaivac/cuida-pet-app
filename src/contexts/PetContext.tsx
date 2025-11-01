@@ -8,14 +8,15 @@ import {
   getPetsApi,
   newPetApi,
 } from "@service/pets/index";
+import { UploadImageData } from "@components/CPImagePicker";
 
 export type PetContextDataProps = {
   selectedPet: PetDTO;
   selectPet: (pet: PetDTO, color: string) => void;
   pets: PetDTO[];
   fetchPets: () => void;
-  addPet: (pet: PetDTO, image: FormData | null) => void;
-  editPet: (pet: PetDTO, image: FormData | null) => void;
+  addPet: (pet: PetDTO, image: UploadImageData | null) => void;
+  editPet: (pet: PetDTO, image: UploadImageData | null) => void;
   deletePet: (id: string) => void;
   backgroundColor: string;
 };
@@ -45,12 +46,12 @@ export function PetContextProvider({ children }: PetContextProviderProps) {
     setPets(response);
   }
 
-  async function addPet(pet: PetDTO, image: FormData | null) {
+  async function addPet(pet: PetDTO, image: UploadImageData | null) {
     await newPetApi(pet, image);
     await fetchPets();
   }
 
-  async function editPet(pet: PetDTO, image: FormData | null) {
+  async function editPet(pet: PetDTO, image: UploadImageData | null) {
     const response = await editPetApi(pet, image);
     if (response) {
       setSelectedPet(response);

@@ -1,3 +1,4 @@
+import { UploadImageData } from "@components/CPImagePicker";
 import { PetDTO } from "@dtos/PetDTO";
 import { api } from "@service/api";
 
@@ -8,7 +9,7 @@ export const getPetsApi = async (userId: string): Promise<PetDTO[]> => {
     return response.data;
 }
 
-export const newPetApi = async (pet: PetDTO, image: FormData | null): Promise<boolean> => {
+export const newPetApi = async (pet: PetDTO, image: UploadImageData | null): Promise<boolean> => {
 
     const response = await api.post("/new-pet", {
         name: pet.name,
@@ -38,7 +39,7 @@ export const newPetApi = async (pet: PetDTO, image: FormData | null): Promise<bo
     return response.status === 201;
 }
 
-export const editPetApi = async (pet: PetDTO, image: FormData | null): Promise<PetDTO | undefined> => {
+export const editPetApi = async (pet: PetDTO, image: UploadImageData | null): Promise<PetDTO | undefined> => {
     if (!pet.id) {
         return;
     }
@@ -68,10 +69,6 @@ export const editPetApi = async (pet: PetDTO, image: FormData | null): Promise<P
         microchipped: pet.microchipped,
     });
 
-
-
-    console.log('edit pet', response.data)
-
     if (response.data) {
         return response.data;
 
@@ -85,19 +82,20 @@ export const deletePetApi = async (id: string): Promise<boolean> => {
     return response.status === 200
 }
 
-const updloadPetImageApi = async (petId: string, image: FormData) => {
+const updloadPetImageApi = async (petId: string, image: UploadImageData) => {
     if (!petId || !image) {
         return;
     }
-    const response = await api.post(`/upload-pet-image/${petId}`, image,
-        {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        }
-    );
+    try {
 
-    if (response.data.url) {
-        return response.data.url
+        const response = await api.post(`/upload-pet-image/${petId}`, image);
+
+        if (response.data.url) {
+            return response.data.url
+        }
+    } catch (error: any) {
+        console.log('error', error)
+
     }
+
 }

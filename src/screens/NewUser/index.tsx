@@ -1,6 +1,6 @@
 import CPButton from "@components/CPButton";
 import CPContainer from "@components/CPContainer";
-import CPImagePicker from "@components/CPImagePicker";
+import CPImagePicker, { UploadImageData } from "@components/CPImagePicker";
 import CPRadioButton from "@components/CPRadioButton";
 import CPTextInput from "@components/CPTextInput";
 import { SpaceV } from "@components/Space";
@@ -20,7 +20,7 @@ const NewUser: React.FC = () => {
 
   const [loading, setLoading] = useState(false);
   const [gender, setGender] = useState<GenderDTO | null>(null);
-  const [image, setImage] = useState<FormData | null>(null);
+  const [image, setImage] = useState<UploadImageData | null>(null);
   const [name, setName] = useState<string | null>(null);
   const [phone, setPhone] = useState<string | null>(null);
   const [email, setEmail] = useState<string | null>(null);
@@ -37,6 +37,19 @@ const NewUser: React.FC = () => {
   const isBirthdateValid = !!birthdate && birthdate.length === 10;
 
   const cpfError = isCpfValid !== null && isCpfValid === false;
+
+  const buttonDisabled =
+    !name ||
+    !email ||
+    !phone ||
+    !birthdate ||
+    !gender ||
+    !cpf ||
+    !password ||
+    !passwordConfirmation ||
+    !isCpfValid ||
+    !isPhoneValid ||
+    !isBirthdateValid;
 
   const handleSaveUser = async () => {
     if (
@@ -141,19 +154,8 @@ const NewUser: React.FC = () => {
       <CPButton
         title="salvar"
         onPress={() => handleSaveUser()}
-        disabled={
-          !name ||
-          !email ||
-          !phone ||
-          !birthdate ||
-          !gender ||
-          !cpf ||
-          !password ||
-          !passwordConfirmation ||
-          !isCpfValid ||
-          !isPhoneValid ||
-          !isBirthdateValid
-        }
+        loading={loading}
+        disabled={buttonDisabled}
       />
     </View>
   );
@@ -227,7 +229,7 @@ const NewUser: React.FC = () => {
   );
 
   return (
-    <CPContainer dark goBack title={"criar conta"} isLoading={loading}>
+    <CPContainer dark goBack title={"criar conta"}>
       {Header()}
       {Body()}
       {Footer()}

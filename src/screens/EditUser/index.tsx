@@ -1,6 +1,6 @@
 import CPButton from "@components/CPButton";
 import CPContainer from "@components/CPContainer";
-import CPImagePicker from "@components/CPImagePicker";
+import CPImagePicker, { UploadImageData } from "@components/CPImagePicker";
 import CPRadioButton from "@components/CPRadioButton";
 import CPTextInput from "@components/CPTextInput";
 import { SpaceV } from "@components/Space";
@@ -28,7 +28,9 @@ const EditUser: React.FC = () => {
   const [gender, setGender] = useState<GenderDTO>(
     (user.gender as GenderDTO) ?? null
   );
-  const [selectedImage, setSelectedImage] = useState<FormData | null>(null);
+  const [selectedImage, setSelectedImage] = useState<UploadImageData | null>(
+    null
+  );
   const [name, setName] = useState<string | null>(user.name ?? null);
   const [phone, setPhone] = useState<string | null>(
     user.phone ? phoneMask(user.phone) : null

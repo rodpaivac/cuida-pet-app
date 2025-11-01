@@ -16,15 +16,16 @@ import {
   signInApi,
   verifyUserDataApi,
 } from "@service/auth";
+import { UploadImageData } from "@components/CPImagePicker";
 
 export type AuthContextDataProps = {
   user: UserDTO;
   signIn: (cpf: string, password: string) => void;
   signOut: () => void;
   isLoadingUserStorageData: boolean;
-  newUser: (user: UserDTO, image: FormData | null) => void;
+  newUser: (user: UserDTO, image: UploadImageData | null) => void;
   token: string | null;
-  editUser: (user: UserDTO, image: FormData | null) => void;
+  editUser: (user: UserDTO, image: UploadImageData | null) => void;
   changePassword: (currentPassword: string, newPassword: string) => void;
   verifyUserData: (
     cpf: string,
@@ -98,11 +99,11 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     }
   }
 
-  async function newUser(user: UserDTO, image: FormData | null) {
+  async function newUser(user: UserDTO, image: UploadImageData | null) {
     await newUserApi(user, image);
   }
 
-  async function editUser(user: UserDTO, image: FormData | null) {
+  async function editUser(user: UserDTO, image: UploadImageData | null) {
     const response = await editUserApi(user, image);
     setUser(response);
     await storageUserSave(response);

@@ -8,7 +8,7 @@ import { SpaceH, SpaceV } from "@components/Space";
 import CPRadioButton from "@components/CPRadioButton";
 import CPButton from "@components/CPButton";
 import CPPicker, { CPPickerItemType } from "@components/CPPicker";
-import CPImagePicker from "@components/CPImagePicker";
+import CPImagePicker, { UploadImageData } from "@components/CPImagePicker";
 import { usePet } from "@hooks/usePet";
 import { dateToString, stringToDate } from "@utils/date";
 import { PetDTO, SexDTO } from "@dtos/PetDTO";
@@ -43,7 +43,7 @@ const NewPet: React.FC = () => {
   const [species, setSpecies] = useState<string | null>(
     isEdit ? selectedPet.species : null
   );
-  const [image, setImage] = useState<FormData | null>(null);
+  const [image, setImage] = useState<UploadImageData | null>(null);
 
   const [birthdate, setBirthdate] = useState<string | null>(
     isEdit ? dateToString(selectedPet.birthdate) : null

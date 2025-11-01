@@ -1,5 +1,5 @@
 import React, { JSX } from "react";
-import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
+import { KeyboardAvoidingView, ScrollView, View } from "react-native";
 import { styles } from "./styles";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CPLoading from "@components/CPLoading";
@@ -63,10 +63,7 @@ const CPContainer: React.FC<Props> = ({
               {children}
             </View>
           ) : (
-            <KeyboardAvoidingView
-              style={{ flex: 1 }}
-              behavior={Platform.OS === "ios" ? "padding" : undefined}
-            >
+            <KeyboardAvoidingView style={{ flex: 1 }} behavior={"padding"}>
               <ScrollView
                 contentContainerStyle={{ flexGrow: 1 }}
                 style={[

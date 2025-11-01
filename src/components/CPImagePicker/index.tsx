@@ -5,8 +5,14 @@ import * as ImagePicker from "expo-image-picker";
 import petImage from "@assets/images/default_pet.png";
 import userImage from "@assets/images/user.png";
 
+export type UploadImageData = {
+  base64Image: string;
+  mimeType: string;
+  fileName: string;
+};
+
 type Props = {
-  onSelect: (image: FormData) => void;
+  onSelect: (image: UploadImageData) => void;
   imageUri: string | null;
   type: "pet" | "user";
 };
@@ -20,21 +26,22 @@ const CPImagePicker: React.FC<Props> = ({ onSelect, imageUri, type }) => {
       allowsEditing: true,
       aspect: [4, 4],
       quality: 0.2,
+      base64: true,
     });
 
     if (!result.canceled) {
       const asset = result.assets[0];
 
-      const formData = new FormData();
-      formData.append("file", {
-        uri: asset.uri, // caminho da imagem
-        name: asset.fileName || `photo_${Date.now()}.jpg`,
-        type: asset.type || "image/jpeg",
-      } as any);
+      if (asset.base64) {
+        const uploadData: UploadImageData = {
+          base64Image: asset.base64,
+          mimeType: asset.type?.includes("/") ? asset.type : "image/jpeg",
+          fileName: asset.fileName || `photo_${Date.now()}.jpg`,
+        };
 
-      setUri(asset.uri);
-
-      onSelect(formData);
+        setUri(asset.uri);
+        onSelect(uploadData);
+      }
     }
   };
 
