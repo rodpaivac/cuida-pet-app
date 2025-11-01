@@ -39,7 +39,7 @@ const CPContainer: React.FC<Props> = ({
       }}
     >
       {isLoading ? (
-        <CPLoading isLoading />
+        <CPLoading isLoading dark />
       ) : (
         <>
           {(header || goBack || title) && (

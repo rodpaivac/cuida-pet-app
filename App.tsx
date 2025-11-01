@@ -19,6 +19,7 @@ import { VaccineContextProvider } from "@contexts/VaccineContext";
 
 import { NotificationClickEvent, OneSignal } from "react-native-onesignal";
 
+//ID do app
 OneSignal.initialize("aefe596e-097d-4c5e-9a20-4fb4e1685e33");
 OneSignal.Notifications.requestPermission(true);
 
