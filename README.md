@@ -52,10 +52,10 @@ Cuida Pet é um aplicativo desenvolvido para facilitar o controle de vacinação
 
 3. Testes unitários
 
-Foram desenvolvidos testes unitários de snapshot para todos os componentes da aplicação. Os testes ficam em um arquivo xxx.test.tsx nas pastas dos respectivos componentes. Foram desenvolvidos testes unitários para as funções dos arquivos age.ts e date.ts da pasta src/utils/.
+   Foram desenvolvidos testes unitários de snapshot para todos os componentes da aplicação. Os testes ficam em um arquivo xxx.test.tsx nas pastas dos respectivos componentes. Foram desenvolvidos testes unitários para as funções dos arquivos age.ts e date.ts da pasta src/utils/.
 
-Para rodar todos os testes: 'npm run test'
-Para todar os testes de um arquivo específico: 'npm run test ${fileName}'
+   Para rodar todos os testes: 'npm run test'
+   Para todar os testes de um arquivo específico: 'npm run test ${fileName}'
 
 4. Instalação
 
