@@ -4,19 +4,15 @@ Cuida Pet é um aplicativo desenvolvido para facilitar o controle de vacinação
 
 1. Stacks
 
-- Main:
-  react-native
-  expo
-  react-navigation
-  typescript
-  onesignal
-  npm
-
-- Style:
-  StyleSheet
-
-- Test:
-  Jest
+- React Native – Framework principal para desenvolvimento mobile.
+- React Navigation – Gerenciamento de rotas e navegação entre telas.
+- TypeScript – Tipagem estática e segurança ao código.
+- Async Storage – Armazenamento local assíncrono para dados simples e persistência offline.
+- OneSignal – Serviço de envio de notificações push.
+- NPM – Gerenciador de pacotes para dependências do projeto.
+- Jest – Framework de testes unitários para garantir a qualidade do código.
+- Express.js – Framework backend em Node.js para criação da API do aplicativo.
+- PostgreSQL – Banco de dados relacional utilizado para armazenamento das informações.
 
 2. Estrutura do projeto
 
