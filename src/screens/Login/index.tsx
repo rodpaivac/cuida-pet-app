@@ -26,7 +26,7 @@ import { SpaceV } from "@components/Space";
 import { validateCPF } from "@utils/validation";
 
 const SCREEN_HEIGHT = screenHeight;
-const INITIAL_HEIGHT = verticalScale(260);
+const INITIAL_HEIGHT = SCREEN_HEIGHT * 0.3;
 const FINAL_TOP = SCREEN_HEIGHT * 0.8;
 
 const Login: React.FC = () => {

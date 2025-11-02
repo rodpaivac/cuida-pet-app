@@ -23,12 +23,14 @@ exports[`Component: CPTextInput should match snapshot 1`] = `
         {
           "borderRadius": 15,
           "borderWidth": 1,
+          "paddingBottom": 7.444196428571429,
           "paddingHorizontal": 27.17391304347826,
-          "paddingVertical": 4.466517857142858,
+          "paddingTop": 13.399553571428573,
         },
         undefined,
         {
           "borderColor": "#F5F5ED",
+          "borderWidth": 1,
         },
       ]
     }
@@ -43,7 +45,6 @@ exports[`Component: CPTextInput should match snapshot 1`] = `
           {
             "fontFamily": "Poppins_300Light",
             "fontSize": 18,
-            "height": 66.99776785714286,
             "width": 543.4782608695652,
           },
           {

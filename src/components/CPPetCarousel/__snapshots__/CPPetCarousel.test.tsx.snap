@@ -2,36 +2,20 @@
 
 exports[`Component: CPPetCarousel should match snapshot 1`] = `
 <RCTScrollView
-  ListEmptyComponent={[Function]}
-  contentContainerStyle={
-    {
-      "paddingHorizontal": 15,
-    }
-  }
-  data={[]}
-  getItem={[Function]}
-  getItemCount={[Function]}
+  collapsable={false}
+  handlerTag={-1}
+  handlerType="NativeViewGestureHandler"
   horizontal={true}
-  keyExtractor={[Function]}
-  onContentSizeChange={[Function]}
-  onLayout={[Function]}
-  onMomentumScrollBegin={[Function]}
-  onMomentumScrollEnd={[Function]}
-  onScroll={[Function]}
-  onScrollBeginDrag={[Function]}
-  onScrollEndDrag={[Function]}
-  removeClippedSubviews={false}
-  renderItem={[Function]}
-  scrollEventThrottle={0.0001}
+  onGestureHandlerEvent={[Function]}
+  onGestureHandlerStateChange={[Function]}
   showsHorizontalScrollIndicator={false}
-  stickyHeaderIndices={[]}
   style={
     {
       "marginBottom": 81.88616071428572,
       "marginTop": 66.99776785714286,
+      "paddingLeft": 27.17391304347826,
     }
   }
-  viewabilityConfigCallbackPairs={[]}
 >
   <View>
     <View
