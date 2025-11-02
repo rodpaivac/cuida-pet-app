@@ -1,6 +1,6 @@
 - Cuida Pet
 
-Cuida Pet é um aplicativo desenvolvido para facilitar o controle de vacinação dos seus animais de estimação. Ele permite cadastrar informações detalhadas sobre cada pet, acompanhar o histórico de vacinas, receber alertas de doses próximas e visualizar, em um só lugar, as próximas vacinas de todos os pets do usuário.
+Cuida Pet é um aplicativo desenvolvido para facilitar o controle de vacinação dos seus animais de estimação. A aplicação permite cadastrar informações detalhadas sobre cada pet, acompanhar o histórico de vacinas, receber alertas de doses próximas e visualizar, em um só lugar, as próximas vacinas de todos os pets do usuário.
 
 1. Stacks
 
